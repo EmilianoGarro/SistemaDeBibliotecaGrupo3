@@ -10,11 +10,28 @@ package sistemabibliotecagrupo3.modelos;
  * @author Emiliano
  */
 public class Lector {
-    int id_Lector,dni;
-    String apellido,nombre;
-    boolean activo;
+    private int id_Lector,dni;
+    private String apellido,nombre,email;
+    private boolean activo;
     
     public Lector(){};
+
+    public Lector(int dni, String apellido, String nombre, String email, boolean activo) {
+        this.dni = dni;
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.email = email;
+        this.activo = activo;
+    }
+
+    public Lector(int dni, String apellido, String nombre, String email) {
+        this.dni = dni;
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.email = email;
+    }
+    
+    
 
     public int getId_Lector() {
         return id_Lector;

@@ -6,19 +6,40 @@
 package sistemabibliotecagrupo3.modelos;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
  * @author Emiliano
  */
 public class Prestamo {
- int id_Prestamo;
- Ejemplar ejemplar;
- Lector lector;
- LocalDate fechaPrestamo,fechaDevolucion;
- boolean activo;
+ private int id_Prestamo;
+ private Ejemplar ejemplar;
+ private Lector lector;
+ private Multa multa=null;
+ private LocalDate fechaPrestamo,fechaDevolucion;
+ private boolean activo = false;
  
  public Prestamo(){};
+ 
+    public Prestamo(Ejemplar ejemplar, Lector lector) {
+        this.ejemplar = ejemplar;
+        this.lector = lector;
+        
+    }
+
+    public void solicitarEjemplar(){
+    this.activo=true;
+    this.fechaPrestamo=LocalDate.now();
+    this.fechaDevolucion=fechaPrestamo.plusDays(30);
+    this.ejemplar.setActivo(false);
+    }
+    
+    public void devolverEjemplar(){
+    this.activo=false;
+    this.ejemplar.setActivo(true);
+    }
+    
 
     public int getId_Prestamo() {
         return id_Prestamo;

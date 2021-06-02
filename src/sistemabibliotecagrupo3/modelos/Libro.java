@@ -10,13 +10,23 @@ package sistemabibliotecagrupo3.modelos;
  * @author Emiliano
  */
 public class Libro {
-int id_Libro,anio;
-Autor autor;
-double ISBN;
-String nombre,tipo,editorial;
-boolean activo;
+private int id_Libro,anio;
+private Autor autor;
+private String ISBN;
+private String nombre,tipo,editorial;
+private boolean activo;
 
 public Libro(){};
+
+    public Libro(int anio, Autor autor, String ISBN, String nombre, String tipo, String editorial, boolean activo) {
+        this.anio = anio;
+        this.autor = autor;
+        this.ISBN = ISBN;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.editorial = editorial;
+        this.activo = activo;
+    }
 
     public int getId_Libro() {
         return id_Libro;
@@ -42,13 +52,15 @@ public Libro(){};
         this.autor = autor;
     }
 
-    public double getISBN() {
+    public String getISBN() {
         return ISBN;
     }
 
-    public void setISBN(double ISBN) {
+    public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
+
+   
 
     public String getNombre() {
         return nombre;

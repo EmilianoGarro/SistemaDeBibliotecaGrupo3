@@ -12,10 +12,10 @@ import java.time.LocalDate;
  * @author Emiliano
  */
 public class Autor {
-    int id_Autor,dni;
-    String apellido,nombre,nacionalidad;
-    LocalDate fechaNac;
-    boolean activo;
+    private int id_Autor,dni;
+    private String apellido,nombre,nacionalidad;
+    private LocalDate fechaNac;
+    private boolean activo;
     
     public Autor(int id, int dni, String apellido, String nombre, String nacionalidad, LocalDate fechaNac, boolean activo){
         this.id_Autor = id;

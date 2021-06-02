@@ -10,12 +10,24 @@ package sistemabibliotecagrupo3.modelos;
  * @author Emiliano
  */
 public class Ejemplar {
- int id_Ejemplar;
- Libro libro;
- String estado;
- boolean activo;
+ private int id_Ejemplar;
+ private Libro libro;
+ private String estado;
+ private boolean activo;
  
  public Ejemplar(){};
+
+    public Ejemplar(Libro libro, String estado, boolean activo) {
+        this.libro = libro;
+        this.estado = estado;
+        this.activo = activo;
+    }
+
+    public Ejemplar(Libro libro, String estado) {
+        this.libro = libro;
+        this.estado = estado;
+    }
+    
 
     public int getId_Ejemplar() {
         return id_Ejemplar;
