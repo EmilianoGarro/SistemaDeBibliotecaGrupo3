@@ -20,13 +20,49 @@ import javax.swing.JOptionPane;
  */
 public class LibroData {
     private Connection con;
-    
+    private Conexion conexion;
     public LibroData(Conexion conexion){
         try {
+            this.conexion=conexion;
             con = conexion.getConexion();
+            
         } catch (SQLException ex) {
             Logger.getLogger(LibroData.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public Libro buscarLibro(int id){
+    Libro auxLibro = null;
+    try{
+        String sql = "SELECT * FROM libro WHERE idLibro=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+        auxLibro = new Libro();
+        auxLibro.setId_Libro(rs.getInt("idLibro"));
+        auxLibro.setISBN(rs.getString("isbn"));
+        auxLibro.setNombre(rs.getString("nombre"));
+        Autor auxAutor = buscarAutor(rs.getInt("idAutor"));
+        auxLibro.setAutor(auxAutor);
+        auxLibro.setTipo(rs.getString("tipo"));
+        auxLibro.setAnio(rs.getInt("anio"));
+        auxLibro.setActivo(rs.getBoolean("activo"));
+        auxLibro.setEditorial(rs.getString("editorial"));
+        }
+        ps.close();
+        
+    
+    }   catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al buscar el libro "+" "+ex.getMessage());
+    }
+    return auxLibro;
+    }
+    
+    public Autor buscarAutor(int id){
+        AutorData auxAutorData = new AutorData(conexion);
+        Autor auxAutor = auxAutorData.buscarAutor(id);
+        return auxAutor;
     }
     
     public void guardarLibro(Libro libro){

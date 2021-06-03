@@ -17,6 +17,8 @@ public class Autor {
     private LocalDate fechaNac;
     private boolean activo;
     
+    public Autor(){};
+    
     public Autor(int id, int dni, String apellido, String nombre, String nacionalidad, LocalDate fechaNac, boolean activo){
         this.id_Autor = id;
         this.dni = dni;

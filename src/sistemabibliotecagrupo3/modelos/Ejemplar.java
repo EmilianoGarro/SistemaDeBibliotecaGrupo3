@@ -12,7 +12,7 @@ package sistemabibliotecagrupo3.modelos;
 public class Ejemplar {
  private int id_Ejemplar;
  private Libro libro;
- private String estado;
+ private String estado; //prestado, retraso, reparación, disponible en biblioteca
  private boolean activo;
  
  public Ejemplar(){};
@@ -22,13 +22,7 @@ public class Ejemplar {
         this.estado = estado;
         this.activo = activo;
     }
-
-    public Ejemplar(Libro libro, String estado) {
-        this.libro = libro;
-        this.estado = estado;
-    }
     
-
     public int getId_Ejemplar() {
         return id_Ejemplar;
     }

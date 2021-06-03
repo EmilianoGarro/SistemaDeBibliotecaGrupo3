@@ -32,6 +32,33 @@ public class AutorData {
         }
     }
     
+    public Autor buscarAutor(int id){
+    Autor auxAutor = null;
+    try{
+        String sql = "SELECT * FROM autor WHERE idAutor=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+        auxAutor = new Autor();
+        auxAutor.setNombre(rs.getString("nombre"));
+        auxAutor.setApellido(rs.getString("apellido"));
+        auxAutor.setDni(rs.getInt("dni"));
+        auxAutor.setFechaNac(rs.getDate("fechaNac").toLocalDate());
+        auxAutor.setNacionalidad(rs.getString("nacionalidad"));
+        auxAutor.setActivo(rs.getBoolean("activo"));
+        auxAutor.setId_Autor(rs.getInt("idAutor"));
+        }
+        ps.close();
+           
+    }   catch (SQLException ex) {
+            //Notificacion si falla
+            JOptionPane.showMessageDialog(null, "Error al buscar el autor "+" "+ex.getMessage());
+        }
+    
+    return auxAutor;    
+    }
+    
     public void guardarAutor(Autor autor){
         
         try{

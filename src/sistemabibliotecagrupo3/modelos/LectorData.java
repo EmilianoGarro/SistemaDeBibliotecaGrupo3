@@ -51,6 +51,7 @@ public class LectorData {
          }
     
     }
+    
     public Lector buscarLector(int id){
     Lector lector=null;
         try{
@@ -96,7 +97,7 @@ public class LectorData {
     
     }
     
-    public void borrarLector(int id){
+    public void darBajaLector(int id){
     Lector lectorA = this.buscarLector(id);
         if(lectorA!=null&&lectorA.isActivo()==true){
         try{
@@ -139,5 +140,23 @@ public class LectorData {
    }else if(lectorA.isActivo()==true){
    JOptionPane.showMessageDialog(null, "El lector ya esta dado de alta");
    }
+   }
+
+    public void eliminarLector(int id){
+    Lector auxLector = buscarLector(id);
+    if(auxLector!=null){
+    try{
+        String sql = "DELETE FROM lector WHERE idLector=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        ps.close();
+        JOptionPane.showMessageDialog(null, "El lector se elimino correctamente");
+    }   catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el lector"+" "+ex.getMessage());
+        }
+    }else if(auxLector==null){
+    JOptionPane.showMessageDialog(null, "El lector que desea eliminar no esta en la base de datos");
+    }
    }
 }
