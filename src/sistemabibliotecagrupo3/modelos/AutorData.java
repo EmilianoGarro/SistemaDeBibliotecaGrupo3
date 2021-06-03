@@ -14,6 +14,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import sistemabibliotecagrupo3.modelos.Autor;
+import sistemabibliotecagrupo3.modelos.Conexion;
 
 /**
  *
@@ -58,7 +60,7 @@ public class AutorData {
     public void actualizarAutor(Autor autor){
         
         try{
-        String sql = "UPDATE autor SET dni='?', apellido='?', nombre='?', nacionalidad='?', fechaNac='?', activo='?' WHERE idAutor='?'";
+        String sql = "UPDATE autor SET dni=?, apellido=?, nombre=?, nacionalidad=?, fechaNac=?, activo=? WHERE idAutor=?";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, autor.getDni());
         ps.setString(2, autor.getApellido());
@@ -66,7 +68,7 @@ public class AutorData {
         ps.setString(4, autor.getNacionalidad());
         ps.setDate(5, Date.valueOf(autor.getFechaNac()));
         ps.setBoolean(6, autor.isActivo());
-        ps.setInt(6, autor.getId_Autor());
+        ps.setInt(7, autor.getId_Autor());
         
         ps.executeUpdate();
         ps.close();
@@ -82,7 +84,7 @@ public class AutorData {
     public void eliminarAutor(int id){
         
         try{
-            String sql = "UPDATE autor SET activo='0' WHERE idAutor= '?'";
+            String sql = "UPDATE autor SET activo=0 WHERE idAutor= ?";
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, id);
             

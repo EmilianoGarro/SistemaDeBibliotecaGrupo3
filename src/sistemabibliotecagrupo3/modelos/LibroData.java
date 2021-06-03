@@ -6,9 +6,13 @@
 package sistemabibliotecagrupo3.modelos;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,5 +31,75 @@ public class LibroData {
     
     public void guardarLibro(Libro libro){
         
+        try{
+            String sql = "INSERT INTO libro(idAutor, isbn, nombre, tipo, editorial, anio, activo) VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, libro.getAutor().getId_Autor());
+            ps.setString(2, libro.getISBN());
+            ps.setString(3, libro.getNombre());
+            ps.setString(4, libro.getTipo());
+            ps.setString(5, libro.getEditorial());
+            ps.setInt(6, libro.getAnio());
+            ps.setBoolean(7, libro.isActivo());
+            
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+                if(rs.next()){
+                    libro.setId_Libro(rs.getInt("idLibro"));
+                }
+            ps.close();
+            
+            //Avisa que se agrego...
+            JOptionPane.showMessageDialog(null, "Se agrego correctamente el Libro " + libro.getNombre());
+        } catch (SQLException ex) {
+            //Logger.getLogger(LibroData.class.getName()).log(Level.SEVERE, null, ex);
+            //avisa el error y donde se encuentra...
+            JOptionPane.showMessageDialog(null, "Error en la carga del libro " + libro.getNombre() + " " + ex.getMessage());
+        } 
+    }   
+    
+    public void eliminarLibro(int id){
+        
+        try{
+            String sql = "UPDATE libro SET idLibro=0 WHERE idLibro=?";
+            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, id);
+            
+            ps.executeUpdate();
+            
+            ps.close();
+            //Avisa que se elimino...
+            JOptionPane.showMessageDialog(null, "El libro se elimino correctamente");
+        } catch (SQLException ex) {
+            //Logger.getLogger(LibroData.class.getName()).log(Level.SEVERE, null, ex);
+            //Avisa el error y donde se encuentra...
+            JOptionPane.showMessageDialog(null, "Error al eliminar el libro " + ex.getMessage());
+        }
+    }
+    
+    public void actualizarLibro(Libro libro){
+        
+        try{
+            String sql = "UPDATE libro SET idAutor=?,isbn=?,nombre=?,tipo=?,editorial=?,anio=?,activo=? WHERE idLibro=?";
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, libro.getAutor().getId_Autor());
+            ps.setString(2, libro.getISBN());
+            ps.setString(3, libro.getNombre());
+            ps.setString(4, libro.getTipo());
+            ps.setString(5, libro.getEditorial());
+            ps.setInt(6, libro.getAnio());
+            ps.setBoolean(7, libro.isActivo());
+            ps.setInt(8, libro.getId_Libro());
+            
+            ps.executeUpdate();
+            
+            ps.close();
+            //Avisa que se actualizo...
+            JOptionPane.showMessageDialog(null, "El libro " + libro.getNombre() + " se actualizo correctamente.");
+        } catch (SQLException ex) {
+            //Logger.getLogger(LibroData.class.getName()).log(Level.SEVERE, null, ex);
+            //Avisa el error y donde se encuentra...
+            JOptionPane.showMessageDialog(null, "Error en la actualizacion del libro " + libro.getNombre() + " " + ex.getMessage());
+        }
     }
 }

@@ -15,6 +15,8 @@ import sistemabibliotecagrupo3.modelos.AutorData;
 import sistemabibliotecagrupo3.modelos.Conexion;
 import sistemabibliotecagrupo3.modelos.Lector;
 import sistemabibliotecagrupo3.modelos.LectorData;
+import sistemabibliotecagrupo3.modelos.Libro;
+import sistemabibliotecagrupo3.modelos.LibroData;
 
 /**
  *
@@ -33,6 +35,7 @@ public class SistemaBibliotecaGrupo3 {
             conexion = new Conexion();
             Connection con = conexion.getConexion();
             AutorData ad1 = new AutorData(conexion);
+            LibroData libD1 = new LibroData(conexion);
             LectorData ld1 = new LectorData(conexion);
             //Prueba autor
             
@@ -41,7 +44,20 @@ public class SistemaBibliotecaGrupo3 {
             
             //Prueba AutorData
             
-            //ad1.guardarAutor(a1);
+            ad1.guardarAutor(a1);
+            ad1.actualizarAutor(a2);
+            ad1.eliminarAutor(23);
+            
+            //Prueba libro
+            
+            Libro lib1 = new Libro(a1, "4758-545654-6456", "Libro de Ejemplo", "Terror", "Prueba nose", 2010, true);
+            Libro lib2 = new Libro(a1, "5439-545121-6543", "Ejemplo de Libro", "Suspenso", "AeAee", 2009, true);
+            
+            //Prueba LibroData
+            
+            libD1.guardarLibro(lib1);
+            libD1.actualizarLibro(lib2);
+            libD1.eliminarLibro(35);
             
             //Prueba Lector
             
