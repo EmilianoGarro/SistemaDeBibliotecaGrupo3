@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import sistemabibliotecagrupo3.modelos.Autor;
 import sistemabibliotecagrupo3.modelos.AutorData;
 import sistemabibliotecagrupo3.modelos.Conexion;
+import sistemabibliotecagrupo3.modelos.Lector;
+import sistemabibliotecagrupo3.modelos.LectorData;
 
 /**
  *
@@ -31,7 +33,7 @@ public class SistemaBibliotecaGrupo3 {
             conexion = new Conexion();
             Connection con = conexion.getConexion();
             AutorData ad1 = new AutorData(conexion);
-            
+            LectorData ld1 = new LectorData(conexion);
             //Prueba autor
             
             Autor a1 = new Autor(12345678, "Prueba", "Prueba", "Argentina", LocalDate.of(2000, 11, 13), true);
@@ -39,9 +41,18 @@ public class SistemaBibliotecaGrupo3 {
             
             //Prueba AutorData
             
-            ad1.guardarAutor(a1);
+            //ad1.guardarAutor(a1);
             
+            //Prueba Lector
             
+            Lector l1 = new Lector(0077,"Pruebaaaa1","Prueb11a1","E-mail",true);
+            //l1.setId_Lector(11);
+            //Prueba LectorData
+            //ld1.borrarLector(10);
+            //System.out.println(ld1.buscarLector(11).getApellido());
+            //ld1.guardarLector(l1);
+            //ld1.actualizarLector(11,l1);
+            ld1.darAltaLector(11);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SistemaBibliotecaGrupo3.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

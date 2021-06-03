@@ -16,6 +16,7 @@ public class Lector {
     
     public Lector(){};
 
+  
     public Lector(int dni, String apellido, String nombre, String email, boolean activo) {
         this.dni = dni;
         this.apellido = apellido;
@@ -31,7 +32,14 @@ public class Lector {
         this.email = email;
     }
     
-    
+      public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
     public int getId_Lector() {
         return id_Lector;
