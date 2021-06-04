@@ -13,13 +13,17 @@ import java.time.LocalDate;
  */
 public class Multa {
 private int id_Multa;
+private Prestamo prestamo;
 private LocalDate fechaInicio,fechaFin;
+private boolean estado;
 
     public Multa(){};
 
-    public Multa(LocalDate fechaInicio, LocalDate fechaFin) {
+    public Multa(Prestamo prestamo, LocalDate fechaInicio, LocalDate fechaFin, boolean estado) {
+        this.prestamo = prestamo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.estado = estado;
     }
 
     public int getId_Multa() {
@@ -29,7 +33,11 @@ private LocalDate fechaInicio,fechaFin;
     public void setId_Multa(int id_Multa) {
         this.id_Multa = id_Multa;
     }
-
+    
+    public int getIdPrestamo(){
+        return prestamo.getId_Prestamo();
+    }
+    
     public LocalDate getFechaInicio() {
         return fechaInicio;
     }
@@ -46,5 +54,11 @@ private LocalDate fechaInicio,fechaFin;
         this.fechaFin = fechaFin;
     }
 
-
+    public boolean isEstado(){
+        return estado;
+    }
+    
+    public void setEstado(boolean estado){
+        this.estado = estado;
+    }
 }
