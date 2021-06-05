@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -36,7 +38,7 @@ public class MultaData {
         try{
             String sql= "INSERT INTO multa(idMulta, idPrestamo, fechaInicio, fechaFin, estado) VALUES (?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, multa.getIdPrestamo());
+            ps.setInt(1, multa.getPrestamo().getId_Prestamo());
             ps.setDate(2, Date.valueOf(multa.getFechaInicio()));
             ps.setDate(3, Date.valueOf(multa.getFechaFin()));
             ps.setBoolean(4, multa.isEstado());
@@ -80,7 +82,7 @@ public class MultaData {
         try{
             String sql= "UPDATE multa SET idPrestamo=?,fechaInicio=?,fechaFin=?,estado=? WHERE idMulta=?";
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, multa.getIdPrestamo());
+            ps.setInt(1, multa.getPrestamo().getId_Prestamo());
             ps.setDate(2, Date.valueOf(multa.getFechaInicio()));
             ps.setDate(3, Date.valueOf(multa.getFechaFin()));
             ps.setBoolean(4, multa.isEstado());
@@ -96,5 +98,82 @@ public class MultaData {
             //Avisa el error y donde se encuentra...
             JOptionPane.showMessageDialog(null, "Error al actualizar la multa " + ex.getMessage());
         }
+    }
+    
+    public void buscarMulta(int id){
+            Multa auxMulta = null;
+            try{
+                String sql = "SELECT * FROM multa WHERE idMulta = ?";
+                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if(rs.next()){
+                    auxMulta = new Multa();
+                    auxMulta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                    auxMulta.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                    auxMulta.setEstado(rs.getBoolean("estado"));
+                }
+                ps.close();
+            } catch (SQLException ex) {
+                //Avisa si falla...
+                JOptionPane.showMessageDialog(null, "Error al buscar Multa " + ex.getMessage());
+        }
+    }
+    
+    List<Multa> obtenerMultas(){
+        List<Multa> multas = new ArrayList<>();
+        
+        try{
+            String sql = "SELECT * FROM multa";
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ResultSet rs = ps.executeQuery();
+            Multa multa;
+            while(rs.next()){
+                multa = new Multa();
+                multa.setId_Multa(rs.getInt("idMulta"));
+                multa.getPrestamo().setId_Prestamo(rs.getInt("idPrestamo"));
+                multa.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                multa.setFechaInicio(rs.getDate("fechaFin").toLocalDate());
+                multa.setEstado(rs.getBoolean("estado"));
+                multas.add(multa);
+            }
+            ps.close();
+            
+        } catch (SQLException ex) {
+            //Logger.getLogger(MultaData.class.getName()).log(Level.SEVERE, null, ex);
+            //Avisa el error y donde se encuentra...
+            JOptionPane.showMessageDialog(null, "Error al obtener multas " + ex.getMessage());
+        }
+        
+        return multas;
+    }
+    
+    List<Multa> obtenerMultasSegunEstado(int estado){
+        List<Multa> multas = new ArrayList<>();
+        
+        try{
+            String sql = "SELECT * FROM multa WHERE estado=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, estado);
+            ResultSet rs = ps.executeQuery();
+            Multa multa;
+            while (rs.next()){
+                multa = new Multa();
+                multa.setId_Multa(rs.getInt("idMulta"));
+                multa.getPrestamo().setId_Prestamo(rs.getInt("idPrestamo"));
+                multa.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                multa.setFechaInicio(rs.getDate("fechaFin").toLocalDate());
+                multa.setEstado(rs.getBoolean("estado"));
+                multas.add(multa);
+            }
+            
+            ps.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MultaData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return multas;
     }
 }

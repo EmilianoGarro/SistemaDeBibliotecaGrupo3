@@ -128,6 +128,7 @@ public class AutorData {
             JOptionPane.showMessageDialog(null, "Error en la eliminacion del autor " + ex.getMessage());
         }
     }
+    
     public List<Autor> obtenerAutores(){
     List<Autor> autores= new ArrayList<>();
         
@@ -158,6 +159,7 @@ public class AutorData {
     return autores;
         
     }
+    
     public List<Autor> obtenerAutoresSegunEstado(int estado){
     List<Autor> autores= new ArrayList<>();
         

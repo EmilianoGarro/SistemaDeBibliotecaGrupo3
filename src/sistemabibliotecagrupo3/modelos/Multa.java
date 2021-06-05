@@ -34,9 +34,10 @@ private boolean estado;
         this.id_Multa = id_Multa;
     }
     
-    public int getIdPrestamo(){
-        return prestamo.getId_Prestamo();
+    public Prestamo getPrestamo(){
+        return prestamo;
     }
+    
     
     public LocalDate getFechaInicio() {
         return fechaInicio;
