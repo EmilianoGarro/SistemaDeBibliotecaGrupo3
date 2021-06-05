@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -159,4 +161,56 @@ public class LectorData {
     JOptionPane.showMessageDialog(null, "El lector que desea eliminar no esta en la base de datos");
     }
    }
+    public List<Lector> obtenerLectores(){
+    List<Lector> lectores= new ArrayList<>();
+        
+        try{ 
+          String sql= "SELECT * FROM lector"; 
+          PreparedStatement ps= con.prepareStatement(sql);
+          
+          ResultSet rs=ps.executeQuery();  
+          Lector lector;
+          while (rs.next()){
+            lector = new Lector();
+            lector.setId_Lector(rs.getInt("idLector"));
+            lector.setApellido(rs.getString("apellido"));
+            lector.setNombre(rs.getString("nombre"));
+            lector.setEmail(rs.getString("email"));
+            lector.setActivo(rs.getBoolean("estado"));
+            lectores.add(lector);
+          }
+                    
+        ps.close();
+        
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "error al listar los lectores. "+ex.getMessage());
+        }
+    return lectores;  
+    }
+    public List<Lector> obtenerLectoresSegunEstado(int estado){
+    List<Lector> lectores= new ArrayList<>();
+        
+        try{ 
+          String sql= "SELECT * FROM lector WHERE estado=?"; 
+          PreparedStatement ps= con.prepareStatement(sql);
+          ps.setInt(1, estado);
+          ResultSet rs=ps.executeQuery();  
+          Lector lector;
+          while (rs.next()){
+            lector = new Lector();
+            lector.setId_Lector(rs.getInt("idLector"));
+            lector.setApellido(rs.getString("apellido"));
+            lector.setNombre(rs.getString("nombre"));
+            lector.setEmail(rs.getString("email"));
+            lector.setActivo(rs.getBoolean("estado"));
+            lectores.add(lector);
+          }
+                    
+        ps.close();
+        
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "error al listar los lectores. "+ex.getMessage());
+        }
+    return lectores;  
+    }
 }

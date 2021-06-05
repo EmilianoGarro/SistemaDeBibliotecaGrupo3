@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -125,5 +127,65 @@ public class AutorData {
             //Avisamos el error y donde se encuentra...
             JOptionPane.showMessageDialog(null, "Error en la eliminacion del autor " + ex.getMessage());
         }
+    }
+    public List<Autor> obtenerAutores(){
+    List<Autor> autores= new ArrayList<>();
+        
+        try{ 
+          String sql= "SELECT * FROM autor"; 
+          PreparedStatement ps= con.prepareStatement(sql);
+          
+          ResultSet rs=ps.executeQuery();  
+          Autor autor;
+          while (rs.next()){
+            autor=new Autor();
+            autor.setNombre(rs.getString("nombre"));
+            autor.setApellido(rs.getString("apellido"));
+            autor.setDni(rs.getInt("dni"));
+            autor.setFechaNac(rs.getDate("fechaNac").toLocalDate());
+            autor.setNacionalidad(rs.getString("nacionalidad"));
+            autor.setActivo(rs.getBoolean("activo"));
+            autor.setId_Autor(rs.getInt("idAutor"));
+            autores.add(autor);
+          }
+                    
+        ps.close();
+        
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "error al listar los autores. "+ex.getMessage());
+        }
+    
+    return autores;
+        
+    }
+    public List<Autor> obtenerAutoresSegunEstado(int estado){
+    List<Autor> autores= new ArrayList<>();
+        
+        try{ 
+          String sql= "SELECT * FROM autor WHERE activo=?"; 
+          PreparedStatement ps= con.prepareStatement(sql);
+          ps.setInt(1, estado);
+          ResultSet rs=ps.executeQuery();  
+          Autor autor;
+          while (rs.next()){
+            autor=new Autor();
+            autor.setNombre(rs.getString("nombre"));
+            autor.setApellido(rs.getString("apellido"));
+            autor.setDni(rs.getInt("dni"));
+            autor.setFechaNac(rs.getDate("fechaNac").toLocalDate());
+            autor.setNacionalidad(rs.getString("nacionalidad"));
+            autor.setActivo(rs.getBoolean("activo"));
+            autor.setId_Autor(rs.getInt("idAutor"));
+            autores.add(autor);
+          }
+                    
+        ps.close();
+        
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "error al listar los autores. "+ex.getMessage());
+        }
+    
+    return autores;
+        
     }
 }

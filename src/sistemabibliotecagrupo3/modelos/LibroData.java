@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -137,5 +139,63 @@ public class LibroData {
             //Avisa el error y donde se encuentra...
             JOptionPane.showMessageDialog(null, "Error en la actualizacion del libro " + libro.getNombre() + " " + ex.getMessage());
         }
+    }
+    public List<Libro> obtenerLibros(){
+    List<Libro> libros= new ArrayList<>();
+        
+        try{ 
+          String sql= "SELECT * FROM autor"; 
+          PreparedStatement ps= con.prepareStatement(sql);
+          
+          ResultSet rs=ps.executeQuery();  
+          Libro libro;
+          while (rs.next()){
+            libro = new Libro();
+            libro.setId_Libro(rs.getInt("idLibro"));
+            libro.setISBN(rs.getString("isbn"));
+            libro.setNombre(rs.getString("nombre"));
+            libro.setAutor(buscarAutor(rs.getInt("idAutor")));
+            libro.setTipo(rs.getString("tipo"));
+            libro.setAnio(rs.getInt("anio"));
+            libro.setActivo(rs.getBoolean("activo"));
+            libro.setEditorial(rs.getString("editorial"));
+            libros.add(libro);
+          }
+                    
+        ps.close();
+        
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "error al listar los libros. "+ex.getMessage());
+        }
+    return libros;  
+    }
+    public List<Libro> obtenerLibrosSegunEstado(int estado){
+    List<Libro> libros= new ArrayList<>();
+        
+        try{ 
+          String sql= "SELECT * FROM autor WHERE activo=?"; 
+          PreparedStatement ps= con.prepareStatement(sql);
+          ps.setInt(1, estado);
+          ResultSet rs=ps.executeQuery();  
+          Libro libro;
+          while (rs.next()){
+            libro = new Libro();
+            libro.setId_Libro(rs.getInt("idLibro"));
+            libro.setISBN(rs.getString("isbn"));
+            libro.setNombre(rs.getString("nombre"));
+            libro.setAutor(buscarAutor(rs.getInt("idAutor")));
+            libro.setTipo(rs.getString("tipo"));
+            libro.setAnio(rs.getInt("anio"));
+            libro.setActivo(rs.getBoolean("activo"));
+            libro.setEditorial(rs.getString("editorial"));
+            libros.add(libro);
+          }
+                    
+        ps.close();
+        
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "error al listar los libros. "+ex.getMessage());
+        }
+    return libros;  
     }
 }
