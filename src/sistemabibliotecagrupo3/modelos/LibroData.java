@@ -29,7 +29,7 @@ public class LibroData {
             con = conexion.getConexion();
             
         } catch (SQLException ex) {
-            Logger.getLogger(LibroData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error de conexion"+" "+ex.getMessage());
         }
     }
     
@@ -96,10 +96,11 @@ public class LibroData {
         } 
     }   
     
-    public void eliminarLibro(int id){
-        
+    public void darBajaLibro(int id){
+    Libro auxLibro = buscarLibro(id);
+    if(auxLibro!=null&&auxLibro.isActivo()==true){
         try{
-            String sql = "UPDATE libro SET idLibro=0 WHERE idLibro=?";
+            String sql = "UPDATE libro SET activo=0 WHERE idLibro=?";
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, id);
             
@@ -107,16 +108,68 @@ public class LibroData {
             
             ps.close();
             //Avisa que se elimino...
-            JOptionPane.showMessageDialog(null, "El libro se elimino correctamente");
+            JOptionPane.showMessageDialog(null, "El libro se dio de baja correctamente");
         } catch (SQLException ex) {
             //Logger.getLogger(LibroData.class.getName()).log(Level.SEVERE, null, ex);
             //Avisa el error y donde se encuentra...
-            JOptionPane.showMessageDialog(null, "Error al eliminar el libro " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al dar de baja el libro " + ex.getMessage());
         }
+    }else if(auxLibro==null){
+    JOptionPane.showMessageDialog(null, "El libro que desea dar de baja no esta en la base de datos");
+    }else if(auxLibro.isActivo()==false){
+    JOptionPane.showMessageDialog(null, "El libro ya esta dado de baja");
+    }
+    }
+ 
+    public void darAltaLibro(int id){
+    Libro auxLibro = buscarLibro(id);
+    if(auxLibro!=null&&auxLibro.isActivo()==false){
+        try{
+            String sql = "UPDATE libro SET activo=1 WHERE idLibro=?";
+            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, id);
+            
+            ps.executeUpdate();
+            
+            ps.close();
+            
+            JOptionPane.showMessageDialog(null, "El libro se dio de alta correctamente");
+        } catch (SQLException ex) {
+            //Logger.getLogger(LibroData.class.getName()).log(Level.SEVERE, null, ex);
+            //Avisa el error y donde se encuentra...
+            JOptionPane.showMessageDialog(null, "Error al dar de alta el libro " + ex.getMessage());
+        }
+    }else if(auxLibro==null){
+    JOptionPane.showMessageDialog(null, "El libro que desea dar de alta no esta en la base de datos");
+    }else if(auxLibro.isActivo()==true){
+    JOptionPane.showMessageDialog(null, "El libro ya esta dado de alta");
+    }
+    }
+    
+    public void eliminarLibro(int id){
+    Libro auxLibro = buscarLibro(id);
+    if(auxLibro!=null){
+    try{
+        String sql = "DELETE FROM libro WHERE idLibro=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        ps.close();
+        JOptionPane.showMessageDialog(null, "El libro se elimino correctamente");
+    
+    }   catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al eliminar el libro "+" "+ex.getMessage());
+        }
+    
+    
+    }else{
+    JOptionPane.showMessageDialog(null, "El libro que desea borrar no esta en la base de datos");
+    }
     }
     
     public void actualizarLibro(Libro libro){
-        
+    Libro auxLibro = buscarLibro(libro.getId_Libro());
+    if(auxLibro!=null){
         try{
             String sql = "UPDATE libro SET idAutor=?,isbn=?,nombre=?,tipo=?,editorial=?,anio=?,activo=? WHERE idLibro=?";
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -139,43 +192,44 @@ public class LibroData {
             //Avisa el error y donde se encuentra...
             JOptionPane.showMessageDialog(null, "Error en la actualizacion del libro " + libro.getNombre() + " " + ex.getMessage());
         }
-    }
+    }else{
+    JOptionPane.showMessageDialog(null, "El libro que desea actualizar no esta en la base de datos");
+}}
+
     public List<Libro> obtenerLibros(){
-    List<Libro> libros= new ArrayList<>();
-        
-        try{ 
-          String sql= "SELECT * FROM autor"; 
-          PreparedStatement ps= con.prepareStatement(sql);
-          
-          ResultSet rs=ps.executeQuery();  
-          Libro libro;
-          while (rs.next()){
-            libro = new Libro();
-            libro.setId_Libro(rs.getInt("idLibro"));
-            libro.setISBN(rs.getString("isbn"));
-            libro.setNombre(rs.getString("nombre"));
-            libro.setAutor(buscarAutor(rs.getInt("idAutor")));
-            libro.setTipo(rs.getString("tipo"));
-            libro.setAnio(rs.getInt("anio"));
-            libro.setActivo(rs.getBoolean("activo"));
-            libro.setEditorial(rs.getString("editorial"));
-            libros.add(libro);
-          }
-                    
-        ps.close();
-        
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "error al listar los libros. "+ex.getMessage());
+    List<Libro> libros = new ArrayList<>();
+    try{
+        String sql = "SELECT * FROM libro";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ResultSet rs = ps.executeQuery();
+        Libro auxLibro;
+        while(rs.next()){
+        auxLibro = new Libro();
+        auxLibro.setId_Libro(rs.getInt("idLibro"));
+        auxLibro.setAnio(rs.getInt("anio"));
+        Autor auxAutor = buscarAutor(rs.getInt("idAutor"));
+        auxLibro.setAutor(auxAutor);
+        auxLibro.setISBN(rs.getString("isbn"));
+        auxLibro.setEditorial(rs.getString("editorial"));
+        auxLibro.setActivo(rs.getBoolean("activo"));
+        auxLibro.setNombre(rs.getString("nombre"));
+        auxLibro.setTipo(rs.getString("tipo"));
+        libros.add(auxLibro);
         }
-    return libros;  
+        ps.close();
+    }   catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los libros "+" "+ex.getMessage());
+        }
+    return libros;
     }
-    public List<Libro> obtenerLibrosSegunEstado(int estado){
+    
+    public List<Libro> obtenerLibrosSegunEstado(boolean activo){
     List<Libro> libros= new ArrayList<>();
         
         try{ 
-          String sql= "SELECT * FROM autor WHERE activo=?"; 
+          String sql= "SELECT * FROM libro WHERE activo=?"; 
           PreparedStatement ps= con.prepareStatement(sql);
-          ps.setInt(1, estado);
+          ps.setBoolean(1, activo);
           ResultSet rs=ps.executeQuery();  
           Libro libro;
           while (rs.next()){
@@ -199,3 +253,4 @@ public class LibroData {
     return libros;  
     }
 }
+

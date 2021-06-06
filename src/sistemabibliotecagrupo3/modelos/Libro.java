@@ -18,7 +18,7 @@ private boolean activo;
 
 public Libro(){};
 
-     public Libro(int id_Libro, int anio, Autor autor, String ISBN, String nombre, String tipo, String editorial, boolean activo) {
+     /*public Libro(int id_Libro, int anio, Autor autor, String ISBN, String nombre, String tipo, String editorial, boolean activo) {
         this.id_Libro = id_Libro;
         this.anio = anio;
         this.autor = autor;
@@ -27,7 +27,7 @@ public Libro(){};
         this.tipo = tipo;
         this.editorial = editorial;
         this.activo = activo;
-    }
+    }*/
 
     public Libro(Autor autor, String ISBN, String nombre, String tipo, String editorial, int anio, boolean activo) {
         this.anio = anio;

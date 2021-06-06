@@ -98,6 +98,28 @@ public class EjemplarData {
     }
     }
     
+    public void actualizarEjemplar(Ejemplar ejemplar){
+    Ejemplar auxEjemplar = buscarEjemplar(ejemplar.getId_Ejemplar());
+    if(auxEjemplar!=null){
+    try{
+        String sql = "UPDATE ejemplar SET idLibro=?,estado=?,activo=? WHERE idEjemplar=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1,ejemplar.getLibro().getId_Libro());
+        ps.setString(2,ejemplar.getEstado());
+        ps.setBoolean(3,ejemplar.isActivo()); 
+        ps.setInt(4, ejemplar.getId_Ejemplar());
+        ps.executeUpdate();
+        ps.close();
+        JOptionPane.showMessageDialog(null, "El ejemplar se actualizo correctamente");
+    }   catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al actualizar el ejemplar "+" "+ex.getMessage());
+        }
+    
+    }else{
+    JOptionPane.showMessageDialog(null, "El ejemplar que desea actualizar no esta en la base de datos");
+    }
+    }
+    
     public Ejemplar buscarEjemplar(int id){
     Ejemplar auxEjemplar = null;    
         try{
@@ -158,16 +180,17 @@ public class EjemplarData {
         }
         ps.close();
     }   catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al listar los ejempares "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener los ejemplares "+" "+ex.getMessage());
         }
     return ejemplares;
     }
-    public List<Ejemplar> obtenerEjemplaresSegunEstado(int estado){
+    
+    public List<Ejemplar> obtenerEjemplaresSegunEstado(boolean estado){
     List<Ejemplar> ejemplares = new ArrayList<>();
     try{
         String sql = "SELECT * FROM ejemplar WHERE activo=?";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-        ps.setInt(1, estado);
+        ps.setBoolean(1, estado);
         ResultSet rs = ps.executeQuery();
         Ejemplar auxEjemplar;
         while(rs.next()){
@@ -181,10 +204,11 @@ public class EjemplarData {
         }
         ps.close();
     }   catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al listar los ejempares "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener los ejemplares "+" "+ex.getMessage());
         }
     return ejemplares;
     }
+    
 }
     
 

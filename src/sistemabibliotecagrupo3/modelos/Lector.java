@@ -5,23 +5,28 @@
  */
 package sistemabibliotecagrupo3.modelos;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author Emiliano
- */
-public class Lector {
+ */public class Lector {
     private int id_Lector,dni;
     private String apellido,nombre,email;
     private boolean activo;
-    
+    Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     public Lector(){};
 
-  
+     
     public Lector(int dni, String apellido, String nombre, String email, boolean activo) {
         this.dni = dni;
         this.apellido = apellido;
         this.nombre = nombre;
-        this.email = email;
+        if(this.isValidEmail(email).find()==true){
+        this.email=email;
+        }
+        else{this.email=null;}
         this.activo = activo;
     }
 
@@ -29,16 +34,27 @@ public class Lector {
         this.dni = dni;
         this.apellido = apellido;
         this.nombre = nombre;
-        this.email = email;
+        if(this.isValidEmail(email).find()==true){
+        this.email=email;
+        }
+        else{this.email=null;}
     }
+    
+    public Matcher isValidEmail(String email) {
+      Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+      return pattern.matcher(email);
+   }
     
       public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
-    }
+        if(this.isValidEmail(email).find()==true){
+        this.email=email;
+        }
+        else{this.email=null;}
+        }
 
 
     public int getId_Lector() {
@@ -82,3 +98,4 @@ public class Lector {
     }
     
 }
+

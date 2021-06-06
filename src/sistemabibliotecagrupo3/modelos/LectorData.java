@@ -69,6 +69,7 @@ public class LectorData {
         lector.setEmail(rs.getString("email"));
         lector.setActivo(rs.getBoolean("estado"));
         }
+        ps.close();
    }     catch (SQLException ex) {
              //notificacion si falla
              JOptionPane.showMessageDialog(null,"Error al buscar le lector");
@@ -76,8 +77,8 @@ public class LectorData {
     return lector;
     }
     
-    public void actualizarLector(int id,Lector lector){
-        Lector lectorA = this.buscarLector(id);
+    public void actualizarLector(Lector lector){
+        Lector lectorA = this.buscarLector(lector.getId_Lector());
         if(lectorA!=null){
     try{
         String sql = "UPDATE lector SET dni=?, apellido=?, nombre=?,email=?,estado=? WHERE idLector=?";
@@ -87,7 +88,7 @@ public class LectorData {
         ps.setString(3,lector.getNombre());
         ps.setString(4, lector.getEmail());
         ps.setBoolean(5, lector.isActivo());
-        ps.setInt(6, id);
+        ps.setInt(6, lector.getId_Lector());
         ps.executeUpdate();
         ps.close();
         //Notificamos la actualizacion
@@ -109,14 +110,14 @@ public class LectorData {
         ps.executeUpdate();
         ps.close();
         //Noticacion de borrado
-        JOptionPane.showMessageDialog(null, "EL lector se borro correctamente");
+        JOptionPane.showMessageDialog(null, "EL lector se dio de baja correctamente");
     
     }    catch (SQLException ex) {
         //Notificacion si falla
-        JOptionPane.showMessageDialog(null, "Error al borrar el lector "+ex.getMessage());
+        JOptionPane.showMessageDialog(null, "Error al dar de baja el lector "+ex.getMessage());
     }
     }else if(lectorA==null){
-        JOptionPane.showMessageDialog(null, "El lector que desea borrar no se encuentra en la base de datos");
+        JOptionPane.showMessageDialog(null, "El lector que desea dar de baja no se encuentra en la base de datos");
     }else if(lectorA.isActivo()==false){
         JOptionPane.showMessageDialog(null,"El lector ya esta dado de baja");}
     }
@@ -161,39 +162,37 @@ public class LectorData {
     JOptionPane.showMessageDialog(null, "El lector que desea eliminar no esta en la base de datos");
     }
    }
+    
     public List<Lector> obtenerLectores(){
-    List<Lector> lectores= new ArrayList<>();
-        
-        try{ 
-          String sql= "SELECT * FROM lector"; 
-          PreparedStatement ps= con.prepareStatement(sql);
-          
-          ResultSet rs=ps.executeQuery();  
-          Lector lector;
-          while (rs.next()){
-            lector = new Lector();
-            lector.setId_Lector(rs.getInt("idLector"));
-            lector.setApellido(rs.getString("apellido"));
-            lector.setNombre(rs.getString("nombre"));
-            lector.setEmail(rs.getString("email"));
-            lector.setActivo(rs.getBoolean("estado"));
-            lectores.add(lector);
-          }
-                    
-        ps.close();
-        
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "error al listar los lectores. "+ex.getMessage());
+    List<Lector> lectores = new ArrayList<>();
+    try{
+        String sql = "SELECT * FROM lector";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ResultSet rs = ps.executeQuery();
+        Lector auxLector;
+        while(rs.next()){
+        auxLector = new Lector();
+        auxLector.setId_Lector(rs.getInt("idLector"));
+        auxLector.setNombre(rs.getString("nombre"));
+        auxLector.setApellido(rs.getString("apellido"));
+        auxLector.setDni(rs.getInt("dni"));
+        auxLector.setActivo(rs.getBoolean("estado"));
+        auxLector.setEmail(rs.getString("email"));
+        lectores.add(auxLector);
         }
-    return lectores;  
+    
+    }    catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Error al obtener los lectores "+" "+ex.getMessage());
+         }
+    return lectores;
     }
-    public List<Lector> obtenerLectoresSegunEstado(int estado){
+    public List<Lector> obtenerLectoresSegunEstado(boolean estado){
     List<Lector> lectores= new ArrayList<>();
         
         try{ 
           String sql= "SELECT * FROM lector WHERE estado=?"; 
           PreparedStatement ps= con.prepareStatement(sql);
-          ps.setInt(1, estado);
+          ps.setBoolean(1, estado);
           ResultSet rs=ps.executeQuery();  
           Lector lector;
           while (rs.next()){

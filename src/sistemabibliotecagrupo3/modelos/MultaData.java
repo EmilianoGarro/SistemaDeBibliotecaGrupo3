@@ -23,189 +23,180 @@ import sistemabibliotecagrupo3.modelos.Conexion;
  * @author Asus
  */
 public class MultaData {
-    private Connection con;
+   private Connection con;
     
     public MultaData(Conexion conexion){
         try {
             con = conexion.getConexion();
         } catch (SQLException ex) {
-            Logger.getLogger(MultaData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error de conexion");
         }
     }
     
-    public void cargarMulta(Multa multa){
-        Multa auxMulta1 = buscarMulta(multa.getId_Multa());
-        if(auxMulta1 == null){
-            try{
-                String sql= "INSERT INTO multa(idMulta, idPrestamo, fechaInicio, fechaFin, estado) VALUES (?,?,?,?)";
-                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, multa.getPrestamo().getId_Prestamo());
-                ps.setDate(2, Date.valueOf(multa.getFechaInicio()));
-                ps.setDate(3, Date.valueOf(multa.getFechaFin()));
-                ps.setBoolean(4, multa.isEstado());
-                ps.executeUpdate();
-            
-                ResultSet rs = ps.getGeneratedKeys();
-                    if(rs.next()){
-                        multa.setId_Multa(rs.getInt("idMulta"));
-                    }
-                ps.close();
-                //Avisa que se guardo la multa...
-                JOptionPane.showMessageDialog(null, "La multa se guardo correctamente.");
-            } catch (SQLException ex) {
-                //Logger.getLogger(MultaData.class.getName()).log(Level.SEVERE, null, ex);
-                //Avisa el error y donde se encuentra
-                JOptionPane.showMessageDialog(null, "Error al guardar la multa " + ex.getMessage());
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "La multa ya se encuentra cargada.");
-        }
-    }
+    public void guardarMulta(Multa multa){
     
-    public void anularMulta(int id){
-        Multa auxMulta = buscarMulta(id);
-        if(auxMulta != null && auxMulta.isEstado()==true){
-            try{
-                String sql="UPDATE multa SET estado=0 WHERE idMulta=?";
-                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, id);
-            
-                ps.executeUpdate();
-            
-               ps.close();
-                //Avisamos que se anulo...
-               JOptionPane.showMessageDialog(null, "La multa se anulo con exito.");
-            } catch (SQLException ex) {
-                //Logger.getLogger(MultaData.class.getName()).log(Level.SEVERE, null, ex);
-                //Avisamos el error y donde se encuentra...
-                JOptionPane.showMessageDialog(null, "Error al anular la multa " + ex.getMessage());
-            }
-        } else if(auxMulta == null){
-            JOptionPane.showMessageDialog(null, "La multa no se encuentra en la base de datos.");
-        } else {
-            JOptionPane.showMessageDialog(null, "La multa se encuentra dada de baja.");
-        }
-    }
-    
-    public void darAltaMulta(int id){
-        Multa auxMulta2 = buscarMulta(id);
-        if(auxMulta2 !=null && auxMulta2.isEstado() == false){
-            try {
-                String sql = "UPDATE multa SET estado=1 WHERE idMulta=?";
-                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, id);
-            
-                ps.executeUpdate();
-            
-                ps.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(MultaData.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (auxMulta2 == null){
-            JOptionPane.showMessageDialog(null, "La multa no se encuentra cargada.");
-        } else {
-            JOptionPane.showMessageDialog(null, "La multa ya se encuentra dada de alta.");
-        }
-    }
-    
-    public void modificarMulta(Multa multa){
+    try{
+        String sql = "INSERT INTO multa(fechaInicio,fechaDevolucion,activo) VALUES (?,?,?)";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setDate(1,Date.valueOf(multa.getFechaInicio()));
+        ps.setDate(2,Date.valueOf(multa.getFechaFin()));
+        ps.setBoolean(3,multa.isEstado());
+        ps.executeUpdate();
+        ResultSet rs = ps.getGeneratedKeys();
+        if(rs.next()){
         
-        try{
-            String sql= "UPDATE multa SET idPrestamo=?,fechaInicio=?,fechaFin=?,estado=? WHERE idMulta=?";
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, multa.getPrestamo().getId_Prestamo());
-            ps.setDate(2, Date.valueOf(multa.getFechaInicio()));
-            ps.setDate(3, Date.valueOf(multa.getFechaFin()));
-            ps.setBoolean(4, multa.isEstado());
-            ps.setInt(5, multa.getId_Multa());
-            
-            ps.executeUpdate();
-            
-            ps.close();
-            //Avisa que se pudo modificar...
-            JOptionPane.showMessageDialog(null, "La multa se modifico con exito.");
-        } catch (SQLException ex) {
-            //Logger.getLogger(MultaData.class.getName()).log(Level.SEVERE, null, ex);
-            //Avisa el error y donde se encuentra...
-            JOptionPane.showMessageDialog(null, "Error al actualizar la multa " + ex.getMessage());
+            multa.setId_Multa(rs.getInt("idMulta"));
+        
         }
+        ps.close();
+        JOptionPane.showMessageDialog(null, "La multa se guardo correctamente");
+    }  catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Erro al guardar la multa"+" "+ex.getMessage());
+       }
+    
+    
     }
     
     public Multa buscarMulta(int id){
-            Multa auxMulta = null;
-            try{
-                String sql = "SELECT * FROM multa WHERE idMulta = ?";
-                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, id);
-                ResultSet rs = ps.executeQuery();
-                if(rs.next()){
-                    auxMulta = new Multa();
-                    auxMulta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
-                    auxMulta.setFechaFin(rs.getDate("fechaFin").toLocalDate());
-                    auxMulta.setEstado(rs.getBoolean("estado"));
-                }
-                ps.close();
-            } catch (SQLException ex) {
-                //Avisa si falla...
-                JOptionPane.showMessageDialog(null, "Error al buscar Multa " + ex.getMessage());
-        }
-        return auxMulta;
-    }
-    
-    List<Multa> obtenerMultas(){
-        List<Multa> multas = new ArrayList<>();
-        
-        try{
-            String sql = "SELECT * FROM multa";
-            PreparedStatement ps = con.prepareStatement(sql);
-            
+    Multa auxMulta = null;
+    try{
+            String sql = "SELECT * FROM multa WHERE idMulta=?";
+            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            Multa multa;
-            while(rs.next()){
-                multa = new Multa();
-                multa.setId_Multa(rs.getInt("idMulta"));
-                multa.getPrestamo().setId_Prestamo(rs.getInt("idPrestamo"));
-                multa.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
-                multa.setFechaInicio(rs.getDate("fechaFin").toLocalDate());
-                multa.setEstado(rs.getBoolean("estado"));
-                multas.add(multa);
+            if(rs.next()){
+            auxMulta=new Multa();
+            auxMulta.setId_Multa(rs.getInt("idMulta"));
+            auxMulta.setEstado(rs.getBoolean("activo"));
+            auxMulta.setFechaFin(rs.getDate("fechaDevolucion").toLocalDate());
+            auxMulta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
             }
             ps.close();
-            
-        } catch (SQLException ex) {
-            //Logger.getLogger(MultaData.class.getName()).log(Level.SEVERE, null, ex);
-            //Avisa el error y donde se encuentra...
-            JOptionPane.showMessageDialog(null, "Error al obtener multas " + ex.getMessage());
-        }
-        
-        return multas;
+        }  catch (SQLException ex) {
+          JOptionPane.showMessageDialog(null, "Error al obtener la multa");
+       }
+    return auxMulta;
     }
     
-    List<Multa> obtenerMultasSegunEstado(int estado){
-        List<Multa> multas = new ArrayList<>();
-        
-        try{
-            String sql = "SELECT * FROM multa WHERE estado=?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, estado);
-            ResultSet rs = ps.executeQuery();
-            Multa multa;
-            while (rs.next()){
-                multa = new Multa();
-                multa.setId_Multa(rs.getInt("idMulta"));
-                multa.getPrestamo().setId_Prestamo(rs.getInt("idPrestamo"));
-                multa.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
-                multa.setFechaInicio(rs.getDate("fechaFin").toLocalDate());
-                multa.setEstado(rs.getBoolean("estado"));
-                multas.add(multa);
-            }
-            
-            ps.close();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(MultaData.class.getName()).log(Level.SEVERE, null, ex);
+    public void darBajaMulta(int id){
+    Multa auxMulta = buscarMulta(id);
+    if(auxMulta!=null&&auxMulta.isEstado()==true){
+    try{
+        String sql = "UPDATE multa SET activo=0 WHERE idMulta=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        ps.close();
+        JOptionPane.showMessageDialog(null, "La multa se dio de baja correctamente");
+    }   catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error al dar de baja la multa");
         }
+    }else if(auxMulta==null){JOptionPane.showMessageDialog(null, "La multa que desea dar de baja no esta en la base de datos");}
+    else if(auxMulta.isEstado()==false){JOptionPane.showMessageDialog(null, "La multa ya esta dada de baja");}
+    }
+    
+    public void darAltaMulta(int id){
+    Multa auxMulta = buscarMulta(id);
+    if(auxMulta!=null&&auxMulta.isEstado()==false){
+    try{
+        String sql = "UPDATE multa SET activo=1 WHERE idMulta=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        ps.close();
+        JOptionPane.showMessageDialog(null, "La multa se dio de alta correctamente");
+    }   catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error al dar de alta la multa");
+        }
+    }else if(auxMulta==null){JOptionPane.showMessageDialog(null, "La multa que desea dar de alta no esta en la base de datos");}
+    else if(auxMulta.isEstado()==true){JOptionPane.showMessageDialog(null, "La multa ya esta dada de alta");}
+    }
+    
+    public void actualizarMulta(Multa multa){
+    Multa auxMulta = buscarMulta(multa.getId_Multa());
+    if(auxMulta!=null){
+    try{
+        String sql = "UPDATE multa SET fechaInicio=?,fechaDevolucion=?,activo=? WHERE idMulta=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setDate(1,Date.valueOf(multa.getFechaInicio()));
+        ps.setDate(2, Date.valueOf(multa.getFechaFin()));
+        ps.setBoolean(3, multa.isEstado());
+        ps.setInt(4,multa.getId_Multa());
+        ps.executeUpdate();
+        ps.close();
+        JOptionPane.showMessageDialog(null, "La multa se actualizo correctamente");
         
-        return multas;
+    }   catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar la multa");
+        }
+    
+    }else{JOptionPane.showMessageDialog(null, "La multa que desea actualizar no esta en la base de datos");}
+        
+   }
+    
+    public void eliminarMulta(int id){
+    Multa auxMulta = buscarMulta(id);
+    if(auxMulta!=null){
+    try{
+        String sql = "DELETE FROM multa WHERE idMulta=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        ps.close();
+        JOptionPane.showMessageDialog(null, "La multa se elimino correctamente");
+    }   catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar la multa");
+        }
+    }else{JOptionPane.showMessageDialog(null, "La multa que desea eliminar no esta en la base de datos");}
+   }
+    
+    public List<Multa> obtenerMultas(){
+    List<Multa>multas=new ArrayList<>();
+    try{
+        String sql = "SELECT * FROM multa";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ResultSet rs = ps.executeQuery();
+        Multa auxMulta;
+        while(rs.next()){
+        auxMulta = new Multa();
+        auxMulta.setId_Multa(rs.getInt("idMulta"));
+        auxMulta.setEstado(rs.getBoolean("activo"));
+        auxMulta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+        auxMulta.setFechaFin(rs.getDate("fechaDevolucion").toLocalDate());
+        multas.add(auxMulta);
+        }
+        ps.close();
+    
+    
+    }  catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error al obtener las multas");
+       }
+     return multas;
+    }
+    
+    public List<Multa> obtenerMultasSegunEstado(boolean estado){
+    List<Multa>multas=new ArrayList<>();
+    try{
+        String sql = "SELECT * FROM multa WHERE activo=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setBoolean(1, estado);
+        ResultSet rs = ps.executeQuery();
+        Multa auxMulta;
+        while(rs.next()){
+        auxMulta = new Multa();
+        auxMulta.setId_Multa(rs.getInt("idMulta"));
+        auxMulta.setEstado(rs.getBoolean("activo"));
+        auxMulta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+        auxMulta.setFechaFin(rs.getDate("fechaDevolucion").toLocalDate());
+        multas.add(auxMulta);
+        }
+        ps.close();
+    
+    
+    }  catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error al obtener las multas");
+       }
+     return multas;
     }
 }
+

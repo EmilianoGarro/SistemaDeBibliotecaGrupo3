@@ -13,14 +13,12 @@ import java.time.LocalDate;
  */
 public class Multa {
 private int id_Multa;
-private Prestamo prestamo;
 private LocalDate fechaInicio,fechaFin;
 private boolean estado;
 
     public Multa(){};
 
-    public Multa(Prestamo prestamo, LocalDate fechaInicio, LocalDate fechaFin, boolean estado) {
-        this.prestamo = prestamo;
+    public Multa(LocalDate fechaInicio, LocalDate fechaFin, boolean estado) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.estado = estado;
@@ -33,11 +31,6 @@ private boolean estado;
     public void setId_Multa(int id_Multa) {
         this.id_Multa = id_Multa;
     }
-    
-    public Prestamo getPrestamo(){
-        return prestamo;
-    }
-    
     
     public LocalDate getFechaInicio() {
         return fechaInicio;

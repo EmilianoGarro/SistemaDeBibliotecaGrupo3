@@ -19,7 +19,7 @@ public class Prestamo {
  private Multa multa=null;
  private LocalDate fechaPrestamo,fechaDevolucion;
  private boolean activo = false;
- 
+// prestado, retraso, reparación, disponible en biblioteca
  public Prestamo(){};
  
     public Prestamo(Ejemplar ejemplar, Lector lector) {
@@ -29,17 +29,32 @@ public class Prestamo {
     }
 
     public void solicitarEjemplar(){
-    this.activo=true;
+    this.activo=true;    
     this.fechaPrestamo=LocalDate.now();
     this.fechaDevolucion=fechaPrestamo.plusDays(30);
-    this.ejemplar.setActivo(false);
+    this.ejemplar.setEstado("Prestado");
     }
     
     public void devolverEjemplar(){
     this.activo=false;
-    this.ejemplar.setActivo(true);
+    this.fechaDevolucion=LocalDate.now();
+    this.ejemplar.setEstado("Disponible en Biblioteca");
     }
     
+    public void solicitarEjemplar(Ejemplar ejemplar, Lector lector){
+    this.activo=true;    
+    this.lector=lector;
+    this.ejemplar=ejemplar;
+    this.fechaPrestamo=LocalDate.now();
+    this.fechaDevolucion=fechaPrestamo.plusDays(30);
+    this.ejemplar.setEstado("Prestado");
+    }
+    
+    public void devolverEjemplar(Ejemplar ejemplar,Lector lector){
+    this.activo=false;
+    this.fechaDevolucion=LocalDate.now();
+    this.ejemplar.setEstado("Disponible en Biblioteca");
+    }
 
     public int getId_Prestamo() {
         return id_Prestamo;
@@ -88,6 +103,15 @@ public class Prestamo {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    public Multa getMulta() {
+        return multa;
+    }
+
+    public void setMulta(Multa multa) {
+        this.multa = multa;
+    }
  
  
 }
+

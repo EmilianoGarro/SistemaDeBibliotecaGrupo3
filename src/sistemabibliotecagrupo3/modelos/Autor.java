@@ -19,7 +19,7 @@ public class Autor {
     
     public Autor(){};
     
-    public Autor(int id, int dni, String apellido, String nombre, String nacionalidad, LocalDate fechaNac, boolean activo){
+    /*public Autor(int id, int dni, String apellido, String nombre, String nacionalidad, LocalDate fechaNac, boolean activo){
         this.id_Autor = id;
         this.dni = dni;
         this.apellido = apellido;
@@ -27,7 +27,7 @@ public class Autor {
         this.nacionalidad = nacionalidad;
         this.fechaNac = fechaNac;
         this.activo = activo;
-    }
+    }*/
 
     public Autor(int dni, String apellido, String nombre, String nacionalidad, LocalDate fechaNac, boolean activo) {
         this.dni = dni;
