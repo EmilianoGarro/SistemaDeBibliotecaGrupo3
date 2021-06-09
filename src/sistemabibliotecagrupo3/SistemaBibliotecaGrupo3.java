@@ -25,6 +25,7 @@ public class SistemaBibliotecaGrupo3 {
     public static void main(String[] args) {
         // TODO code application logic here
 
+        
         Conexion conexion;
         try {
             conexion = new Conexion();
@@ -242,12 +243,12 @@ public class SistemaBibliotecaGrupo3 {
             Multa m4 = new Multa(LocalDate.of(2020, 2, 28),LocalDate.of(2021, 6, 6),true);    
 //            --------------CARGA DE MULTAS---------------------------------------
             
-            ArrayList<Multa> multas = (ArrayList)multaData.obtenerMultas();
+            
 //            multaData.guardarMulta(m1);
 //            multaData.guardarMulta(m2);
 //            multaData.guardarMulta(m3);
 //            multaData.guardarMulta(m4);
-          
+          ArrayList<Multa> multas = (ArrayList)multaData.obtenerMultas();
 //            multaData.darAltaMulta(multas.get(1).getId_Multa());
 //            multaData.darAltaMulta(multas.get(2).getId_Multa());
 //            multaData.darBajaMulta(multas.get(0).getId_Multa());
@@ -267,9 +268,33 @@ public class SistemaBibliotecaGrupo3 {
                 ArrayList<Ejemplar>ejemplaresP=(ArrayList)ejemplarData.obtenerEjemplares();
                 
 
-                Prestamo p1 = new Prestamo(ejemplaresP.get(0),lectoresP.get(0));
-                prestamoData.guardarPrestamo(p1);
-
+//                Prestamo p1 = new Prestamo(lectoresP.get(6),ejemplaresP.get(0));
+//                p1.setFechaDevolucion(LocalDate.of(1999,6,6));
+//                p1.setFechaPrestamo(LocalDate.of(2005,5,5));
+//                p1.setMulta(multas.get(0));
+//                prestamoData.guardarPrestamo(p1);
+//                  JOptionPane.showMessageDialog(null, prestamoData.buscarPrestamo(15).getEjemplar().getLibro().getAutor().getApellido());
+//                ArrayList<Prestamo>prestamos=(ArrayList)prestamoData.obtenerPrestamosPorFecha(LocalDate.of(2000, 5, 5));
+//                JOptionPane.showMessageDialog(null, prestamos.get(0).getLector().getApellido());
+//                JOptionPane.showMessageDialog(null,prestamos.size());
+//                    ArrayList<Lector> lectores = (ArrayList)lectorData.obtenerLectores();
+//                    ArrayList<Prestamo>auxPrestamos=(ArrayList)prestamoData.obtenerPrestamosVigentesPorLector(lectores.get(1));
+//                    JOptionPane.showMessageDialog(null, auxPrestamos.size());
+                
+//                ArrayList<Lector>lectoresV=(ArrayList)prestamoData.obtenerLectoresConPrestamosVencidos();
+//                JOptionPane.showMessageDialog(null, lectoresV.size());
+//                  ArrayList<Lector>lectoresM=(ArrayList)prestamoData.obtenerLectoresConMultasDentroDeUnMes();
+//                  JOptionPane.showMessageDialog(null, lectoresM.size());
+                 ArrayList<Prestamo>bPrestamos=(ArrayList)prestamoData.obtenerPrestamos();
+//                 prestamoData.darBajaPrestamo(bPrestamos.get(0).getId_Prestamo());
+//                    prestamoData.darAltaPrestamo(bPrestamos.get(0).getId_Prestamo());
+//                    prestamoData.eliminarPrestamo(bPrestamos.get(0).getId_Prestamo());
+//                        p1.setId_Prestamo(bPrestamos.get(1).getId_Prestamo());
+//                        prestamoData.actualizarPrestamo(p1);
+//                    prestamoData.guardarPrestamo(p1);
+                   Prestamo aux = prestamoData.buscarPrestamo(18);
+//                    prestamoData.solicitarPrestamo(aux);
+                prestamoData.devolverPrestamo(aux);
         } catch (ClassNotFoundException ex) {
            JOptionPane.showMessageDialog(null, "Problema con los drivers de conexion.");
         } catch (SQLException ex) {
@@ -278,3 +303,4 @@ public class SistemaBibliotecaGrupo3 {
     }
     
 }
+

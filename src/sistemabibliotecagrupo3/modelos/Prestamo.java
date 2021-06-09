@@ -17,44 +17,47 @@ public class Prestamo {
  private Ejemplar ejemplar;
  private Lector lector;
  private Multa multa=null;
- private LocalDate fechaPrestamo,fechaDevolucion;
+ private LocalDate fechaPrestamo=null,fechaDevolucion=null;
  private boolean activo = false;
 // prestado, retraso, reparación, disponible en biblioteca
  public Prestamo(){};
  
-    public Prestamo(Ejemplar ejemplar, Lector lector) {
-        this.ejemplar = ejemplar;
+    public Prestamo(Lector lector,Ejemplar ejemplar) {
         this.lector = lector;
+        this.ejemplar=ejemplar;
         
     }
 
-    public void solicitarEjemplar(){
-    this.activo=true;    
-    this.fechaPrestamo=LocalDate.now();
-    this.fechaDevolucion=fechaPrestamo.plusDays(30);
-    this.ejemplar.setEstado("Prestado");
-    }
-    
-    public void devolverEjemplar(){
-    this.activo=false;
-    this.fechaDevolucion=LocalDate.now();
-    this.ejemplar.setEstado("Disponible en Biblioteca");
-    }
-    
-    public void solicitarEjemplar(Ejemplar ejemplar, Lector lector){
-    this.activo=true;    
-    this.lector=lector;
-    this.ejemplar=ejemplar;
-    this.fechaPrestamo=LocalDate.now();
-    this.fechaDevolucion=fechaPrestamo.plusDays(30);
-    this.ejemplar.setEstado("Prestado");
-    }
-    
-    public void devolverEjemplar(Ejemplar ejemplar,Lector lector){
-    this.activo=false;
-    this.fechaDevolucion=LocalDate.now();
-    this.ejemplar.setEstado("Disponible en Biblioteca");
-    }
+//    public void solicitarEjemplar(){
+//    
+//        this.activo=true;    
+//    this.fechaPrestamo=LocalDate.now();
+//    
+//    this.ejemplar.setEstado("Prestado");
+//
+//
+//    }
+//    
+//    public void devolverEjemplar(){
+//    this.activo=false;
+//    this.fechaDevolucion=LocalDate.now();
+//    this.ejemplar.setEstado("Disponible en Biblioteca");
+//    }
+//    
+//    public void solicitarEjemplar(Ejemplar ejemplar){
+//    if(ejemplar!=null&&ejemplar.getEstado().equals("Disponible")&&ejemplar.isActivo()==true){
+//    this.ejemplar=ejemplar;
+//    this.fechaPrestamo=LocalDate.now();
+//    this.ejemplar.setEstado("Prestado");
+//    }
+//        
+//    }
+//    
+//    public void devolverEjemplar(Ejemplar ejemplar,Lector lector){
+//    this.activo=false;
+//    this.fechaDevolucion=LocalDate.now();
+//    this.ejemplar.setEstado("Disponible en Biblioteca");
+//    }
 
     public int getId_Prestamo() {
         return id_Prestamo;
@@ -114,4 +117,5 @@ public class Prestamo {
  
  
 }
+
 
