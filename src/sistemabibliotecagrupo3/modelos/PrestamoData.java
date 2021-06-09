@@ -356,8 +356,8 @@ public class PrestamoData {
     }
     
     public void solicitarPrestamo(Prestamo prestamo){
-    Prestamo auxPrestamo=buscarPrestamo(prestamo.getId_Prestamo());
-    if(auxPrestamo!=null&&auxPrestamo.getEjemplar().isActivo()==true&&auxPrestamo.isActivo()==false){
+    Prestamo ap = buscarPrestamo(prestamo.getId_Prestamo());
+    if(ap != null && ap.getEjemplar().isActivo() && ap.isActivo()== false){
     try{
         String sql = "UPDATE `prestamo` SET `fechaPrestamo`=?,`activo`=1 WHERE idPrestamo=?";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -380,7 +380,7 @@ public class PrestamoData {
      Prestamo auxPrestamo=buscarPrestamo(prestamo.getId_Prestamo());
     if(auxPrestamo!=null&&auxPrestamo.getEjemplar().isActivo()==false&&auxPrestamo.isActivo()==true){
     try{
-        String sql = "UPDATE `prestamo` SET `idMulta=?`,`fechaDevolucion`=?,`activo`=0 WHERE idPrestamo=?";
+        String sql = "UPDATE prestamo SET idMulta=?,fechaDevolucion=?,activo=0 WHERE idPrestamo=?";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
         Ejemplar auxE = buscarEjemplar(prestamo.getEjemplar().getId_Ejemplar());
         auxE.setEstado("Disponible");
@@ -392,8 +392,10 @@ public class PrestamoData {
         Multa multa = new Multa(LocalDate.now(),LocalDate.now().plusDays(2),true);
         guardarMulta(multa);
         ps.setInt(1,multa.getId_Multa());
-        }else{Integer i = null;ps.setInt(1,i);}
-        
+        }else{
+            Integer i = null;
+            ps.setInt(1,i);
+        }
         ps.executeUpdate();
         ps.close();
         JOptionPane.showMessageDialog(null, "Prestamo devuelto correctamente");

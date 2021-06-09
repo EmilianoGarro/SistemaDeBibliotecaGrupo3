@@ -293,7 +293,7 @@ public class SistemaBibliotecaGrupo3 {
 //                        prestamoData.actualizarPrestamo(p1);
 //                    prestamoData.guardarPrestamo(p1);
                    Prestamo aux = prestamoData.buscarPrestamo(18);
-//                    prestamoData.solicitarPrestamo(aux);
+                    prestamoData.solicitarPrestamo(aux);
                 prestamoData.devolverPrestamo(aux);
         } catch (ClassNotFoundException ex) {
            JOptionPane.showMessageDialog(null, "Problema con los drivers de conexion.");

@@ -169,7 +169,7 @@ public class MultaData {
     
     
     }  catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "Error al obtener las multas");
+           JOptionPane.showMessageDialog(null, "Error al obtener las multas " + ex.getMessage());
        }
      return multas;
     }
