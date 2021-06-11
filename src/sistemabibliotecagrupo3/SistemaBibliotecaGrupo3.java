@@ -248,8 +248,8 @@ public class SistemaBibliotecaGrupo3 {
 //            JOptionPane.showMessageDialog(null,auxMultas.get(0).getFechaInicio());
 //            multas.forEach((m) -> multaData.eliminarMulta(m.getId_Multa()));
 //           -------------------------------PRESTAMO DATA-------------------------------
-              ArrayList<Ejemplar> ejemplaresP = (ArrayList)ejemplarData.obtenerEjemplares();
-              ArrayList<Lector> lectoresP = (ArrayList)lectorData.obtenerLectores();
+//              ArrayList<Ejemplar> ejemplaresP = (ArrayList)ejemplarData.obtenerEjemplares();
+//              ArrayList<Lector> lectoresP = (ArrayList)lectorData.obtenerLectores();
 //              for(Lector l:lectoresP){
 //              l.setActivo(true);
 //              lectorData.actualizarLector(l);
@@ -285,18 +285,18 @@ public class SistemaBibliotecaGrupo3 {
                 
               ArrayList<Prestamo>p=(ArrayList)prestamoData.obtenerPrestamos(); //obtiene todos los prestamos
 //              JOptionPane.showMessageDialog(null, p.size()); // tiene que dar 6 O menos o mas dependiendo cuantos alla
-              Prestamo p1 = p.get(0);
-              Prestamo p2 = p.get(1);
-              Prestamo p3 = p.get(2);
-              Prestamo p4 = p.get(3);
-              Prestamo p5 = p.get(4);
-              Prestamo p6 = p.get(5);
-              p1.setFechaPrestamo(LocalDate.of(2021, 1, 1)); //cumple mas de un mes 
-              p2.setFechaPrestamo(LocalDate.of(2021,5,5));  // cumple mas de 30 dias
-              p3.setFechaPrestamo(LocalDate.of(2021,5,30));
-              prestamoData.actualizarPrestamo(p1);
-              prestamoData.actualizarPrestamo(p2);
-              prestamoData.actualizarPrestamo(p3);
+//              Prestamo p1 = p.get(0);
+//              Prestamo p2 = p.get(1);
+//              Prestamo p3 = p.get(2);
+//              Prestamo p4 = p.get(3);
+//              Prestamo p5 = p.get(4);
+//              Prestamo p6 = p.get(5);
+//              p1.setFechaPrestamo(LocalDate.of(2021, 1, 1)); //cumple mas de un mes 
+//              p2.setFechaPrestamo(LocalDate.of(2021,5,5));  // cumple mas de 30 dias
+//              p3.setFechaPrestamo(LocalDate.of(2021,5,30));
+//              prestamoData.actualizarPrestamo(p1);  //actualiza la fecha de los prestamos
+//              prestamoData.actualizarPrestamo(p2);  //actualiza la fecha de los prestamos
+//              prestamoData.actualizarPrestamo(p3);  //actualiza la fecha de los prestamos
 //              ArrayList<Prestamo>prestamoPorFecha=(ArrayList)prestamoData.obtenerPrestamosPorFecha(LocalDate.now());//consultamos dentro de este mes
 //              JOptionPane.showMessageDialog(null, prestamoPorFecha.size()+", "+prestamoPorFecha.get(0).getFechaPrestamo()); //tiene que dar 3 y muestra la fecha del prstamo
 
@@ -313,7 +313,7 @@ public class SistemaBibliotecaGrupo3 {
 //              prestamoData.solicitarPrestamo(ejemplaresP.get(0), lectoresP.get(0));
 //
 
-
+//FUNCIONANDO TODO COMO CORRESPONDE
         } catch (ClassNotFoundException ex) {
            JOptionPane.showMessageDialog(null, "Problema con los drivers de conexion.");
         } catch (SQLException ex) {

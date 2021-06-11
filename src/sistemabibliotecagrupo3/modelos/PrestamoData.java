@@ -412,7 +412,12 @@ public class PrestamoData {
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, prestamo.getEjemplar().getId_Ejemplar());
             ps.setInt(2, prestamo.getLector().getId_Lector());
-            ps.setInt(3, prestamo.getMulta().getId_Multa());
+            if(prestamo.getMulta()!=null){  //parte nueva para null
+                ps.setInt(3, prestamo.getMulta().getId_Multa());
+            } else{
+                ps.setNull(3, java.sql.Types.NULL);
+            }
+            
             ps.setDate(4,Date.valueOf(prestamo.getFechaPrestamo()));
             ps.setBoolean(5, prestamo.isActivo());
             ps.setInt(6, prestamo.getId_Prestamo());
