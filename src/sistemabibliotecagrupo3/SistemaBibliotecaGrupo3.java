@@ -36,7 +36,7 @@ public class SistemaBibliotecaGrupo3 {
             EjemplarData ejemplarData = new EjemplarData(conexion);
             MultaData multaData = new MultaData(conexion);
             PrestamoData prestamoData = new PrestamoData(conexion);
-            
+
 //            ---------------------------PRUEBA AUTORDATA-------------------------------------------
 //  ---------------------------------AUTORES--------------------------------------------------------------------
 //            Autor a1 = new Autor(5748365,"Céline","Louis-Ferdinand","Francia",LocalDate.of(1894,5,27),true);
@@ -45,7 +45,7 @@ public class SistemaBibliotecaGrupo3 {
 //            Autor a4 = new Autor(4562168,"Coelho","Paulo","Brasil",LocalDate.of(1947,8,24),true);
 //            Autor a5 = new Autor(8416783,"Dilkens","Charles","Reino Unido",LocalDate.of(1812,2,7),true);
 //            Autor a6 = new Autor(3754170,"Huxley","Aldous","Reino Unido",LocalDate.of(1894,6,26),true);
-
+         
 //          -----------------------------CARGA DE AUTORES A LA BASE DE DATOS-----------------------------------------
 //             autorData.guardarAutor(a1);
 //             autorData.guardarAutor(a2);
@@ -171,7 +171,7 @@ public class SistemaBibliotecaGrupo3 {
 
 
 //    -------------------------------PRUEBA EJEMPLAR---------------------------
-                      ArrayList<Libro> auxL = (ArrayList)libroData.obtenerLibros();
+               ArrayList<Libro> auxL = (ArrayList)libroData.obtenerLibros();
 //                Ejemplar e1 = new Ejemplar(auxL.get(0),"Disponible",true);
 //                Ejemplar e2 = new Ejemplar(auxL.get(1),"Disponible",true);
 //                Ejemplar e3 = new Ejemplar(auxL.get(2),"Disponible",true);
