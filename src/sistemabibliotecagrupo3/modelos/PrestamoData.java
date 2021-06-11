@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  * @author Emiliano
  */
 public class PrestamoData {
-     private Connection con;
+    private Connection con;
     private Conexion conexion;
     
     public PrestamoData(Conexion conexion){
@@ -36,40 +36,45 @@ public class PrestamoData {
         }
     }
     
-    public Lector buscarLector(int id){
+    protected Lector buscarLector(int id){
         LectorData auxLectorData = new LectorData(conexion);
         Lector auxLector = auxLectorData.buscarLector(id);
     return auxLector;
     }
     
-    public Ejemplar buscarEjemplar(int id){
+    protected Ejemplar buscarEjemplar(int id){
         EjemplarData auxEjemplarData = new EjemplarData(conexion);
         Ejemplar auxEjemplar = auxEjemplarData.buscarEjemplar(id);
         return auxEjemplar;
     }
     
-    public void actualizarEjemplar(Ejemplar ejemplar){
+    protected void actualizarEjemplar(Ejemplar ejemplar){
     EjemplarData aux = new EjemplarData(conexion);
     aux.actualizarEjemplar(ejemplar);
     }
     
-    public void darBajaLector(Lector lector){
+    protected void darBajaLector(Lector lector){
     LectorData aux = new LectorData(conexion);
     aux.darBajaLector(lector.getId_Lector());
     }
     
-    public Multa buscarMulta(int id){
+    protected void darAltaLector(Lector lector){
+    LectorData aux = new LectorData(conexion);
+    aux.darAltaLector(lector.getId_Lector());
+    }
+    
+    protected Multa buscarMulta(int id){
         MultaData auxMultaData = new MultaData(conexion);
         Multa auxMulta = auxMultaData.buscarMulta(id);
         return auxMulta;
     }
     
-    public void actualizarMulta(Multa multa){
+    protected void actualizarMulta(Multa multa){
     MultaData auxMultaData = new MultaData(conexion);
     auxMultaData.actualizarMulta(multa);
     }
     
-    public void guardarMulta(Multa multa){
+    protected void guardarMulta(Multa multa){
     MultaData aux = new MultaData(conexion);
     aux.guardarMulta(multa);
     }
@@ -82,16 +87,17 @@ public class PrestamoData {
     int v = 0;
     int a = 0;
     for(Prestamo p : auxP){
-    if(p.getMulta().isEstado()){
-    a++;
-    }
+        if(auxP.size()>=0&&p.getMulta()!=null){
+        if(p.getMulta().isEstado()){
+        a++;
+        }
+        }
     }
     for(Lector l:auxLectores){
     if(lector.getId_Lector()==l.getId_Lector()){
     v++;
     }
     }
-    
     if(auxLector!=null&&auxLector.isActivo()&&auxEjemplar!=null&&auxEjemplar.getEstado().equals("Disponible")&&auxEjemplar.isActivo()&&auxP.size()<3&&a==0&&v==0){
         try{
             String sql = "INSERT INTO  prestamo(idEjemplar,idLector,fechaPrestamo,activo)VALUES (?,?,?,?)"; 
@@ -187,7 +193,7 @@ public class PrestamoData {
     public List<Prestamo> obtenerPrestamosVigentesPorLector(Lector lector){
     List<Prestamo>prestamos=new ArrayList<>();
     try{
-    String sql = "SELECT * FROM `prestamo` WHERE idLector=? AND activo=?";
+    String sql = "SELECT * FROM `prestamo` WHERE idLector=? AND activo=? AND idMulta IS NULL";
     PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
     ps.setInt(1,lector.getId_Lector());
     ps.setBoolean(2,lector.isActivo());
@@ -197,13 +203,9 @@ public class PrestamoData {
      auxPrestamo = new Prestamo();
             auxPrestamo.setActivo(rs.getBoolean("activo"));
             auxPrestamo.setEjemplar(buscarEjemplar(rs.getInt("idEjemplar")));
-            if(rs.getDate("fechaDevolucion")!=null){
-            auxPrestamo.setFechaDevolucion(rs.getDate("fechaDevolucion").toLocalDate());
-            }
             auxPrestamo.setFechaPrestamo(rs.getDate("fechaPrestamo").toLocalDate());
             auxPrestamo.setLector(buscarLector(rs.getInt("idLector")));
             auxPrestamo.setId_Prestamo(rs.getInt("idPrestamo"));
-            auxPrestamo.setMulta(buscarMulta(rs.getInt("idMulta")));
             prestamos.add(auxPrestamo);
     }
     ps.close();
@@ -216,17 +218,19 @@ public class PrestamoData {
     public List<Lector> obtenerLectoresConMultas(){
     List<Lector>lectores=new ArrayList<>();
     try{
-        String sql = "SELECT idLector FROM `prestamo` WHERE `idMulta`IS NOT NULL";
+        String sql = "SELECT * FROM `prestamo` WHERE `idMulta`IS NOT NULL";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
         ResultSet rs = ps.executeQuery();
         Lector lector;
         while(rs.next()){
-        lector = buscarLector(rs.getInt("idLector"));
-        lectores.add(lector);
+        Multa aux = this.buscarMulta(rs.getInt("idMulta"));
+            if(aux.isEstado()){
+            lector = buscarLector(rs.getInt("idLector"));
+            lectores.add(lector);}
         }
         ps.close();
     }   catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "Error al obtener los lectores con prestamos vencidos");
+           JOptionPane.showMessageDialog(null, "Error al obtener los lectores con multas"+" "+ex.getMessage());
     }
     return lectores;
     }
@@ -451,13 +455,13 @@ public class PrestamoData {
    }else if(auxPrestamo==null){JOptionPane.showMessageDialog(null, "El prestamo que desea actualizar no esta en la base de datos");}
     }
     
-     public void devolverPrestamo(Prestamo prestamo){///////////////////////////////////////////
+    public void devolverPrestamo(Prestamo prestamo){///////////////////////////////////////////
      Prestamo auxPrestamo = buscarPrestamo(prestamo.getId_Prestamo());
         
      
      if(auxPrestamo!=null&&auxPrestamo.getFechaDevolucion()==null){
         try{
-         String sql = "UPDATE `prestamo` SET `fechaDevolucion`='?',`activo`='0' WHERE `idPrestamo`=?";
+         String sql = "UPDATE prestamo SET fechaDevolucion=?,activo=0 WHERE idPrestamo=?";
          PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
          ps.setDate(1, Date.valueOf(LocalDate.now()));
          ps.setInt(2,prestamo.getId_Prestamo());
@@ -494,8 +498,22 @@ public class PrestamoData {
     
     }
 
+    public void revisarAltaLector(Lector lector){
+    ArrayList<Lector>p=(ArrayList)this.obtenerPrestamosVigentesPorLector(lector);
+    ArrayList<Lector>m=(ArrayList)this.obtenerLectoresConMultas();
+    int a = 0;
+    for(Lector l:m){
+        if(l.getDni()==lector.getDni());
+        a++;
+    }
+    
+    if(p.size()==0&&a==0){
+    Lector auxl = this.buscarLector(lector.getId_Lector());
+    auxl.setActivo(true);
+    this.darAltaLector(auxl);
+    } 
 
-}
+}}
    
     
     
