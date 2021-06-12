@@ -67,6 +67,12 @@ public class LibroData {
         return auxAutor;
     }
     
+    public List<Autor> ListarAutores(){
+        AutorData auxAutorData = new AutorData(conexion);
+        List<Autor> autores = auxAutorData.obtenerAutoresSegunEstado(true);
+        return autores;
+    }
+    
     public void guardarLibro(Libro libro){
         
         try{

@@ -138,7 +138,7 @@ public class AutorData {
         }
     }
     
-    public void datAltaAutor(int id){
+    public void darAltaAutor(int id){
     Autor auxAutor = buscarAutor(id);
     if(auxAutor!=null&&auxAutor.isActivo()==false){
         try{
