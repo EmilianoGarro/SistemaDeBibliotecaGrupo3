@@ -67,9 +67,9 @@ public class LibroData {
         return auxAutor;
     }
     
-    public List<Autor> ListarAutores(){
+    public ArrayList<Autor> listarAutores(){
         AutorData auxAutorData = new AutorData(conexion);
-        List<Autor> autores = auxAutorData.obtenerAutoresSegunEstado(true);
+        ArrayList<Autor> autores = (ArrayList)auxAutorData.obtenerAutoresSegunEstado(true);
         return autores;
     }
     

@@ -122,6 +122,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu5.setText("Opciones Ejemplar");
 
         jMenuItem10.setText("Agregar Ejemplar");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem10);
 
         jMenuItem11.setText("Actualizar Ejemplar");
@@ -203,6 +208,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         vl.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
         vl.show();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        escritorio.removeAll();
+        escritorio.repaint();
+        VistaEjemplares ve = new VistaEjemplares();
+        ve.setVisible(true);
+        escritorio.add(ve);
+        escritorio.moveToFront(ve);
+         Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = ve.getSize();
+        ve.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        ve.show();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments

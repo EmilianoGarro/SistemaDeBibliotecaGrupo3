@@ -29,8 +29,8 @@ public class VistaLibros extends javax.swing.JInternalFrame {
      */
     public VistaLibros() {
         initComponents();
-//        autores = (ArrayList)libroData.ListarAutores(); 
-//        cargarAutores();
+        
+        
          try {
         conexion = new Conexion();
         Connection con = conexion.getConexion();
@@ -41,7 +41,7 @@ public class VistaLibros extends javax.swing.JInternalFrame {
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Problema de conexion con la base de datos");
     }
-
+         cargarAutores();
     }
 
     /**
@@ -439,6 +439,7 @@ public class VistaLibros extends javax.swing.JInternalFrame {
         jYearAnio.setValue(2021);
         jTEditorial.setText("");
         jTTipo.setText("");
+        cargarAutores();
         jCAutor.setSelectedItem(null);
         jCEstado.setSelected(false);
             
@@ -468,7 +469,10 @@ public class VistaLibros extends javax.swing.JInternalFrame {
         jTIsbn.setText(libro.getISBN());
         jTTipo.setText(libro.getTipo());
         jTEditorial.setText(libro.getEditorial());
-        jCAutor.setSelectedItem(libro.getAutor());
+        jCAutor.removeAllItems();
+        jCAutor.addItem(libro.getAutor());
+//        jCAutor.setSelectedItem(libro.getAutor());
+        
         jCEstado.setSelected(libro.isActivo());
         jBBuscar.setEnabled(false);
         jBGuardar.setEnabled(false);
@@ -553,9 +557,12 @@ public class VistaLibros extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCAutorActionPerformed
     public void cargarAutores(){
+        autores = libroData.listarAutores(); 
+        System.out.println(autores);
         for(Autor a:autores){
         jCAutor.addItem(a);
         }
+        jCAutor.setSelectedItem(null);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBActualizar;

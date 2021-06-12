@@ -37,7 +37,11 @@ public class EjemplarData {
     Libro auxLibro = auxLibroData.buscarLibro(id);
     return auxLibro;
     }
-    
+    public ArrayList<Libro> listarLibros(){
+        LibroData auxLibroData = new LibroData(conexion);
+        ArrayList<Libro> libros = (ArrayList)auxLibroData.obtenerLibrosSegunEstado(true);
+        return libros;
+    }
     public void guardarEjemplar(Ejemplar ejemplar){
     try{
      String sql = "INSERT INTO `ejemplar`(`idLibro`, `estado`, `activo`) VALUES (?,?,?)";

@@ -105,5 +105,10 @@ public Libro(){};
         this.activo = activo;
     }
 
+    @Override
+    public String toString() {
+        return  nombre + ", " + autor ;
+    }
+
 
 }
