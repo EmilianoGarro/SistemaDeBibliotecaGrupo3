@@ -56,8 +56,8 @@
                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jDFechaNac" pref="107" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jDFechaNac" pref="148" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -68,16 +68,16 @@
                           </Group>
                           <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTApellido" pref="159" max="32767" attributes="0"/>
-                              <Component id="jTNombre" pref="159" max="32767" attributes="0"/>
                               <Component id="jTID" min="-2" pref="106" max="-2" attributes="0"/>
+                              <Component id="jTDni" pref="192" max="32767" attributes="0"/>
+                              <Component id="jTNombre" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jTApellido" alignment="0" max="32767" attributes="0"/>
                               <Component id="jTNacionalidad" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTDni" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="67" max="32767" attributes="0"/>
+              <EmptySpace pref="39" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -114,7 +114,7 @@
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTApellido" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace pref="18" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jTNacionalidad" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel8" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
@@ -132,7 +132,7 @@
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <Component id="jCEstado" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="28" max="32767" attributes="0"/>
+              <EmptySpace pref="30" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jBGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jBBorrar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -231,6 +231,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCEstado">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jCEstadoKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jBGuardar">
       <Properties>

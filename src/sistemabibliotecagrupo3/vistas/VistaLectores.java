@@ -17,18 +17,18 @@ import sistemabibliotecagrupo3.modelos.*;
  *
  * @author Emiliano
  */
-public class VistaAutores extends javax.swing.JInternalFrame {
-    private AutorData autorData;
+public class VistaLectores extends javax.swing.JInternalFrame {
+    private LectorData lectorData;
     private Conexion conexion=null;
     /**
      * Creates new form VistaAlumnos
      */
-    public VistaAutores() {
+    public VistaLectores() {
         initComponents();
          try {
         conexion = new Conexion();
         Connection con = conexion.getConexion();
-        autorData = new AutorData(conexion);
+        lectorData = new LectorData(conexion);
     } catch (ClassNotFoundException ex) {
         JOptionPane.showMessageDialog(this, "Error con los drivers de conexion");
     } catch (SQLException ex) {
@@ -51,7 +51,6 @@ public class VistaAutores extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jTID = new javax.swing.JTextField();
         jTDni = new javax.swing.JTextField();
@@ -63,8 +62,7 @@ public class VistaAutores extends javax.swing.JInternalFrame {
         jBActualizar = new javax.swing.JButton();
         jBLimpiar = new javax.swing.JButton();
         jBBuscar = new javax.swing.JButton();
-        jDFechaNac = new com.toedter.calendar.JDateChooser();
-        jTNacionalidad = new javax.swing.JTextField();
+        jTCorreo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -75,7 +73,7 @@ public class VistaAutores extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 102));
-        jLabel1.setText("AUTORES");
+        jLabel1.setText("LECTORES");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("ID:");
@@ -88,9 +86,6 @@ public class VistaAutores extends javax.swing.JInternalFrame {
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Apellido:");
-
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setText("Fecha De Nacimiento:");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setText("Estado:");
@@ -186,23 +181,17 @@ public class VistaAutores extends javax.swing.JInternalFrame {
             }
         });
 
-        jDFechaNac.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jDFechaNacKeyReleased(evt);
-            }
-        });
-
-        jTNacionalidad.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTNacionalidadKeyReleased(evt);
+                jTCorreoKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTNacionalidadKeyTyped(evt);
+                jTCorreoKeyTyped(evt);
             }
         });
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel8.setText("Nacionalidad:");
+        jLabel8.setText("@Correo:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -230,24 +219,19 @@ public class VistaAutores extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(184, 184, 184)
                         .addComponent(jLabel1))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jDFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel5))
-                            .addGap(57, 57, 57)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTDni, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                                .addComponent(jTNombre)
-                                .addComponent(jTApellido)
-                                .addComponent(jTNacionalidad)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(57, 57, 57)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTDni, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                            .addComponent(jTNombre)
+                            .addComponent(jTApellido)
+                            .addComponent(jTCorreo))))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -256,41 +240,35 @@ public class VistaAutores extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jBBuscar))
-                                .addGap(18, 18, 18)))
-                        .addComponent(jLabel3)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jBBuscar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(17, 17, 17)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
+                        .addGap(18, 18, 18)
                         .addComponent(jTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(6, 6, 6))
-                    .addComponent(jDFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(jCEstado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBGuardar)
                     .addComponent(jBBorrar)
@@ -304,7 +282,7 @@ public class VistaAutores extends javax.swing.JInternalFrame {
     
     private void habilitarBotonGuardar(){
                
-        if(!jTNacionalidad.getText().isEmpty()&&!jTDni.getText().isEmpty()&&!jTNombre.getText().isEmpty()&&!jTApellido.getText().isEmpty()){
+        if(!jTCorreo.getText().isEmpty()&&!jTDni.getText().isEmpty()&&!jTNombre.getText().isEmpty()&&!jTApellido.getText().isEmpty()){
         jBGuardar.setEnabled(true);
         }else{jBGuardar.setEnabled(false);}
     }
@@ -318,8 +296,8 @@ public class VistaAutores extends javax.swing.JInternalFrame {
     public void habilitarBotonBorrar(){
         if(!jTID.getText().isEmpty()){
         int aux = Integer.parseInt(jTID.getText());
-        Autor autor = autorData.buscarAutor(aux);
-        if(autor!=null && autor.isActivo()!=false){
+        Lector lector = lectorData.buscarLector(aux);
+        if(lector!=null && lector.isActivo()!=false){
         jBBorrar.setEnabled(true);
         }else{jBBorrar.setEnabled(false);}
         }
@@ -329,7 +307,7 @@ public class VistaAutores extends javax.swing.JInternalFrame {
     
     private void habilitarBotonActualizar(){
     
-        if(!jTNacionalidad.getText().isEmpty()&&!jTDni.getText().isEmpty()&&!jTNombre.getText().isEmpty()&&!jTApellido.getText().isEmpty()&&!jTID.getText().isEmpty()){
+        if(!jTCorreo.getText().isEmpty()&&!jTDni.getText().isEmpty()&&!jTNombre.getText().isEmpty()&&!jTApellido.getText().isEmpty()&&!jTID.getText().isEmpty()){
         jBActualizar.setEnabled(true);
         }else{jBActualizar.setEnabled(false);}
     
@@ -337,82 +315,74 @@ public class VistaAutores extends javax.swing.JInternalFrame {
     
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
         // TODO add your handling code here:
-        if(jDFechaNac.getDate()!=null){
+        
         String nombre=jTNombre.getText();
         String apellido=jTApellido.getText();
         int dni = Integer.parseInt(jTDni.getText());
-        LocalDate fechaNac=jDFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        String nacionalidad=jTNacionalidad.getText();
+        String email=jTCorreo.getText();
         Boolean estado = jCEstado.isSelected();
-        Autor autor = new Autor(dni,apellido,nombre,nacionalidad,fechaNac,estado);
-        autorData.guardarAutor(autor);
+        Lector lector = new Lector(dni,apellido,nombre,email,estado);
+        lectorData.guardarLector(lector);
         
-        jTID.setText(String.valueOf(autor.getId_Autor()));
+        jTID.setText(String.valueOf(lector.getId_Lector()));
         jTID.setEnabled(false);
         jTNombre.setEnabled(false);
         jBGuardar.setEnabled(false);
         jTApellido.setEnabled(false);
         jTDni.setEnabled(false);
-        jDFechaNac.setEnabled(false);
         jCEstado.setEnabled(false);
-        jTNacionalidad.setEnabled(false);
-        }else{JOptionPane.showMessageDialog(this, "Ingrese una fecha valida");}
-        
-        
+        jTCorreo.setEnabled(false);
+     
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
         // TODO add your handling code here:
         int id = Integer.parseInt(jTID.getText());
-        Autor autor = autorData.buscarAutor(id);
-        if(autor!=null){
+        Lector lector = lectorData.buscarLector(id);
+        if(lector!=null){
         
-        autorData.darBajaAutor(id);
+        lectorData.darBajaLector(id);
         
-        jTDni.setText(String.valueOf(autor.getDni()));
-        jTNombre.setText(autor.getNombre());
-        jTApellido.setText(autor.getApellido());
-        jTNacionalidad.setText(autor.getNacionalidad());
-        jDFechaNac.setDate(Date.valueOf(autor.getFechaNac()));
+        jTDni.setText(String.valueOf(lector.getDni()));
+        jTNombre.setText(lector.getNombre());
+        jTApellido.setText(lector.getApellido());
+        jTCorreo.setText(lector.getEmail());
         jCEstado.setEnabled(false);
         jTID.setEnabled(false);
         jTNombre.setEnabled(false);
         jTApellido.setEnabled(false);
         jTDni.setEnabled(false);
-        jDFechaNac.setEnabled(false);
-        jTNacionalidad.setEnabled(false);
+        jTCorreo.setEnabled(false);
         
         jBBorrar.setEnabled(false);
         jBBuscar.setEnabled(false);
         jBActualizar.setEnabled(false);
         }
-        else{JOptionPane.showMessageDialog(this, "El autor que intenta borrar, no se encuentra en la base de datos");}
+        else{JOptionPane.showMessageDialog(this, "El lector que intenta borrar, no se encuentra en la base de datos");}
     }//GEN-LAST:event_jBBorrarActionPerformed
 
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
         // TODO add your handling code here:
         int id = Integer.parseInt(jTID.getText());
-        Autor autor = autorData.buscarAutor(id);
-        if(autor!=null){
-        autor.setNombre(jTNombre.getText());
-        autor.setApellido(jTApellido.getText());
-        autor.setDni(Integer.parseInt(jTDni.getText()));
-        autor.setNacionalidad(jTNacionalidad.getText());
-        autor.setFechaNac(jDFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        autor.setActivo(jCEstado.isSelected());
-        autorData.actualizarAutor(autor);
+        Lector lector = lectorData.buscarLector(id);
+        if(lector!=null){
+        lector.setNombre(jTNombre.getText());
+        lector.setApellido(jTApellido.getText());
+        lector.setDni(Integer.parseInt(jTDni.getText()));
+        lector.setEmail(jTCorreo.getText());
+        lector.setActivo(jCEstado.isSelected());
+        lectorData.actualizarLector(lector);
         jTID.setEnabled(false);
         jTNombre.setEnabled(false);
         jTApellido.setEnabled(false);
         jTDni.setEnabled(false);
-        jDFechaNac.setEnabled(false);
-        jTNacionalidad.setEnabled(false);
+        jTCorreo.setEnabled(false);
         jCEstado.setEnabled(false);
         jBBuscar.setEnabled(false);
         jBActualizar.setEnabled(false);
         jBBorrar.setEnabled(false);
         jBGuardar.setEnabled(false);
-        }else{JOptionPane.showMessageDialog(this,"El autor que quiere actualizar no esta en la base de datos");}
+        }else{JOptionPane.showMessageDialog(this,"El lector que quiere actualizar no esta en la base de datos");}
     }//GEN-LAST:event_jBActualizarActionPerformed
 
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
@@ -421,17 +391,15 @@ public class VistaAutores extends javax.swing.JInternalFrame {
         jTNombre.setText("");
         jTApellido.setText("");
         jTDni.setText("");
-        jTNacionalidad.setText("");
-        jDFechaNac.setDate(null);
+        jTCorreo.setText("");
         jCEstado.setSelected(false);
             
         jTID.setEnabled(true);
         jTNombre.setEnabled(true);
         jTApellido.setEnabled(true);
         jTDni.setEnabled(true);
-        jDFechaNac.setEnabled(true);
         jCEstado.setEnabled(true);
-        jTNacionalidad.setEnabled(true);
+        jTCorreo.setEnabled(true);
         
         jBActualizar.setEnabled(false);
         jBGuardar.setEnabled(false);
@@ -443,14 +411,13 @@ public class VistaAutores extends javax.swing.JInternalFrame {
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // TODO add your handling code here:
         int id = Integer.parseInt(jTID.getText());
-        Autor autor = autorData.buscarAutor(id);
-        if(autor!=null){
-        jTDni.setText(String.valueOf(autor.getDni()));
-        jTNombre.setText(autor.getNombre());
-        jTApellido.setText(autor.getApellido());
-        jDFechaNac.setDate(Date.valueOf(autor.getFechaNac()));
-        jTNacionalidad.setText(autor.getNacionalidad());
-        jCEstado.setSelected(autor.isActivo());
+        Lector lector = lectorData.buscarLector(id);
+        if(lector!=null){
+        jTDni.setText(String.valueOf(lector.getDni()));
+        jTNombre.setText(lector.getNombre());
+        jTApellido.setText(lector.getApellido());
+        jTCorreo.setText(lector.getEmail());
+        jCEstado.setSelected(lector.isActivo());
         jBBuscar.setEnabled(false);
         jBGuardar.setEnabled(false);
         jBActualizar.setEnabled(true);
@@ -523,12 +490,6 @@ public class VistaAutores extends javax.swing.JInternalFrame {
         habilitarBotonActualizar();
     }//GEN-LAST:event_jTApellidoKeyReleased
 
-    private void jDFechaNacKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDFechaNacKeyReleased
-        // TODO add your handling code here:
-        habilitarBotonGuardar();
-        habilitarBotonActualizar();
-    }//GEN-LAST:event_jDFechaNacKeyReleased
-
     private void jTIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTIDKeyReleased
         // TODO add your handling code here:
         habilitarBotonBuscar();
@@ -536,20 +497,15 @@ public class VistaAutores extends javax.swing.JInternalFrame {
         habilitarBotonActualizar();
     }//GEN-LAST:event_jTIDKeyReleased
 
-    private void jTNacionalidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTNacionalidadKeyReleased
+    private void jTCorreoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTCorreoKeyReleased
         // TODO add your handling code here:
         habilitarBotonGuardar();
         habilitarBotonActualizar();
-    }//GEN-LAST:event_jTNacionalidadKeyReleased
+    }//GEN-LAST:event_jTCorreoKeyReleased
 
-    private void jTNacionalidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTNacionalidadKeyTyped
-        char validar = evt.getKeyChar();
-        if(Character.isDigit(validar)){
-        getToolkit().beep();
-        evt.consume();
-        JOptionPane.showMessageDialog(this,"solo puede ingresar letras");
-        }
-    }//GEN-LAST:event_jTNacionalidadKeyTyped
+    private void jTCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTCorreoKeyTyped
+
+    }//GEN-LAST:event_jTCorreoKeyTyped
 
     private void jTDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTDniActionPerformed
         // TODO add your handling code here:
@@ -568,19 +524,17 @@ public class VistaAutores extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBGuardar;
     private javax.swing.JButton jBLimpiar;
     private javax.swing.JCheckBox jCEstado;
-    private com.toedter.calendar.JDateChooser jDFechaNac;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jTApellido;
+    private javax.swing.JTextField jTCorreo;
     private javax.swing.JTextField jTDni;
     private javax.swing.JTextField jTID;
-    private javax.swing.JTextField jTNacionalidad;
     private javax.swing.JTextField jTNombre;
     // End of variables declaration//GEN-END:variables
 }

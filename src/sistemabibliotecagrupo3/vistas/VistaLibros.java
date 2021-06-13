@@ -5,6 +5,7 @@
  */
 package sistemabibliotecagrupo3.vistas;
 
+import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -75,6 +76,7 @@ public class VistaLibros extends javax.swing.JInternalFrame {
         jTTipo = new javax.swing.JTextField();
         jYearAnio = new com.toedter.calendar.JYearChooser();
         jCAutor = new javax.swing.JComboBox<>();
+        jBNuevo = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -205,6 +207,13 @@ public class VistaLibros extends javax.swing.JInternalFrame {
             }
         });
 
+        jBNuevo.setText("Nuevo");
+        jBNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNuevoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -217,40 +226,42 @@ public class VistaLibros extends javax.swing.JInternalFrame {
                         .addGap(184, 184, 184)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jBBuscar)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jCEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jBGuardar))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jBBorrar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jBActualizar))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel6))
-                                .addGap(57, 57, 57)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTIsbn, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                                    .addComponent(jTNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                                    .addComponent(jTEditorial)
-                                    .addComponent(jTTipo, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jYearAnio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
-                                    .addComponent(jCAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(jBLimpiar)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBBuscar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jCEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jBGuardar))
+                                .addGap(18, 18, 18)
+                                .addComponent(jBBorrar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jBActualizar)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jBLimpiar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel6))
+                        .addGap(57, 57, 57)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTIsbn, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                            .addComponent(jTNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                            .addComponent(jTEditorial)
+                            .addComponent(jTTipo, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jYearAnio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jCAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(26, 26, 26)
+                        .addComponent(jBNuevo)))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -280,12 +291,13 @@ public class VistaLibros extends javax.swing.JInternalFrame {
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jCAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
+                    .addComponent(jCAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBNuevo))
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -345,13 +357,13 @@ public class VistaLibros extends javax.swing.JInternalFrame {
     
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
         // TODO add your handling code here:
-        if(jYearAnio.getValue()<0){
+        if(jYearAnio.getValue()>0){
         String nombre=jTNombre.getText();
         String isbn=jTIsbn.getText();
         int anio = jYearAnio.getValue();
         String tipo=jTTipo.getText();
         String editorial=jTEditorial.getText();
-        Boolean estado = jCEstado.isEnabled();
+        Boolean estado = jCEstado.isSelected();
         Autor autor = (Autor)jCAutor.getSelectedItem();
         Libro libro = new Libro(autor, isbn, nombre, tipo, editorial, anio, estado);
         libroData.guardarLibro(libro);
@@ -404,16 +416,15 @@ public class VistaLibros extends javax.swing.JInternalFrame {
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
         // TODO add your handling code here:
         int id = Integer.parseInt(jTID.getText());
-        Libro aux = libroData.buscarLibro(id);
-        if(aux!=null){
-        String nombre=jTNombre.getText();
-        String isbn=jTIsbn.getText();
-        int anio = jYearAnio.getValue();
-        String editorial=jTEditorial.getText();
-        String tipo=jTTipo.getText();
-        Boolean estado = jCEstado.isEnabled();
-        Autor autor = (Autor)jCAutor.getSelectedItem();
-        Libro libro = new Libro(autor, isbn, nombre, tipo, editorial, anio, estado);
+        Libro libro = libroData.buscarLibro(id);
+        if(libro!=null){
+        libro.setNombre(jTNombre.getText());
+        libro.setISBN(jTIsbn.getText());
+        libro.setAnio(jYearAnio.getValue());
+        libro.setEditorial(jTEditorial.getText());
+        libro.setTipo(jTTipo.getText());
+        libro.setActivo(jCEstado.isSelected());
+        libro.setAutor((Autor)jCAutor.getSelectedItem());
         libroData.actualizarLibro(libro);
         jTID.setEnabled(false);
         jTNombre.setEnabled(false);
@@ -506,12 +517,6 @@ public class VistaLibros extends javax.swing.JInternalFrame {
 
     private void jTIsbnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTIsbnKeyTyped
         // TODO add your handling code here:
-        char validar = evt.getKeyChar();
-        if(Character.isDigit(validar)){
-        getToolkit().beep();
-        evt.consume();
-        JOptionPane.showMessageDialog(this,"solo puede ingresar letras");
-        }
     }//GEN-LAST:event_jTIsbnKeyTyped
 
     private void jTIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTIDActionPerformed
@@ -539,26 +544,47 @@ public class VistaLibros extends javax.swing.JInternalFrame {
 
     private void jTEditorialKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTEditorialKeyReleased
         // TODO add your handling code here:
+        habilitarBotonGuardar();
+        habilitarBotonActualizar();
     }//GEN-LAST:event_jTEditorialKeyReleased
 
     private void jTEditorialKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTEditorialKeyTyped
         // TODO add your handling code here:
+        char validar = evt.getKeyChar();
+        if(Character.isDigit(validar)){
+        getToolkit().beep();
+        evt.consume();
+        JOptionPane.showMessageDialog(this,"solo puede ingresar letras");
+        }
     }//GEN-LAST:event_jTEditorialKeyTyped
 
     private void jTTipoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTTipoKeyReleased
         // TODO add your handling code here:
+        habilitarBotonGuardar();
+        habilitarBotonActualizar();
+
     }//GEN-LAST:event_jTTipoKeyReleased
 
     private void jTTipoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTTipoKeyTyped
-        // TODO add your handling code here:
+        char validar = evt.getKeyChar();
+        if(Character.isDigit(validar)){
+        getToolkit().beep();
+        evt.consume();
+        JOptionPane.showMessageDialog(this,"solo puede ingresar letras");
+        }
     }//GEN-LAST:event_jTTipoKeyTyped
 
     private void jCAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCAutorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCAutorActionPerformed
+
+    private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
+        // TODO add your handling code here:
+//        MenuPrincipal mp = new MenuPrincipal();
+//        mp.agregarVentanaAutores();
+    }//GEN-LAST:event_jBNuevoActionPerformed
     public void cargarAutores(){
         autores = libroData.listarAutores(); 
-        System.out.println(autores);
         for(Autor a:autores){
         jCAutor.addItem(a);
         }
@@ -570,6 +596,7 @@ public class VistaLibros extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBGuardar;
     private javax.swing.JButton jBLimpiar;
+    private javax.swing.JButton jBNuevo;
     private javax.swing.JComboBox<Autor> jCAutor;
     private javax.swing.JCheckBox jCEstado;
     private javax.swing.JLabel jLabel1;

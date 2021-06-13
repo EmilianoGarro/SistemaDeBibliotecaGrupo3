@@ -55,4 +55,10 @@ private boolean estado;
     public void setEstado(boolean estado){
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Inicio=" + fechaInicio + ", Fin=" + fechaFin;
+    }
+    
 }

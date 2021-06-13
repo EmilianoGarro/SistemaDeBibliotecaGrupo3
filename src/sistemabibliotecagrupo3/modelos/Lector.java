@@ -96,6 +96,11 @@ import java.util.regex.Pattern;
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    @Override
+    public String toString() {
+        return apellido + ", " + nombre;
+    }
     
 }
 

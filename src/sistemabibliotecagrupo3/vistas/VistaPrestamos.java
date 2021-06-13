@@ -19,30 +19,35 @@ import sistemabibliotecagrupo3.modelos.*;
  *
  * @author Emiliano
  */
-public class VistaEjemplares extends javax.swing.JInternalFrame {
+public class VistaPrestamos extends javax.swing.JInternalFrame {
+    private PrestamoData prestamoData;
     private EjemplarData ejemplarData;
-    private ArrayList<Libro> libros;
+    private LectorData lectorData;
+    private ArrayList<Prestamo> prestamos;
     
     private Conexion conexion=null;
     /**
      * Creates new form VistaAlumnos
      */
-    public VistaEjemplares() {
+    public VistaPrestamos() {
         initComponents();
         
         
          try {
         conexion = new Conexion();
         Connection con = conexion.getConexion();
+        prestamoData = new PrestamoData(conexion);
         ejemplarData = new EjemplarData(conexion);
+        lectorData = new LectorData(conexion);
         
     } catch (ClassNotFoundException ex) {
         JOptionPane.showMessageDialog(this, "Error con los drivers de conexion");
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Problema de conexion con la base de datos");
     }
-         cargarLibros();
-         cargarStatus();
+         cargarEjemplares();
+         cargarLectores();
+         
     }
 
     /**
@@ -60,14 +65,20 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jTID = new javax.swing.JTextField();
         jCEstado = new javax.swing.JCheckBox();
-        jBGuardar = new javax.swing.JButton();
+        jBSolicitar = new javax.swing.JButton();
         jBBorrar = new javax.swing.JButton();
-        jBActualizar = new javax.swing.JButton();
+        jBDevolver = new javax.swing.JButton();
         jBLimpiar = new javax.swing.JButton();
         jBBuscar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jCLibro = new javax.swing.JComboBox<>();
-        jCStatus = new javax.swing.JComboBox<>();
+        jCEjemplar = new javax.swing.JComboBox<>();
+        jCLector = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jDFechaPrestamo = new com.toedter.calendar.JDateChooser();
+        jLabel11 = new javax.swing.JLabel();
+        jDFechaDevolucion = new com.toedter.calendar.JDateChooser();
+        jTMulta = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -77,13 +88,13 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 102));
-        jLabel1.setText("EJEMPLARES");
+        jLabel1.setText("PRESTAMOS");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("ID:");
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setText("Status:");
+        jLabel6.setText("Lector:");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setText("Estado:");
@@ -108,11 +119,11 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
             }
         });
 
-        jBGuardar.setText("Guardar");
-        jBGuardar.setEnabled(false);
-        jBGuardar.addActionListener(new java.awt.event.ActionListener() {
+        jBSolicitar.setText("Solicitar");
+        jBSolicitar.setEnabled(false);
+        jBSolicitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBGuardarActionPerformed(evt);
+                jBSolicitarActionPerformed(evt);
             }
         });
 
@@ -124,11 +135,11 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
             }
         });
 
-        jBActualizar.setText("Actualizar");
-        jBActualizar.setEnabled(false);
-        jBActualizar.addActionListener(new java.awt.event.ActionListener() {
+        jBDevolver.setText("Devolver");
+        jBDevolver.setEnabled(false);
+        jBDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBActualizarActionPerformed(evt);
+                jBDevolverActionPerformed(evt);
             }
         });
 
@@ -148,17 +159,38 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         });
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel9.setText("Libro:");
+        jLabel9.setText("Ejemplar:");
 
-        jCLibro.addActionListener(new java.awt.event.ActionListener() {
+        jCEjemplar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCLibroActionPerformed(evt);
+                jCEjemplarActionPerformed(evt);
             }
         });
 
-        jCStatus.addActionListener(new java.awt.event.ActionListener() {
+        jCLector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCStatusActionPerformed(evt);
+                jCLectorActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel8.setText("Multa:");
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel10.setText("Fecha De Prestamo:");
+
+        jDFechaPrestamo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jDFechaPrestamoKeyReleased(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel11.setText("Fecha De Devolución:");
+
+        jDFechaDevolucion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jDFechaDevolucionKeyReleased(evt);
             }
         });
 
@@ -175,16 +207,16 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(54, 54, 54)
-                                        .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(71, 71, 71)
+                                        .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jBBuscar))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jBGuardar)
+                                        .addComponent(jBSolicitar)
                                         .addGap(18, 18, 18)
                                         .addComponent(jBBorrar)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jBActualizar)))
+                                        .addComponent(jBDevolver)))
                                 .addGap(18, 18, 18)
                                 .addComponent(jBLimpiar))
                             .addGroup(layout.createSequentialGroup()
@@ -197,12 +229,22 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8))
                         .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jCLibro, 0, 296, Short.MAX_VALUE)
-                            .addComponent(jCStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(67, Short.MAX_VALUE))
+                            .addComponent(jCEjemplar, 0, 318, Short.MAX_VALUE)
+                            .addComponent(jCLector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTMulta)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jDFechaDevolucion, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                            .addComponent(jDFechaPrestamo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,22 +262,45 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jCLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
+                    .addComponent(jCEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jCStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCLector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jTMulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDFechaPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jCEstado))
-                .addGap(69, 69, 69)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBGuardar)
-                    .addComponent(jBBorrar)
-                    .addComponent(jBActualizar)
-                    .addComponent(jBLimpiar))
-                .addGap(13, 13, 13))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 52, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jCEstado))
+                                .addGap(23, 23, 23))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jDFechaDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBSolicitar)
+                            .addComponent(jBBorrar)
+                            .addComponent(jBDevolver)
+                            .addComponent(jBLimpiar))
+                        .addGap(13, 13, 13))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -244,9 +309,9 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
     private void habilitarBotonGuardar(){
         
         
-        if(jCStatus.getSelectedItem()!=null&&jCLibro.getSelectedItem()!=null){
-        jBGuardar.setEnabled(true);
-        }else{jBGuardar.setEnabled(false);}
+        if(jCLector.getSelectedItem()!=null&&jCEjemplar.getSelectedItem()!=null){
+        jBSolicitar.setEnabled(true);
+        }else{jBSolicitar.setEnabled(false);}
     }
     
     private void habilitarBotonBuscar(){
@@ -269,31 +334,34 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
     
     private void habilitarBotonActualizar(){
     
-        if(jCStatus.getSelectedItem()!=null&&jCLibro.getSelectedItem()!=null){
-        jBActualizar.setEnabled(true);
-        }else{jBActualizar.setEnabled(false);}
+        if(jCLector.getSelectedItem()!=null&&jCEjemplar.getSelectedItem()!=null){
+        jBDevolver.setEnabled(true);
+        }else{jBDevolver.setEnabled(false);}
     
     }
     
-    private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
+    private void jBSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSolicitarActionPerformed
         // TODO add your handling code here:
-        Boolean estado = jCEstado.isSelected();
-        Libro libro = (Libro)jCLibro.getSelectedItem();
-        String status = (String)jCStatus.getSelectedItem();
-        Ejemplar ejemplar = new Ejemplar(libro, status, estado);
-        ejemplarData.guardarEjemplar(ejemplar);
+//        Boolean estado = jCEstado.isSelected();
+//        String multa = jTMulta.getText();
+//        LocalDate fechaPrestamo =jDFechaPrestamo.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//        LocalDate fechaDevolucion =jDFechaDevolucion.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Ejemplar ejemplar = (Ejemplar)jCEjemplar.getSelectedItem();
+        Lector lector = (Lector)jCLector.getSelectedItem();
+        prestamoData.solicitarPrestamo(ejemplar,lector);
         
-        jTID.setText(String.valueOf(ejemplar.getId_Ejemplar()));
+//        jTID.setText(String.valueOf(ejemplar.getId_Ejemplar()));
         jTID.setEnabled(false);
-        jBGuardar.setEnabled(false);
+        jBSolicitar.setEnabled(false);
 
         jCEstado.setEnabled(false);
-        jCStatus.setEnabled(false);
-        jCLibro.setEnabled(false);
+        jCLector.setEnabled(false);
+        jCEjemplar.setEnabled(false);
+        jDFechaPrestamo.setEnabled(false);
+        jDFechaDevolucion.setEnabled(false);
+        jTMulta.setEnabled(false);
         
-        
-        
-    }//GEN-LAST:event_jBGuardarActionPerformed
+    }//GEN-LAST:event_jBSolicitarActionPerformed
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
         // TODO add your handling code here:
@@ -302,62 +370,65 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         if(ejemplar!=null){
         
         ejemplarData.darBajaEjemplar(id);
-        jCLibro.setSelectedItem(ejemplar.getLibro());
-        jCStatus.setSelectedItem(ejemplar.getEstado());
+        jCEjemplar.setSelectedItem(ejemplar.getLibro());
+        jCLector.setSelectedItem(ejemplar.getEstado());
         jCEstado.setSelected(ejemplar.isActivo());
         
         jCEstado.setEnabled(false);
         jTID.setEnabled(false);
-        jCStatus.setEnabled(false);
-        jCLibro.setEnabled(false);
+        jCLector.setEnabled(false);
+        jCEjemplar.setEnabled(false);
         
         jBBorrar.setEnabled(false);
         jBBuscar.setEnabled(false);
-        jBActualizar.setEnabled(false);
+        jBDevolver.setEnabled(false);
         }
         else{JOptionPane.showMessageDialog(this, "El ejemplar que intenta borrar, no se encuentra en la base de datos");}
     }//GEN-LAST:event_jBBorrarActionPerformed
 
-    private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
+    private void jBDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDevolverActionPerformed
         // TODO add your handling code here:
         int id = Integer.parseInt(jTID.getText());
         Ejemplar ejemplar = ejemplarData.buscarEjemplar(id);
         if(ejemplar!=null){
         ejemplar.setActivo(jCEstado.isSelected());
-        ejemplar.setLibro((Libro)jCLibro.getSelectedItem());
-        ejemplar.setEstado((String)jCStatus.getSelectedItem());
+        ejemplar.setLibro((Libro)jCEjemplar.getSelectedItem());
+        ejemplar.setEstado((String)jCLector.getSelectedItem());
         ejemplarData.actualizarEjemplar(ejemplar);    
 
         jTID.setEnabled(false);
-        jCStatus.setEnabled(false);
+        jCLector.setEnabled(false);
         jCEstado.setEnabled(false);
-        jCLibro.setEnabled(false);
+        jCEjemplar.setEnabled(false);
         
         jBBuscar.setEnabled(false);
-        jBActualizar.setEnabled(false);
+        jBDevolver.setEnabled(false);
         jBBorrar.setEnabled(false);
-        jBGuardar.setEnabled(false);
+        jBSolicitar.setEnabled(false);
         }else{JOptionPane.showMessageDialog(this,"El ejemplar que quiere actualizar no esta en la base de datos");}
-    }//GEN-LAST:event_jBActualizarActionPerformed
+    }//GEN-LAST:event_jBDevolverActionPerformed
 
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
         // TODO add your handling code here:
         jTID.setText("");
-        jCStatus.removeAllItems();
-        jCLibro.removeAllItems();
-        cargarLibros();
-        cargarStatus();
-        jCStatus.setSelectedItem(null);
-        jCLibro.setSelectedItem(null);
+        jTMulta.setText("");
+        jDFechaPrestamo.setDate(null);
+        jDFechaDevolucion.setDate(null);
+        jCLector.removeAllItems();
+        jCEjemplar.removeAllItems();
+        cargarEjemplares();
+        cargarLectores();
+        jCLector.setSelectedItem(null);
+        jCEjemplar.setSelectedItem(null);
         jCEstado.setSelected(false);
             
         jTID.setEnabled(true);
-        jCStatus.setEnabled(true);
+        jCLector.setEnabled(true);
         jCEstado.setEnabled(true);
-        jCLibro.setEnabled(true);
+        jCEjemplar.setEnabled(true);
         
-        jBActualizar.setEnabled(false);
-        jBGuardar.setEnabled(false);
+        jBDevolver.setEnabled(false);
+        jBSolicitar.setEnabled(false);
         jBBorrar.setEnabled(false);
         
         
@@ -366,19 +437,22 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // TODO add your handling code here:
         int id = Integer.parseInt(jTID.getText());
-        Ejemplar ejemplar = ejemplarData.buscarEjemplar(id);
-        if(ejemplar!=null){
+        Prestamo prestamo = prestamoData.buscarPrestamo(id);
+        if(prestamo!=null){
  
-        jCStatus.removeAllItems();  
-        jCStatus.addItem(ejemplar.getEstado());
-        jCLibro.removeAllItems();
-        jCLibro.addItem(ejemplar.getLibro());
-        jCEstado.setSelected(ejemplar.isActivo());
+        jCLector.removeAllItems();  
+        jCLector.addItem(prestamo.getLector());
+        jCEjemplar.removeAllItems();
+        jCEjemplar.addItem(prestamo.getEjemplar());
+        jCEstado.setSelected(prestamo.isActivo());
+        jTMulta.setText(String.valueOf(prestamo.getMulta()));
+        jDFechaPrestamo.setDate(Date.valueOf(prestamo.getFechaPrestamo()));
+        jDFechaDevolucion.setDate(Date.valueOf(prestamo.getFechaDevolucion()));
         
         jBBuscar.setEnabled(false);
-        jBGuardar.setEnabled(false);
-        jBActualizar.setEnabled(true);
-        jBGuardar.setEnabled(false);
+        jBSolicitar.setEnabled(false);
+        jBDevolver.setEnabled(true);
+        jBSolicitar.setEnabled(false);
         }
         else{JOptionPane.showMessageDialog(this, "El id que ingreso no esta registrado en la base de datos");}
         
@@ -406,46 +480,62 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         habilitarBotonActualizar();
     }//GEN-LAST:event_jTIDKeyReleased
 
-    private void jCLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCLibroActionPerformed
+    private void jCEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCEjemplarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCLibroActionPerformed
+    }//GEN-LAST:event_jCEjemplarActionPerformed
 
-    private void jCStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCStatusActionPerformed
+    private void jCLectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCLectorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCStatusActionPerformed
+    }//GEN-LAST:event_jCLectorActionPerformed
 
     private void jCEstadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCEstadoKeyReleased
         // TODO add your handling code here:
         habilitarBotonGuardar();
     }//GEN-LAST:event_jCEstadoKeyReleased
-    public void cargarLibros(){
-        libros = ejemplarData.listarLibros(); 
-        for(Libro l:libros){
-        jCLibro.addItem(l);
+
+    private void jDFechaPrestamoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDFechaPrestamoKeyReleased
+        // TODO add your handling code here:
+        habilitarBotonGuardar();
+        habilitarBotonActualizar();
+    }//GEN-LAST:event_jDFechaPrestamoKeyReleased
+
+    private void jDFechaDevolucionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDFechaDevolucionKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jDFechaDevolucionKeyReleased
+    public void cargarEjemplares(){
+        List<Ejemplar> ejemplares = ejemplarData.obtenerEjemplaresSegunEstado(true); 
+        for(Ejemplar e:ejemplares){
+        jCEjemplar.addItem(e);
         }
-        jCLibro.setSelectedItem(null);
+        jCEjemplar.setSelectedItem(null);
     }
-    public void cargarStatus() {
-        jCStatus.addItem("Prestado");
-        jCStatus.addItem("Retraso");
-        jCStatus.addItem("Reparación");
-        jCStatus.addItem("Disponible");
-        jCStatus.setSelectedItem(null);
+    public void cargarLectores() {
+        List<Lector> lectores = lectorData.obtenerLectoresSegunEstado(true); 
+        for(Lector l:lectores){
+        jCLector.addItem(l);
+        }
+        jCLector.setSelectedItem(null);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBActualizar;
     private javax.swing.JButton jBBorrar;
     private javax.swing.JButton jBBuscar;
-    private javax.swing.JButton jBGuardar;
+    private javax.swing.JButton jBDevolver;
     private javax.swing.JButton jBLimpiar;
+    private javax.swing.JButton jBSolicitar;
+    private javax.swing.JComboBox<Ejemplar> jCEjemplar;
     private javax.swing.JCheckBox jCEstado;
-    private javax.swing.JComboBox<Libro> jCLibro;
-    private javax.swing.JComboBox<String> jCStatus;
+    private javax.swing.JComboBox<Lector> jCLector;
+    private com.toedter.calendar.JDateChooser jDFechaDevolucion;
+    private com.toedter.calendar.JDateChooser jDFechaPrestamo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTID;
+    private javax.swing.JTextField jTMulta;
     // End of variables declaration//GEN-END:variables
 }
