@@ -11,16 +11,11 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMSolicitar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Solicitar Libro"/>
+                <Property name="text" type="java.lang.String" value="Solicitar  o Devolver Libro"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMSolicitarActionPerformed"/>
               </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMDevolver">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Devolver Libro"/>
-              </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMBuscarPrestamo">
               <Properties>
@@ -42,10 +37,13 @@
             <Property name="text" type="java.lang.String" value="Opciones Multa"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem17">
+            <MenuItem class="javax.swing.JMenuItem" name="jMListarMultas">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Buscar Multas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMListarMultasActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

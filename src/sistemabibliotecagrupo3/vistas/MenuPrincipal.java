@@ -33,11 +33,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu6 = new javax.swing.JMenu();
         jMSolicitar = new javax.swing.JMenuItem();
-        jMDevolver = new javax.swing.JMenuItem();
         jMBuscarPrestamo = new javax.swing.JMenuItem();
         jMPrestamosVencidos = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
-        jMenuItem17 = new javax.swing.JMenuItem();
+        jMListarMultas = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
@@ -66,16 +65,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenu6.setText("Opciones Prestamos");
 
-        jMSolicitar.setText("Solicitar Libro");
+        jMSolicitar.setText("Solicitar  o Devolver Libro");
         jMSolicitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMSolicitarActionPerformed(evt);
             }
         });
         jMenu6.add(jMSolicitar);
-
-        jMDevolver.setText("Devolver Libro");
-        jMenu6.add(jMDevolver);
 
         jMBuscarPrestamo.setText("Buscar Prestamo");
         jMenu6.add(jMBuscarPrestamo);
@@ -92,8 +88,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenu7.setText("Opciones Multa");
 
-        jMenuItem17.setText("Buscar Multas");
-        jMenu7.add(jMenuItem17);
+        jMListarMultas.setText("Buscar Multas");
+        jMListarMultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMListarMultasActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMListarMultas);
 
         jMenuBar1.add(jMenu7);
 
@@ -328,6 +329,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
         vp.show();
     }//GEN-LAST:event_jMSolicitarActionPerformed
 
+    private void jMListarMultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMListarMultasActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        ListadoMulta lm = new ListadoMulta();
+        lm.setVisible(true);
+        escritorio.add(lm);
+        escritorio.moveToFront(lm);
+         Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = lm.getSize();
+        lm.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        lm.show();
+    }//GEN-LAST:event_jMListarMultasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -367,7 +382,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuItem jMAutores;
     private javax.swing.JMenuItem jMBuscarPrestamo;
-    private javax.swing.JMenuItem jMDevolver;
     private javax.swing.JMenuItem jMEjemplares;
     private javax.swing.JMenuItem jMLectores;
     private javax.swing.JMenuItem jMLibros;
@@ -375,6 +389,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMListadoEjemplares;
     private javax.swing.JMenuItem jMListadoLectores;
     private javax.swing.JMenuItem jMListadoLibros;
+    private javax.swing.JMenuItem jMListarMultas;
     private javax.swing.JMenuItem jMPrestamosVencidos;
     private javax.swing.JMenuItem jMSolicitar;
     private javax.swing.JMenu jMenu1;
@@ -383,7 +398,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     // End of variables declaration//GEN-END:variables
 }
