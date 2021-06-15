@@ -36,7 +36,6 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
         jTDevolucion.setEditable(false);
         jTMulta.setEditable(false);
         jBBuscar.setEnabled(false);
-//        jBSolicitar.setEnabled(false);
     } catch (ClassNotFoundException ex) {
         JOptionPane.showMessageDialog(this, "Error con los drivers de conexion");
     } catch (SQLException ex) {
@@ -111,6 +110,11 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
             }
         });
 
+        jCEjemplar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCEjemplarItemStateChanged(evt);
+            }
+        });
         jCEjemplar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jCEjemplarKeyReleased(evt);
@@ -280,7 +284,7 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
             if(auxP.getFechaDevolucion()!=null){
             jTDevolucion.setText(auxP.getFechaDevolucion().toString());}
             else{jTDevolucion.setText("No registra fecha de devolucion");}
-        }else{JOptionPane.showMessageDialog(null, "ASDasdas");}
+        }else{JOptionPane.showMessageDialog(null, "el prestamo no esta en la base de datos");}
         
        
     }//GEN-LAST:event_jBBuscarActionPerformed
@@ -311,8 +315,9 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
         Ejemplar auxE = (Ejemplar)jCEjemplar.getSelectedItem();
         if(auxL!=null&&auxE!=null){
         prestamoData.solicitarPrestamo(auxE, auxL);
+        Prestamo auxP = prestamoData.buscarPrestamo(auxL,auxE,true);
         jTPrestamo.setText(LocalDate.now().toString());
-        }  
+        }else{JOptionPane.showMessageDialog(null, "Tiene que seleccionar un lector y un ejemplar");}  
     }//GEN-LAST:event_jBSolicitarActionPerformed
 
     private void jCEjemplarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCEjemplarKeyReleased
@@ -329,13 +334,16 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Lector auxL = (Lector)jCLector.getSelectedItem();
         Ejemplar auxE =(Ejemplar)jCEjemplar.getSelectedItem();
-        Prestamo auxP = prestamoData.buscarPrestamo(auxL, auxE,true);
-        if(auxP!=null){
-        prestamoData.devolverPrestamo(auxP);
-        jTPrestamo.setText(auxP.getFechaPrestamo().toString());
-        jTDevolucion.setText(LocalDate.now().toString());
-        }
-        
+        if(auxL!=null&&auxE!=null){
+            Prestamo auxP = prestamoData.buscarPrestamo(auxL, auxE,true);
+            if(auxP!=null){
+            prestamoData.devolverPrestamo(auxP);
+            jTPrestamo.setText(auxP.getFechaPrestamo().toString());
+            jTDevolucion.setText(LocalDate.now().toString());
+            }else if(auxP==null){
+                JOptionPane.showMessageDialog(null, "El prestamo que desea eliminar no esta en la base de datos");
+            }
+        }else{JOptionPane.showMessageDialog(null, "Tiene que seleccionar un lector y un ejemplar");}
         
     }//GEN-LAST:event_jBDevolverActionPerformed
 
@@ -343,6 +351,7 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Lector auxL = (Lector)jCLector.getSelectedItem();
         Ejemplar auxE =(Ejemplar)jCEjemplar.getSelectedItem();
+        if(auxL!=null&&auxE!=null){
         Prestamo auxP = prestamoData.buscarPrestamo(auxL, auxE,true);
         if(auxP!=null){
             prestamoData.darBajaPrestamo(auxP.getId_Prestamo());
@@ -356,7 +365,8 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
             }else{
             jTDevolucion.setText("No registra fecha de devolucion");       
             }
-        }
+        }else{JOptionPane.showMessageDialog(null, "El prestamo ya se encuentra dado de baja");}
+        }else{JOptionPane.showMessageDialog(null, "El prestamo que desea dar de baja no esta en la base de datos");}
     }//GEN-LAST:event_jBBorrarActionPerformed
 
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
@@ -380,11 +390,12 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
 
     private void jBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAltaActionPerformed
         // TODO add your handling code here:
-        Lector auxL = (Lector)jCLector.getSelectedItem();
+       Lector auxL = (Lector)jCLector.getSelectedItem();
         Ejemplar auxE =(Ejemplar)jCEjemplar.getSelectedItem();
+        if(auxL!=null&&auxE!=null){
         Prestamo auxP = prestamoData.buscarPrestamo(auxL, auxE,false);
         if(auxP!=null){
-            prestamoData.darAltaPrestamo(auxP.getId_Prestamo());
+            prestamoData.darBajaPrestamo(auxP.getId_Prestamo());
             if(auxP.getFechaPrestamo()!=null){
             jTPrestamo.setText(auxP.getFechaPrestamo().toString());
             }else{
@@ -395,8 +406,13 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
             }else{
             jTDevolucion.setText("No registra fecha de devolucion");       
             }
-        }
+        }else{JOptionPane.showMessageDialog(null, "El prestamo ya esta dado de alta");}
+        }else{JOptionPane.showMessageDialog(null, "El prestamo que desea dar de alta no esta en la base de datos");}
     }//GEN-LAST:event_jBAltaActionPerformed
+
+    private void jCEjemplarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCEjemplarItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCEjemplarItemStateChanged
 
     public void cargarEjemplar(){
         EjemplarData auxE = new EjemplarData(conexion);
@@ -427,10 +443,8 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
     }
     
 //    private void habilitarBotonSolicitar(){
-//       Lector auxL = (Lector)jCLector.getSelectedItem();
-//       Ejemplar auxE = (Ejemplar)jCEjemplar.getSelectedItem();
 //        
-//        if(auxL!=null&&auxE!=null){
+//        if(jCEjemplar.getSelectedItem().toString()!=null&&jCLector.getSelectedItem().toString()!=null){
 //        jBSolicitar.setEnabled(true);
 //        }else{jBSolicitar.setEnabled(false);}
 //    }
