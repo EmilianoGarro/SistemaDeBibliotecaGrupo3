@@ -336,6 +336,7 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
         jTDevolucion.setText(LocalDate.now().toString());
         }
         
+        
     }//GEN-LAST:event_jBDevolverActionPerformed
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
