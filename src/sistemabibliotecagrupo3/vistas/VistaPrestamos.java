@@ -423,6 +423,7 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
         jCEjemplar.setSelectedItem(null);
         }
     
+    
     public void cargarLectores(){
         LectorData auxL = new LectorData(conexion);
         ArrayList<Lector> lectores = (ArrayList)auxL.obtenerLectoresSegunEstado(true);
