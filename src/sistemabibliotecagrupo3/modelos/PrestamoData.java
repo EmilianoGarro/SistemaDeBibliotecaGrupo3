@@ -36,45 +36,45 @@ public class PrestamoData {
         }
     }
     
-    protected Lector buscarLector(int id){
+    public Lector buscarLector(int id){
         LectorData auxLectorData = new LectorData(conexion);
         Lector auxLector = auxLectorData.buscarLector(id);
     return auxLector;
     }
     
-    protected Ejemplar buscarEjemplar(int id){
+    public Ejemplar buscarEjemplar(int id){
         EjemplarData auxEjemplarData = new EjemplarData(conexion);
         Ejemplar auxEjemplar = auxEjemplarData.buscarEjemplar(id);
         return auxEjemplar;
     }
     
-    protected void actualizarEjemplar(Ejemplar ejemplar){
+    public void actualizarEjemplar(Ejemplar ejemplar){
     EjemplarData aux = new EjemplarData(conexion);
     aux.actualizarEjemplar(ejemplar);
     }
     
-    protected void darBajaLector(Lector lector){
+    public void darBajaLector(Lector lector){
     LectorData aux = new LectorData(conexion);
     aux.darBajaLector(lector.getId_Lector());
     }
     
-    protected void darAltaLector(Lector lector){
+    public void darAltaLector(Lector lector){
     LectorData aux = new LectorData(conexion);
     aux.darAltaLector(lector.getId_Lector());
     }
     
-    protected Multa buscarMulta(int id){
+    public Multa buscarMulta(int id){
         MultaData auxMultaData = new MultaData(conexion);
         Multa auxMulta = auxMultaData.buscarMulta(id);
         return auxMulta;
     }
     
-    protected void actualizarMulta(Multa multa){
+    public void actualizarMulta(Multa multa){
     MultaData auxMultaData = new MultaData(conexion);
     auxMultaData.actualizarMulta(multa);
     }
     
-    protected void guardarMulta(Multa multa){
+    public void guardarMulta(Multa multa){
     MultaData aux = new MultaData(conexion);
     aux.guardarMulta(multa);
     }
@@ -518,7 +518,47 @@ public class PrestamoData {
     this.darAltaLector(auxl);
     } 
 
-}}
+}
+    
+    public Prestamo buscarPrestamo(Lector lector,Ejemplar ejemplar,boolean estado){
+    Prestamo auxPrestamo=null;
+    try{
+        String sql = "SELECT * FROM prestamo WHERE idLector=? AND idEjemplar=? AND activo=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1,lector.getId_Lector());
+        ps.setInt(2, ejemplar.getId_Ejemplar());
+        ps.setBoolean(3, estado);
+        ResultSet rs = ps.executeQuery();
+        
+        if(rs.next()){
+        auxPrestamo = new Prestamo();
+        auxPrestamo.setId_Prestamo(rs.getInt("idPrestamo"));
+        auxPrestamo.setActivo(rs.getBoolean("activo")); 
+        auxPrestamo.setLector(this.buscarLector(rs.getInt("idLector")));
+        auxPrestamo.setEjemplar(this.buscarEjemplar(rs.getInt("idEjemplar")));
+        auxPrestamo.setMulta(this.buscarMulta(rs.getInt("idMulta")));
+        if(rs.getDate("fechaPrestamo")!=null){
+        auxPrestamo.setFechaPrestamo(rs.getDate("fechaPrestamo").toLocalDate());
+        }
+        if(rs.getDate("fechaDevolucion")!=null){
+        auxPrestamo.setFechaDevolucion(rs.getDate("fechaDevolucion").toLocalDate());
+        }
+        }
+        ps.close();
+    }   catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error  al buscar el prestamo "+" "+ex.getMessage());
+        }
+    
+    
+    
+    
+    return auxPrestamo;
+    }
+    
+    
+    
+
+}
    
     
     

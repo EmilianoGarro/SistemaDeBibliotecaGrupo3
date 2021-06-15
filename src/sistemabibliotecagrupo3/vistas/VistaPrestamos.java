@@ -4,15 +4,12 @@
  * and open the template in the editor.
  */
 package sistemabibliotecagrupo3.vistas;
-
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
+import javax.xml.bind.DatatypeConverter;
 import sistemabibliotecagrupo3.modelos.*;
 
 /**
@@ -20,34 +17,33 @@ import sistemabibliotecagrupo3.modelos.*;
  * @author Emiliano
  */
 public class VistaPrestamos extends javax.swing.JInternalFrame {
-    private PrestamoData prestamoData;
-    private EjemplarData ejemplarData;
-    private LectorData lectorData;
-    private ArrayList<Prestamo> prestamos;
-    
-    private Conexion conexion=null;
+    PrestamoData prestamoData;
+    Conexion conexion=null;
     /**
-     * Creates new form VistaAlumnos
+     * Creates new form VistaPrestamos
      */
     public VistaPrestamos() {
-        initComponents();
+          initComponents();
         
         
          try {
         conexion = new Conexion();
         Connection con = conexion.getConexion();
         prestamoData = new PrestamoData(conexion);
-        ejemplarData = new EjemplarData(conexion);
-        lectorData = new LectorData(conexion);
-        
+        cargarEjemplar();
+        cargarLectores();
+        jTPrestamo.setEditable(false);
+        jTDevolucion.setEditable(false);
+        jTMulta.setEditable(false);
+        jBBuscar.setEnabled(false);
+//        jBSolicitar.setEnabled(false);
     } catch (ClassNotFoundException ex) {
         JOptionPane.showMessageDialog(this, "Error con los drivers de conexion");
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Problema de conexion con la base de datos");
     }
-         cargarEjemplares();
-         cargarLectores();
          
+    
     }
 
     /**
@@ -61,85 +57,90 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTID = new javax.swing.JTextField();
-        jCEstado = new javax.swing.JCheckBox();
-        jBSolicitar = new javax.swing.JButton();
-        jBBorrar = new javax.swing.JButton();
-        jBDevolver = new javax.swing.JButton();
-        jBLimpiar = new javax.swing.JButton();
-        jBBuscar = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
+        jTId = new javax.swing.JTextField();
+        jTPrestamo = new javax.swing.JTextField();
         jCEjemplar = new javax.swing.JComboBox<>();
         jCLector = new javax.swing.JComboBox<>();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jDFechaPrestamo = new com.toedter.calendar.JDateChooser();
-        jLabel11 = new javax.swing.JLabel();
-        jDFechaDevolucion = new com.toedter.calendar.JDateChooser();
         jTMulta = new javax.swing.JTextField();
+        jTDevolucion = new javax.swing.JTextField();
+        jBSolicitar = new javax.swing.JButton();
+        jBDevolver = new javax.swing.JButton();
+        jBBorrar = new javax.swing.JButton();
+        jBLimpiar = new javax.swing.JButton();
+        jBBuscar = new javax.swing.JButton();
+        jBAlta = new javax.swing.JButton();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
-        setTitle("Altas, bajas, modificaciones");
-
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 102));
-        jLabel1.setText("PRESTAMOS");
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel1.setText("PRESTAMO");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("ID:");
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setText("Lector:");
+        jLabel3.setText("Ejemplar:");
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel7.setText("Estado:");
+        jLabel4.setText("Lector:");
 
-        jTID.addActionListener(new java.awt.event.ActionListener() {
+        jLabel5.setText("Multa:");
+
+        jLabel6.setText("Fecha prestamo:");
+
+        jLabel7.setText("Fecha Devolucion");
+
+        jTId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTIDActionPerformed(evt);
+                jTIdActionPerformed(evt);
             }
         });
-        jTID.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTIDKeyReleased(evt);
+                jTIdKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTIDKeyTyped(evt);
+                jTIdKeyTyped(evt);
             }
         });
 
-        jCEstado.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTPrestamoActionPerformed(evt);
+            }
+        });
+
+        jCEjemplar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jCEstadoKeyReleased(evt);
+                jCEjemplarKeyReleased(evt);
+            }
+        });
+
+        jCLector.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jCLectorKeyReleased(evt);
             }
         });
 
         jBSolicitar.setText("Solicitar");
-        jBSolicitar.setEnabled(false);
         jBSolicitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBSolicitarActionPerformed(evt);
             }
         });
 
-        jBBorrar.setText("Borrar");
-        jBBorrar.setEnabled(false);
-        jBBorrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBBorrarActionPerformed(evt);
-            }
-        });
-
         jBDevolver.setText("Devolver");
-        jBDevolver.setEnabled(false);
         jBDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBDevolverActionPerformed(evt);
+            }
+        });
+
+        jBBorrar.setText("Borrar");
+        jBBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBorrarActionPerformed(evt);
             }
         });
 
@@ -151,46 +152,16 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
         });
 
         jBBuscar.setText("Buscar");
-        jBBuscar.setEnabled(false);
         jBBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBBuscarActionPerformed(evt);
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel9.setText("Ejemplar:");
-
-        jCEjemplar.addActionListener(new java.awt.event.ActionListener() {
+        jBAlta.setText("Dar alta");
+        jBAlta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCEjemplarActionPerformed(evt);
-            }
-        });
-
-        jCLector.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCLectorActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel8.setText("Multa:");
-
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setText("Fecha De Prestamo:");
-
-        jDFechaPrestamo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jDFechaPrestamoKeyReleased(evt);
-            }
-        });
-
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel11.setText("Fecha De Devolución:");
-
-        jDFechaDevolucion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jDFechaDevolucionKeyReleased(evt);
+                jBAltaActionPerformed(evt);
             }
         });
 
@@ -199,343 +170,296 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(71, 71, 71)
-                                        .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jBBuscar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jBSolicitar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jBBorrar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jBDevolver)))
-                                .addGap(18, 18, 18)
-                                .addComponent(jBLimpiar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addComponent(jCEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(184, 184, 184)
-                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel9)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel8))
-                        .addGap(58, 58, 58)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jCEjemplar, 0, 318, Short.MAX_VALUE)
-                            .addComponent(jCLector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTMulta)))
-                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7))
+                        .addGap(55, 55, 55)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jDFechaDevolucion, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                            .addComponent(jDFechaPrestamo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                            .addComponent(jCLector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jCEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(30, 30, 30)
+                                                .addComponent(jLabel1))
+                                            .addComponent(jTId, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jBBuscar))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jTDevolucion, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTPrestamo, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTMulta))
+                                        .addGap(20, 20, 20)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(145, 145, 145))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jBSolicitar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBDevolver)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBBorrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBAlta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBLimpiar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBBuscar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(6, 6, 6)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jCEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(9, 9, 9)
+                                        .addComponent(jLabel2))
+                                    .addComponent(jTId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jBBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4))
                     .addComponent(jCLector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
                     .addComponent(jTMulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDFechaPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 52, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jCEstado))
-                                .addGap(23, 23, 23))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jDFechaDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBSolicitar)
-                            .addComponent(jBBorrar)
-                            .addComponent(jBDevolver)
-                            .addComponent(jBLimpiar))
-                        .addGap(13, 13, 13))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jLabel6)
+                    .addComponent(jTPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7)
+                    .addComponent(jTDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBSolicitar)
+                    .addComponent(jBDevolver)
+                    .addComponent(jBBorrar)
+                    .addComponent(jBLimpiar)
+                    .addComponent(jBAlta))
+                .addGap(48, 48, 48))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void habilitarBotonGuardar(){
-        
-        
-        if(jCLector.getSelectedItem()!=null&&jCEjemplar.getSelectedItem()!=null){
-        jBSolicitar.setEnabled(true);
-        }else{jBSolicitar.setEnabled(false);}
-    }
-    
-    private void habilitarBotonBuscar(){
-                 if(!jTID.getText().isEmpty()){
-                 jBBuscar.setEnabled(true);
-                 }else{jBBuscar.setEnabled(false);}   
-    }
-    
-    public void habilitarBotonBorrar(){
-        if(!jTID.getText().isEmpty()){
-        int aux = Integer.parseInt(jTID.getText());
-        Ejemplar ejemplar = ejemplarData.buscarEjemplar(aux);
-        if(ejemplar!=null && ejemplar.isActivo()!=false){
-        jBBorrar.setEnabled(true);
-        }else{jBBorrar.setEnabled(false);}
-        }
-       
-      
-    }
-    
-    private void habilitarBotonActualizar(){
-    
-        if(jCLector.getSelectedItem()!=null&&jCEjemplar.getSelectedItem()!=null){
-        jBDevolver.setEnabled(true);
-        }else{jBDevolver.setEnabled(false);}
-    
-    }
-    
-    private void jBSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSolicitarActionPerformed
-        // TODO add your handling code here:
-//        Boolean estado = jCEstado.isSelected();
-//        String multa = jTMulta.getText();
-//        LocalDate fechaPrestamo =jDFechaPrestamo.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//        LocalDate fechaDevolucion =jDFechaDevolucion.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Ejemplar ejemplar = (Ejemplar)jCEjemplar.getSelectedItem();
-        Lector lector = (Lector)jCLector.getSelectedItem();
-        prestamoData.solicitarPrestamo(ejemplar,lector);
-        
-//        jTID.setText(String.valueOf(ejemplar.getId_Ejemplar()));
-        jTID.setEnabled(false);
-        jBSolicitar.setEnabled(false);
-
-        jCEstado.setEnabled(false);
-        jCLector.setEnabled(false);
-        jCEjemplar.setEnabled(false);
-        jDFechaPrestamo.setEnabled(false);
-        jDFechaDevolucion.setEnabled(false);
-        jTMulta.setEnabled(false);
-        
-    }//GEN-LAST:event_jBSolicitarActionPerformed
-
-    private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
-        // TODO add your handling code here:
-        int id = Integer.parseInt(jTID.getText());
-        Ejemplar ejemplar = ejemplarData.buscarEjemplar(id);
-        if(ejemplar!=null){
-        
-        ejemplarData.darBajaEjemplar(id);
-        jCEjemplar.setSelectedItem(ejemplar.getLibro());
-        jCLector.setSelectedItem(ejemplar.getEstado());
-        jCEstado.setSelected(ejemplar.isActivo());
-        
-        jCEstado.setEnabled(false);
-        jTID.setEnabled(false);
-        jCLector.setEnabled(false);
-        jCEjemplar.setEnabled(false);
-        
-        jBBorrar.setEnabled(false);
-        jBBuscar.setEnabled(false);
-        jBDevolver.setEnabled(false);
-        }
-        else{JOptionPane.showMessageDialog(this, "El ejemplar que intenta borrar, no se encuentra en la base de datos");}
-    }//GEN-LAST:event_jBBorrarActionPerformed
-
-    private void jBDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDevolverActionPerformed
-        // TODO add your handling code here:
-        int id = Integer.parseInt(jTID.getText());
-        Ejemplar ejemplar = ejemplarData.buscarEjemplar(id);
-        if(ejemplar!=null){
-        ejemplar.setActivo(jCEstado.isSelected());
-        ejemplar.setLibro((Libro)jCEjemplar.getSelectedItem());
-        ejemplar.setEstado((String)jCLector.getSelectedItem());
-        ejemplarData.actualizarEjemplar(ejemplar);    
-
-        jTID.setEnabled(false);
-        jCLector.setEnabled(false);
-        jCEstado.setEnabled(false);
-        jCEjemplar.setEnabled(false);
-        
-        jBBuscar.setEnabled(false);
-        jBDevolver.setEnabled(false);
-        jBBorrar.setEnabled(false);
-        jBSolicitar.setEnabled(false);
-        }else{JOptionPane.showMessageDialog(this,"El ejemplar que quiere actualizar no esta en la base de datos");}
-    }//GEN-LAST:event_jBDevolverActionPerformed
-
-    private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
-        // TODO add your handling code here:
-        jTID.setText("");
-        jTMulta.setText("");
-        jDFechaPrestamo.setDate(null);
-        jDFechaDevolucion.setDate(null);
-        jCLector.removeAllItems();
-        jCEjemplar.removeAllItems();
-        cargarEjemplares();
-        cargarLectores();
-        jCLector.setSelectedItem(null);
-        jCEjemplar.setSelectedItem(null);
-        jCEstado.setSelected(false);
-            
-        jTID.setEnabled(true);
-        jCLector.setEnabled(true);
-        jCEstado.setEnabled(true);
-        jCEjemplar.setEnabled(true);
-        
-        jBDevolver.setEnabled(false);
-        jBSolicitar.setEnabled(false);
-        jBBorrar.setEnabled(false);
-        
-        
-    }//GEN-LAST:event_jBLimpiarActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // TODO add your handling code here:
-        int id = Integer.parseInt(jTID.getText());
-        Prestamo prestamo = prestamoData.buscarPrestamo(id);
-        if(prestamo!=null){
- 
-        jCLector.removeAllItems();  
-        jCLector.addItem(prestamo.getLector());
-        jCEjemplar.removeAllItems();
-        jCEjemplar.addItem(prestamo.getEjemplar());
-        jCEstado.setSelected(prestamo.isActivo());
-        jTMulta.setText(String.valueOf(prestamo.getMulta()));
-        jDFechaPrestamo.setDate(Date.valueOf(prestamo.getFechaPrestamo()));
-        jDFechaDevolucion.setDate(Date.valueOf(prestamo.getFechaDevolucion()));
+        int auxI = Integer.parseInt(jTId.getText());
+        Prestamo auxP = prestamoData.buscarPrestamo(auxI);
+        if(auxP!=null){
+            jCEjemplar.removeAllItems();
+            jCLector.removeAllItems();
+            jCEjemplar.addItem(auxP.getEjemplar());
+            jCLector.addItem(auxP.getLector());
+            Multa m = auxP.getMulta();
+            if(m!=null){
+            jTMulta.setText(String.valueOf(m.getId_Multa()));
+            }else{jTMulta.setText("No registra multa");}
+            if(auxP.getFechaPrestamo()!=null){
+            jTPrestamo.setText(auxP.getFechaPrestamo().toString());}
+            else{jTPrestamo.setText("No registra fecha de prestamo");}
+            if(auxP.getFechaDevolucion()!=null){
+            jTDevolucion.setText(auxP.getFechaDevolucion().toString());}
+            else{jTDevolucion.setText("No registra fecha de devolucion");}
+        }else{JOptionPane.showMessageDialog(null, "ASDasdas");}
         
-        jBBuscar.setEnabled(false);
-        jBSolicitar.setEnabled(false);
-        jBDevolver.setEnabled(true);
-        jBSolicitar.setEnabled(false);
-        }
-        else{JOptionPane.showMessageDialog(this, "El id que ingreso no esta registrado en la base de datos");}
-        
-        
+       
     }//GEN-LAST:event_jBBuscarActionPerformed
 
-    private void jTIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTIDKeyTyped
+    private void jTIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTIdActionPerformed
         // TODO add your handling code here:
+     
+    }//GEN-LAST:event_jTIdActionPerformed
+
+    private void jTIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTIdKeyTyped
+        // TODO add your handling code here:
+        
         char validar = evt.getKeyChar();
-        if(Character.isLetter(validar)){
+        if(!Character.isDigit(validar)){
         getToolkit().beep();
         evt.consume();
-        JOptionPane.showMessageDialog(this,"Solo puede ingresar numeros");
         }
-    }//GEN-LAST:event_jTIDKeyTyped
+    }//GEN-LAST:event_jTIdKeyTyped
 
-    private void jTIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTIDActionPerformed
-
-    private void jTIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTIDKeyReleased
+    private void jTIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTIdKeyReleased
         // TODO add your handling code here:
         habilitarBotonBuscar();
-        habilitarBotonBorrar();
-        habilitarBotonActualizar();
-    }//GEN-LAST:event_jTIDKeyReleased
+    }//GEN-LAST:event_jTIdKeyReleased
 
-    private void jCEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCEjemplarActionPerformed
+    private void jBSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSolicitarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCEjemplarActionPerformed
+        Lector auxL = (Lector)jCLector.getSelectedItem();
+        Ejemplar auxE = (Ejemplar)jCEjemplar.getSelectedItem();
+        if(auxL!=null&&auxE!=null){
+        prestamoData.solicitarPrestamo(auxE, auxL);
+        jTPrestamo.setText(LocalDate.now().toString());
+        }  
+    }//GEN-LAST:event_jBSolicitarActionPerformed
 
-    private void jCLectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCLectorActionPerformed
+    private void jCEjemplarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCEjemplarKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCLectorActionPerformed
+//        habilitarBotonSolicitar();
+    }//GEN-LAST:event_jCEjemplarKeyReleased
 
-    private void jCEstadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCEstadoKeyReleased
+    private void jCLectorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCLectorKeyReleased
         // TODO add your handling code here:
-        habilitarBotonGuardar();
-    }//GEN-LAST:event_jCEstadoKeyReleased
+//        habilitarBotonSolicitar();
+    }//GEN-LAST:event_jCLectorKeyReleased
 
-    private void jDFechaPrestamoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDFechaPrestamoKeyReleased
+    private void jBDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDevolverActionPerformed
         // TODO add your handling code here:
-        habilitarBotonGuardar();
-        habilitarBotonActualizar();
-    }//GEN-LAST:event_jDFechaPrestamoKeyReleased
-
-    private void jDFechaDevolucionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDFechaDevolucionKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jDFechaDevolucionKeyReleased
-    public void cargarEjemplares(){
-        List<Ejemplar> ejemplares = ejemplarData.obtenerEjemplaresSegunEstado(true); 
-        for(Ejemplar e:ejemplares){
-        jCEjemplar.addItem(e);
+        Lector auxL = (Lector)jCLector.getSelectedItem();
+        Ejemplar auxE =(Ejemplar)jCEjemplar.getSelectedItem();
+        Prestamo auxP = prestamoData.buscarPrestamo(auxL, auxE,true);
+        if(auxP!=null){
+        prestamoData.devolverPrestamo(auxP);
+        jTPrestamo.setText(auxP.getFechaPrestamo().toString());
+        jTDevolucion.setText(LocalDate.now().toString());
         }
+        
+    }//GEN-LAST:event_jBDevolverActionPerformed
+
+    private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
+        // TODO add your handling code here:
+        Lector auxL = (Lector)jCLector.getSelectedItem();
+        Ejemplar auxE =(Ejemplar)jCEjemplar.getSelectedItem();
+        Prestamo auxP = prestamoData.buscarPrestamo(auxL, auxE,true);
+        if(auxP!=null){
+            prestamoData.darBajaPrestamo(auxP.getId_Prestamo());
+            if(auxP.getFechaPrestamo()!=null){
+            jTPrestamo.setText(auxP.getFechaPrestamo().toString());
+            }else{
+            jTPrestamo.setText("No registra fecha de solicitud");
+            }
+            if(auxP.getFechaDevolucion()!=null){
+            jTDevolucion.setText(auxP.getFechaDevolucion().toString());
+            }else{
+            jTDevolucion.setText("No registra fecha de devolucion");       
+            }
+        }
+    }//GEN-LAST:event_jBBorrarActionPerformed
+
+    private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
+        // TODO add your handling code here:
+        jTId.setText("");
+        jTMulta.setText("");
+        jTPrestamo.setText("");
+        jTDevolucion.setText("");
+        jCLector.removeAllItems();
+        jCEjemplar.removeAllItems();
+        cargarEjemplar();
+        cargarLectores();
+        jCLector.setSelectedItem(null);
         jCEjemplar.setSelectedItem(null);
-    }
-    public void cargarLectores() {
-        List<Lector> lectores = lectorData.obtenerLectoresSegunEstado(true); 
-        for(Lector l:lectores){
-        jCLector.addItem(l);
+
+    }//GEN-LAST:event_jBLimpiarActionPerformed
+
+    private void jTPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTPrestamoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTPrestamoActionPerformed
+
+    private void jBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAltaActionPerformed
+        // TODO add your handling code here:
+        Lector auxL = (Lector)jCLector.getSelectedItem();
+        Ejemplar auxE =(Ejemplar)jCEjemplar.getSelectedItem();
+        Prestamo auxP = prestamoData.buscarPrestamo(auxL, auxE,false);
+        if(auxP!=null){
+            prestamoData.darAltaPrestamo(auxP.getId_Prestamo());
+            if(auxP.getFechaPrestamo()!=null){
+            jTPrestamo.setText(auxP.getFechaPrestamo().toString());
+            }else{
+            jTPrestamo.setText("No registra fecha de solicitud");
+            }
+            if(auxP.getFechaDevolucion()!=null){
+            jTDevolucion.setText(auxP.getFechaDevolucion().toString());
+            }else{
+            jTDevolucion.setText("No registra fecha de devolucion");       
+            }
         }
+    }//GEN-LAST:event_jBAltaActionPerformed
+
+    public void cargarEjemplar(){
+        EjemplarData auxE = new EjemplarData(conexion);
+        ArrayList<Ejemplar>ejemplares=(ArrayList)auxE.obtenerEjemplaresSegunEstado(true);
+        for(Ejemplar a : ejemplares){
+            jCEjemplar.addItem(a);
+        } 
+        jCEjemplar.setSelectedItem(null);
+        }
+    
+    public void cargarLectores(){
+        LectorData auxL = new LectorData(conexion);
+        ArrayList<Lector> lectores = (ArrayList)auxL.obtenerLectoresSegunEstado(true);
+        for(Lector l:lectores){
+            jCLector.addItem(l);
+        } 
         jCLector.setSelectedItem(null);
     }
+    
+    private void habilitarBotonBuscar(){
+                 if(!jTId.getText().isEmpty()){
+                     int auxI = Integer.parseInt(jTId.getText());
+                     Prestamo auxP = prestamoData.buscarPrestamo(auxI);
+                     if(auxP!=null){
+                     jBBuscar.setEnabled(true);}
+                     else{jBBuscar.setEnabled(false);}
+                 }else{jBBuscar.setEnabled(false);}   
+    }
+    
+//    private void habilitarBotonSolicitar(){
+//       Lector auxL = (Lector)jCLector.getSelectedItem();
+//       Ejemplar auxE = (Ejemplar)jCEjemplar.getSelectedItem();
+//        
+//        if(auxL!=null&&auxE!=null){
+//        jBSolicitar.setEnabled(true);
+//        }else{jBSolicitar.setEnabled(false);}
+//    }
+
+    
+    
+    
+    
+    
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAlta;
     private javax.swing.JButton jBBorrar;
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBDevolver;
     private javax.swing.JButton jBLimpiar;
     private javax.swing.JButton jBSolicitar;
     private javax.swing.JComboBox<Ejemplar> jCEjemplar;
-    private javax.swing.JCheckBox jCEstado;
     private javax.swing.JComboBox<Lector> jCLector;
-    private com.toedter.calendar.JDateChooser jDFechaDevolucion;
-    private com.toedter.calendar.JDateChooser jDFechaPrestamo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTID;
+    private javax.swing.JTextField jTDevolucion;
+    private javax.swing.JTextField jTId;
     private javax.swing.JTextField jTMulta;
+    private javax.swing.JTextField jTPrestamo;
     // End of variables declaration//GEN-END:variables
 }
