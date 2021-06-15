@@ -1,0 +1,1090 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SistemaDeBibliotecaGrupo3">
+  <ClassDiagramComponents>
+    <Class name="Autor" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="169.0" yPosition="116.0">
+      <Fields>
+        <Field name="id_Autor" type="int" visibility="private"/>
+        <Field name="apellido" type="String" visibility="private"/>
+        <Field name="fechaNac" type="LocalDate" visibility="private"/>
+        <Field name="activo" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="dni"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="nacionalidad"/>
+          <Argument type="LocalDate" name="fechaNac"/>
+          <Argument type="boolean" name="activo"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId_Autor" returnType="int" visibility="public"/>
+        <Method name="setId_Autor" returnType="void" visibility="public">
+          <Argument type="int" name="id_Autor"/>
+        </Method>
+        <Method name="getDni" returnType="int" visibility="public"/>
+        <Method name="setDni" returnType="void" visibility="public">
+          <Argument type="int" name="dni"/>
+        </Method>
+        <Method name="getApellido" returnType="String" visibility="public"/>
+        <Method name="setApellido" returnType="void" visibility="public">
+          <Argument type="String" name="apellido"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getNacionalidad" returnType="String" visibility="public"/>
+        <Method name="setNacionalidad" returnType="void" visibility="public">
+          <Argument type="String" name="nacionalidad"/>
+        </Method>
+        <Method name="getFechaNac" returnType="LocalDate" visibility="public"/>
+        <Method name="setFechaNac" returnType="void" visibility="public">
+          <Argument type="LocalDate" name="fechaNac"/>
+        </Method>
+        <Method name="isActivo" returnType="boolean" visibility="public"/>
+        <Method name="setActivo" returnType="void" visibility="public">
+          <Argument type="boolean" name="activo"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="AutorData" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="492.0" yPosition="954.0">
+      <Fields>
+        <Field name="con" type="Connection" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Conexion" name="conexion"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="buscarAutor" returnType="Autor" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="guardarAutor" returnType="void" visibility="public">
+          <Argument type="Autor" name="autor"/>
+        </Method>
+        <Method name="actualizarAutor" returnType="void" visibility="public">
+          <Argument type="Autor" name="autor"/>
+        </Method>
+        <Method name="darBajaAutor" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="darAltaAutor" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="eliminarAutor" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="obtenerAutores" returnType="List&lt;Autor&gt;" visibility="public"/>
+        <Method name="obtenerAutoresSegunEstado" returnType="List&lt;Autor&gt;" visibility="public">
+          <Argument type="boolean" name="activo"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Conexion" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="2985.0" yPosition="1763.0">
+      <Fields>
+        <Field name="url" type="String" visibility="private"/>
+        <Field name="usuario" type="String" visibility="private"/>
+        <Field name="password" type="String" visibility="private"/>
+        <Field name="conexion" type="Connection" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="url"/>
+          <Argument type="String" name="usuario"/>
+          <Argument type="String" name="password"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getConexion" returnType="Connection" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Ejemplar" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="4553.0" yPosition="143.0">
+      <Fields>
+        <Field name="id_Ejemplar" type="int" visibility="private"/>
+        <Field name="libro" type="Libro" visibility="private"/>
+        <Field name="estado" type="String" visibility="private"/>
+        <Field name="activo" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Libro" name="libro"/>
+          <Argument type="String" name="estado"/>
+          <Argument type="boolean" name="activo"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId_Ejemplar" returnType="int" visibility="public"/>
+        <Method name="setId_Ejemplar" returnType="void" visibility="public">
+          <Argument type="int" name="id_Ejemplar"/>
+        </Method>
+        <Method name="getLibro" returnType="Libro" visibility="public"/>
+        <Method name="setLibro" returnType="void" visibility="public">
+          <Argument type="Libro" name="libro"/>
+        </Method>
+        <Method name="getEstado" returnType="String" visibility="public"/>
+        <Method name="setEstado" returnType="void" visibility="public">
+          <Argument type="String" name="estado"/>
+        </Method>
+        <Method name="isActivo" returnType="boolean" visibility="public"/>
+        <Method name="setActivo" returnType="void" visibility="public">
+          <Argument type="boolean" name="activo"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="EjemplarData" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="3705.0" yPosition="500.0">
+      <Fields>
+        <Field name="con" type="Connection" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Conexion" name="conexion"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="buscarLibro" returnType="Libro" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="listarLibros" returnType="ArrayList&lt;Libro&gt;" visibility="public"/>
+        <Method name="guardarEjemplar" returnType="void" visibility="public">
+          <Argument type="Ejemplar" name="ejemplar"/>
+        </Method>
+        <Method name="darBajaEjemplar" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="darAltaEjemplar" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="actualizarEjemplar" returnType="void" visibility="public">
+          <Argument type="Ejemplar" name="ejemplar"/>
+        </Method>
+        <Method name="buscarEjemplar" returnType="Ejemplar" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="eliminarEjemplar" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="obtenerEjemplares" returnType="List&lt;Ejemplar&gt;" visibility="public"/>
+        <Method name="obtenerEjemplaresSegunEstado" returnType="List&lt;Ejemplar&gt;" visibility="public">
+          <Argument type="boolean" name="estado"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Lector" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="5112.0" yPosition="1797.0">
+      <Fields>
+        <Field name="id_Lector" type="int" visibility="private"/>
+        <Field name="apellido" type="String" visibility="private"/>
+        <Field name="activo" type="boolean" visibility="private"/>
+        <Field name="pattern" type="Pattern" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="dni"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="email"/>
+          <Argument type="boolean" name="activo"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="int" name="dni"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="email"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="isValidEmail" returnType="Matcher" visibility="public">
+          <Argument type="String" name="email"/>
+        </Method>
+        <Method name="getEmail" returnType="String" visibility="public"/>
+        <Method name="setEmail" returnType="void" visibility="public">
+          <Argument type="String" name="email"/>
+        </Method>
+        <Method name="getId_Lector" returnType="int" visibility="public"/>
+        <Method name="setId_Lector" returnType="void" visibility="public">
+          <Argument type="int" name="id_Lector"/>
+        </Method>
+        <Method name="getDni" returnType="int" visibility="public"/>
+        <Method name="setDni" returnType="void" visibility="public">
+          <Argument type="int" name="dni"/>
+        </Method>
+        <Method name="getApellido" returnType="String" visibility="public"/>
+        <Method name="setApellido" returnType="void" visibility="public">
+          <Argument type="String" name="apellido"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="isActivo" returnType="boolean" visibility="public"/>
+        <Method name="setActivo" returnType="void" visibility="public">
+          <Argument type="boolean" name="activo"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="LectorData" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="715.0" yPosition="1979.0">
+      <Fields>
+        <Field name="con" type="Connection" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Conexion" name="conexion"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="guardarLector" returnType="void" visibility="public">
+          <Argument type="Lector" name="lector"/>
+        </Method>
+        <Method name="buscarLector" returnType="Lector" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="actualizarLector" returnType="void" visibility="public">
+          <Argument type="Lector" name="lector"/>
+        </Method>
+        <Method name="darBajaLector" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="darAltaLector" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="eliminarLector" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="obtenerLectores" returnType="List&lt;Lector&gt;" visibility="public"/>
+        <Method name="obtenerLectoresSegunEstado" returnType="List&lt;Lector&gt;" visibility="public">
+          <Argument type="boolean" name="estado"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Libro" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="2846.0" yPosition="88.0">
+      <Fields>
+        <Field name="id_Libro" type="int" visibility="private"/>
+        <Field name="autor" type="Autor" visibility="private"/>
+        <Field name="ISBN" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="activo" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Autor" name="autor"/>
+          <Argument type="String" name="ISBN"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="tipo"/>
+          <Argument type="String" name="editorial"/>
+          <Argument type="int" name="anio"/>
+          <Argument type="boolean" name="activo"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId_Libro" returnType="int" visibility="public"/>
+        <Method name="setId_Libro" returnType="void" visibility="public">
+          <Argument type="int" name="id_Libro"/>
+        </Method>
+        <Method name="getAnio" returnType="int" visibility="public"/>
+        <Method name="setAnio" returnType="void" visibility="public">
+          <Argument type="int" name="anio"/>
+        </Method>
+        <Method name="getAutor" returnType="Autor" visibility="public"/>
+        <Method name="setAutor" returnType="void" visibility="public">
+          <Argument type="Autor" name="autor"/>
+        </Method>
+        <Method name="getISBN" returnType="String" visibility="public"/>
+        <Method name="setISBN" returnType="void" visibility="public">
+          <Argument type="String" name="ISBN"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getTipo" returnType="String" visibility="public"/>
+        <Method name="setTipo" returnType="void" visibility="public">
+          <Argument type="String" name="tipo"/>
+        </Method>
+        <Method name="getEditorial" returnType="String" visibility="public"/>
+        <Method name="setEditorial" returnType="void" visibility="public">
+          <Argument type="String" name="editorial"/>
+        </Method>
+        <Method name="isActivo" returnType="boolean" visibility="public"/>
+        <Method name="setActivo" returnType="void" visibility="public">
+          <Argument type="boolean" name="activo"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="LibroData" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="1959.0" yPosition="461.0">
+      <Fields>
+        <Field name="con" type="Connection" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Conexion" name="conexion"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="buscarLibro" returnType="Libro" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="buscarAutor" returnType="Autor" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="listarAutores" returnType="ArrayList&lt;Autor&gt;" visibility="public"/>
+        <Method name="guardarLibro" returnType="void" visibility="public">
+          <Argument type="Libro" name="libro"/>
+        </Method>
+        <Method name="darBajaLibro" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="darAltaLibro" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="eliminarLibro" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="actualizarLibro" returnType="void" visibility="public">
+          <Argument type="Libro" name="libro"/>
+        </Method>
+        <Method name="obtenerLibros" returnType="List&lt;Libro&gt;" visibility="public"/>
+        <Method name="obtenerLibrosSegunEstado" returnType="List&lt;Libro&gt;" visibility="public">
+          <Argument type="boolean" name="activo"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Multa" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="3012.0" yPosition="2336.0">
+      <Fields>
+        <Field name="id_Multa" type="int" visibility="private"/>
+        <Field name="fechaInicio" type="LocalDate" visibility="private"/>
+        <Field name="estado" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="LocalDate" name="fechaInicio"/>
+          <Argument type="LocalDate" name="fechaFin"/>
+          <Argument type="boolean" name="estado"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId_Multa" returnType="int" visibility="public"/>
+        <Method name="setId_Multa" returnType="void" visibility="public">
+          <Argument type="int" name="id_Multa"/>
+        </Method>
+        <Method name="getFechaInicio" returnType="LocalDate" visibility="public"/>
+        <Method name="setFechaInicio" returnType="void" visibility="public">
+          <Argument type="LocalDate" name="fechaInicio"/>
+        </Method>
+        <Method name="getFechaFin" returnType="LocalDate" visibility="public"/>
+        <Method name="setFechaFin" returnType="void" visibility="public">
+          <Argument type="LocalDate" name="fechaFin"/>
+        </Method>
+        <Method name="isEstado" returnType="boolean" visibility="public"/>
+        <Method name="setEstado" returnType="void" visibility="public">
+          <Argument type="boolean" name="estado"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="MultaData" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="3542.0" yPosition="2847.0">
+      <Fields>
+        <Field name="con" type="Connection" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Conexion" name="conexion"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="guardarMulta" returnType="void" visibility="public">
+          <Argument type="Multa" name="multa"/>
+        </Method>
+        <Method name="buscarMulta" returnType="Multa" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="darBajaMulta" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="darAltaMulta" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="actualizarMulta" returnType="void" visibility="public">
+          <Argument type="Multa" name="multa"/>
+        </Method>
+        <Method name="eliminarMulta" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="obtenerMultas" returnType="List&lt;Multa&gt;" visibility="public"/>
+        <Method name="obtenerMultasSegunEstado" returnType="List&lt;Multa&gt;" visibility="public">
+          <Argument type="boolean" name="estado"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Prestamo" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="5152.0" yPosition="1110.0">
+      <Fields>
+        <Field name="id_Prestamo" type="int" visibility="private"/>
+        <Field name="ejemplar" type="Ejemplar" visibility="private"/>
+        <Field name="lector" type="Lector" visibility="private"/>
+        <Field name="multa" type="Multa" visibility="private"/>
+        <Field name="fechaPrestamo" type="LocalDate" visibility="private"/>
+        <Field name="activo" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Lector" name="lector"/>
+          <Argument type="Ejemplar" name="ejemplar"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId_Prestamo" returnType="int" visibility="public"/>
+        <Method name="setId_Prestamo" returnType="void" visibility="public">
+          <Argument type="int" name="id_Prestamo"/>
+        </Method>
+        <Method name="getEjemplar" returnType="Ejemplar" visibility="public"/>
+        <Method name="setEjemplar" returnType="void" visibility="public">
+          <Argument type="Ejemplar" name="ejemplar"/>
+        </Method>
+        <Method name="getLector" returnType="Lector" visibility="public"/>
+        <Method name="setLector" returnType="void" visibility="public">
+          <Argument type="Lector" name="lector"/>
+        </Method>
+        <Method name="getFechaPrestamo" returnType="LocalDate" visibility="public"/>
+        <Method name="setFechaPrestamo" returnType="void" visibility="public">
+          <Argument type="LocalDate" name="fechaPrestamo"/>
+        </Method>
+        <Method name="getFechaDevolucion" returnType="LocalDate" visibility="public"/>
+        <Method name="setFechaDevolucion" returnType="void" visibility="public">
+          <Argument type="LocalDate" name="fechaDevolucion"/>
+        </Method>
+        <Method name="isActivo" returnType="boolean" visibility="public"/>
+        <Method name="setActivo" returnType="void" visibility="public">
+          <Argument type="boolean" name="activo"/>
+        </Method>
+        <Method name="getMulta" returnType="Multa" visibility="public"/>
+        <Method name="setMulta" returnType="void" visibility="public">
+          <Argument type="Multa" name="multa"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="PrestamoData" package="sistemabibliotecagrupo3.modelos" visibility="public" xPosition="4206.0" yPosition="1015.0">
+      <Fields>
+        <Field name="con" type="Connection" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Conexion" name="conexion"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="buscarLector" returnType="Lector" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="buscarEjemplar" returnType="Ejemplar" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="actualizarEjemplar" returnType="void" visibility="public">
+          <Argument type="Ejemplar" name="ejemplar"/>
+        </Method>
+        <Method name="darBajaLector" returnType="void" visibility="public">
+          <Argument type="Lector" name="lector"/>
+        </Method>
+        <Method name="darAltaLector" returnType="void" visibility="public">
+          <Argument type="Lector" name="lector"/>
+        </Method>
+        <Method name="buscarMulta" returnType="Multa" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="actualizarMulta" returnType="void" visibility="public">
+          <Argument type="Multa" name="multa"/>
+        </Method>
+        <Method name="guardarMulta" returnType="void" visibility="public">
+          <Argument type="Multa" name="multa"/>
+        </Method>
+        <Method name="solicitarPrestamo" returnType="void" visibility="public">
+          <Argument type="Ejemplar" name="ejemplar"/>
+          <Argument type="Lector" name="lector"/>
+        </Method>
+        <Method name="buscarPrestamo" returnType="Prestamo" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="obtenerPrestamosPorFecha" returnType="List&lt;Prestamo&gt;" visibility="public">
+          <Argument type="LocalDate" name="fecha"/>
+        </Method>
+        <Method name="obtenerPrestamosVigentesPorLector" returnType="List&lt;Prestamo&gt;" visibility="public">
+          <Argument type="Lector" name="lector"/>
+        </Method>
+        <Method name="obtenerLectoresConMultas" returnType="List&lt;Lector&gt;" visibility="public"/>
+        <Method name="revisionDePrestamosSinDevolucion" returnType="void" visibility="public"/>
+        <Method name="obtenerLectoresConPrestamosVencidos" returnType="List&lt;Lector&gt;" visibility="public"/>
+        <Method name="obtenerLectoresConMultasDentroDeUnMes" returnType="List&lt;Lector&gt;" visibility="public"/>
+        <Method name="obtenerPrestamos" returnType="List&lt;Prestamo&gt;" visibility="public"/>
+        <Method name="darBajaPrestamo" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="darAltaPrestamo" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="eliminarPrestamo" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="actualizarPrestamo" returnType="void" visibility="public">
+          <Argument type="Prestamo" name="prestamo"/>
+        </Method>
+        <Method name="devolverPrestamo" returnType="void" visibility="public">
+          <Argument type="Prestamo" name="prestamo"/>
+        </Method>
+        <Method name="revisarAltaLector" returnType="void" visibility="public">
+          <Argument type="Lector" name="lector"/>
+        </Method>
+        <Method name="buscarPrestamo" returnType="Prestamo" visibility="public">
+          <Argument type="Lector" name="lector"/>
+          <Argument type="Ejemplar" name="ejemplar"/>
+          <Argument type="boolean" name="estado"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SistemaBibliotecaGrupo3" package="sistemabibliotecagrupo3" visibility="public" xPosition="1582.0" yPosition="2847.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ListadoAutores" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="66.0" yPosition="1666.0">
+      <Fields>
+        <Field name="modelo" type="DefaultTableModel" visibility="private"/>
+        <Field name="autorData" type="AutorData" visibility="private"/>
+        <Field name="autores" type="ArrayList&lt;Autor&gt;" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="armarCabeceraTabla" returnType="void" visibility="public"/>
+        <Method name="borrarFilasTabla" returnType="void" visibility="public"/>
+        <Method name="cargaDatos" returnType="void" visibility="public"/>
+        <Method name="cbEstadoActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ListadoEjemplares" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="3823.0" yPosition="1161.0">
+      <Fields>
+        <Field name="modelo" type="DefaultTableModel" visibility="private"/>
+        <Field name="ejemplarData" type="EjemplarData" visibility="private"/>
+        <Field name="ejemplares" type="ArrayList&lt;Ejemplar&gt;" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="armarCabeceraTabla" returnType="void" visibility="public"/>
+        <Method name="borrarFilasTabla" returnType="void" visibility="public"/>
+        <Method name="cargaDatos" returnType="void" visibility="public"/>
+        <Method name="cbEstadoActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ListadoLectores" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="1668.0" yPosition="1871.0">
+      <Fields>
+        <Field name="modelo" type="DefaultTableModel" visibility="private"/>
+        <Field name="lectorData" type="LectorData" visibility="private"/>
+        <Field name="lectores" type="ArrayList&lt;Lector&gt;" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="armarCabeceraTabla" returnType="void" visibility="public"/>
+        <Method name="borrarFilasTabla" returnType="void" visibility="public"/>
+        <Method name="cargaDatos" returnType="void" visibility="public"/>
+        <Method name="cbEstadoActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ListadoLibros" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="2615.0" yPosition="830.0">
+      <Fields>
+        <Field name="modelo" type="DefaultTableModel" visibility="private"/>
+        <Field name="libroData" type="LibroData" visibility="private"/>
+        <Field name="libros" type="ArrayList&lt;Libro&gt;" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="armarCabeceraTabla" returnType="void" visibility="public"/>
+        <Method name="borrarFilasTabla" returnType="void" visibility="public"/>
+        <Method name="cargaDatos" returnType="void" visibility="public"/>
+        <Method name="cbEstadoActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ListadoMulta" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="2108.0" yPosition="2466.0">
+      <Fields>
+        <Field name="modelo" type="DefaultTableModel" visibility="private"/>
+        <Field name="md" type="MultaData" visibility="private"/>
+        <Field name="multas" type="ArrayList&lt;Multa&gt;" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="armarTabla" returnType="void" visibility="public"/>
+        <Method name="borrarFilas" returnType="void" visibility="public"/>
+        <Method name="cargarDatos" returnType="void" visibility="public"/>
+        <Method name="cbEstadoActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ListadoPrestamos" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="3877.0" yPosition="1763.0">
+      <Fields>
+        <Field name="modelo" type="DefaultTableModel" visibility="private"/>
+        <Field name="prestamoData" type="PrestamoData" visibility="private"/>
+        <Field name="prestamos" type="ArrayList&lt;Prestamo&gt;" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="armarCabeceraTabla" returnType="void" visibility="public"/>
+        <Method name="borrarFilasTabla" returnType="void" visibility="public"/>
+        <Method name="cargaDatos" returnType="void" visibility="public"/>
+        <Method name="cbEstadoActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MenuPrincipal" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="837.0" yPosition="2664.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="jMAutoresActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMLibrosActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMEjemplaresActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMLectoresActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMListadoAutoresActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMListadoEjemplaresActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMListadoLectoresActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMListadoLibrosActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMPrestamosVencidosActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMSolicitarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMListarMultasActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="VistaAutores" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="1131.0" yPosition="1220.0">
+      <Fields>
+        <Field name="autorData" type="AutorData" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="habilitarBotonGuardar" returnType="void" visibility="private"/>
+        <Method name="habilitarBotonBuscar" returnType="void" visibility="private"/>
+        <Method name="habilitarBotonBorrar" returnType="void" visibility="public"/>
+        <Method name="habilitarBotonActualizar" returnType="void" visibility="private"/>
+        <Method name="jBGuardarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBBorrarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBActualizarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBLimpiarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBBuscarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTNombreKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTApellidoKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTDniKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jTDniKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTNombreKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTApellidoKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jDFechaNacKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTNacionalidadKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTNacionalidadKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTDniActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jCEstadoKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="VistaEjemplares" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="3135.0" yPosition="803.0">
+      <Fields>
+        <Field name="ejemplarData" type="EjemplarData" visibility="private"/>
+        <Field name="libros" type="ArrayList&lt;Libro&gt;" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="habilitarBotonGuardar" returnType="void" visibility="private"/>
+        <Method name="habilitarBotonBuscar" returnType="void" visibility="private"/>
+        <Method name="habilitarBotonBorrar" returnType="void" visibility="public"/>
+        <Method name="habilitarBotonActualizar" returnType="void" visibility="private"/>
+        <Method name="jBGuardarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBBorrarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBActualizarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBLimpiarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBBuscarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jCLibroActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jCStatusActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jCEstadoKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="cargarLibros" returnType="void" visibility="public"/>
+        <Method name="cargarStatus" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="VistaLectores" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="55.0" yPosition="2262.0">
+      <Fields>
+        <Field name="lectorData" type="LectorData" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="habilitarBotonGuardar" returnType="void" visibility="private"/>
+        <Method name="habilitarBotonBuscar" returnType="void" visibility="private"/>
+        <Method name="habilitarBotonBorrar" returnType="void" visibility="public"/>
+        <Method name="habilitarBotonActualizar" returnType="void" visibility="private"/>
+        <Method name="jBGuardarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBBorrarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBActualizarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBLimpiarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBBuscarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTNombreKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTApellidoKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTDniKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jTDniKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTNombreKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTApellidoKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTCorreoKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTCorreoKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTDniActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jCEstadoKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="VistaLibros" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="1233.0" yPosition="554.0">
+      <Fields>
+        <Field name="libroData" type="LibroData" visibility="private"/>
+        <Field name="autores" type="ArrayList&lt;Autor&gt;" visibility="private"/>
+        <Field name="conexion" type="Conexion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="habilitarBotonGuardar" returnType="void" visibility="private"/>
+        <Method name="habilitarBotonBuscar" returnType="void" visibility="private"/>
+        <Method name="habilitarBotonBorrar" returnType="void" visibility="public"/>
+        <Method name="habilitarBotonActualizar" returnType="void" visibility="private"/>
+        <Method name="jBGuardarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBBorrarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBActualizarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBLimpiarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBBuscarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTNombreKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTIsbnKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jTNombreKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTIsbnKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTIDKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTEditorialKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTEditorialKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTTipoKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTTipoKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jCAutorActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBNuevoActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="cargarAutores" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="VistaPrestamos" package="sistemabibliotecagrupo3.vistas" visibility="public" xPosition="4581.0" yPosition="2581.0">
+      <Fields>
+        <Field name="prestamoData" type="PrestamoData" visibility="package"/>
+        <Field name="conexion" type="Conexion" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="jBBuscarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jTIdActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jTIdKeyTyped" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jTIdKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jBSolicitarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jCEjemplarKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jCLectorKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jBDevolverActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBBorrarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBLimpiarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jTPrestamoActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBAltaActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="cargarEjemplar" returnType="void" visibility="public"/>
+        <Method name="cargarLectores" returnType="void" visibility="public"/>
+        <Method name="habilitarBotonBuscar" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="libros" source="sistemabibliotecagrupo3.vistas.VistaEjemplares" target="sistemabibliotecagrupo3.modelos.Libro" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Libro&gt;"/>
+    <HasRelation name="ejemplarData" source="sistemabibliotecagrupo3.vistas.VistaEjemplares" target="sistemabibliotecagrupo3.modelos.EjemplarData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="autores" source="sistemabibliotecagrupo3.vistas.VistaLibros" target="sistemabibliotecagrupo3.modelos.Autor" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Autor&gt;"/>
+    <HasRelation name="autorData" source="sistemabibliotecagrupo3.vistas.VistaAutores" target="sistemabibliotecagrupo3.modelos.AutorData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.vistas.ListadoLibros" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="lector" source="sistemabibliotecagrupo3.modelos.Prestamo" target="sistemabibliotecagrupo3.modelos.Lector" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="ejemplarData" source="sistemabibliotecagrupo3.vistas.ListadoEjemplares" target="sistemabibliotecagrupo3.modelos.EjemplarData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.vistas.ListadoAutores" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="sistemabibliotecagrupo3.modelos.PrestamoData" target="sistemabibliotecagrupo3.modelos.Multa" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.vistas.ListadoLectores" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="sistemabibliotecagrupo3.modelos.PrestamoData" target="sistemabibliotecagrupo3.modelos.Lector" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="libroData" source="sistemabibliotecagrupo3.vistas.VistaLibros" target="sistemabibliotecagrupo3.modelos.LibroData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.vistas.VistaLectores" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="ejemplar" source="sistemabibliotecagrupo3.modelos.Prestamo" target="sistemabibliotecagrupo3.modelos.Ejemplar" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="autores" source="sistemabibliotecagrupo3.vistas.ListadoAutores" target="sistemabibliotecagrupo3.modelos.Autor" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Autor&gt;"/>
+    <HasRelation name="libroData" source="sistemabibliotecagrupo3.vistas.ListadoLibros" target="sistemabibliotecagrupo3.modelos.LibroData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.vistas.ListadoEjemplares" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="ejemplares" source="sistemabibliotecagrupo3.vistas.ListadoEjemplares" target="sistemabibliotecagrupo3.modelos.Ejemplar" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Ejemplar&gt;"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.vistas.VistaLibros" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.vistas.ListadoPrestamos" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="sistemabibliotecagrupo3.modelos.EjemplarData" target="sistemabibliotecagrupo3.modelos.Libro" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="prestamoData" source="sistemabibliotecagrupo3.vistas.VistaPrestamos" target="sistemabibliotecagrupo3.modelos.PrestamoData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.modelos.LibroData" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="libros" source="sistemabibliotecagrupo3.vistas.ListadoLibros" target="sistemabibliotecagrupo3.modelos.Libro" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Libro&gt;"/>
+    <HasRelation name="md" source="sistemabibliotecagrupo3.vistas.ListadoMulta" target="sistemabibliotecagrupo3.modelos.MultaData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.modelos.PrestamoData" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="sistemabibliotecagrupo3.modelos.LibroData" target="sistemabibliotecagrupo3.modelos.Autor" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="sistemabibliotecagrupo3.modelos.AutorData" target="sistemabibliotecagrupo3.modelos.Autor" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="autorData" source="sistemabibliotecagrupo3.vistas.ListadoAutores" target="sistemabibliotecagrupo3.modelos.AutorData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="sistemabibliotecagrupo3.modelos.PrestamoData" target="sistemabibliotecagrupo3.modelos.Prestamo" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.vistas.VistaEjemplares" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="prestamos" source="sistemabibliotecagrupo3.vistas.ListadoPrestamos" target="sistemabibliotecagrupo3.modelos.Prestamo" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Prestamo&gt;"/>
+    <UseRelation source="sistemabibliotecagrupo3.modelos.MultaData" target="sistemabibliotecagrupo3.modelos.Multa" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="jCEjemplar" source="sistemabibliotecagrupo3.vistas.VistaPrestamos" target="sistemabibliotecagrupo3.modelos.Ejemplar" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="prestamoData" source="sistemabibliotecagrupo3.vistas.ListadoPrestamos" target="sistemabibliotecagrupo3.modelos.PrestamoData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.vistas.ListadoMulta" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="sistemabibliotecagrupo3.modelos.LibroData" target="sistemabibliotecagrupo3.modelos.Libro" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="sistemabibliotecagrupo3.modelos.EjemplarData" target="sistemabibliotecagrupo3.modelos.Ejemplar" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="libro" source="sistemabibliotecagrupo3.modelos.Ejemplar" target="sistemabibliotecagrupo3.modelos.Libro" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="sistemabibliotecagrupo3.modelos.PrestamoData" target="sistemabibliotecagrupo3.modelos.Ejemplar" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="lectorData" source="sistemabibliotecagrupo3.vistas.VistaLectores" target="sistemabibliotecagrupo3.modelos.LectorData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.vistas.VistaPrestamos" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="autor" source="sistemabibliotecagrupo3.modelos.Libro" target="sistemabibliotecagrupo3.modelos.Autor" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="multa" source="sistemabibliotecagrupo3.modelos.Prestamo" target="sistemabibliotecagrupo3.modelos.Multa" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.modelos.EjemplarData" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="jCLector" source="sistemabibliotecagrupo3.vistas.VistaPrestamos" target="sistemabibliotecagrupo3.modelos.Lector" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="conexion" source="sistemabibliotecagrupo3.vistas.VistaAutores" target="sistemabibliotecagrupo3.modelos.Conexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="sistemabibliotecagrupo3.modelos.LectorData" target="sistemabibliotecagrupo3.modelos.Lector" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="lectorData" source="sistemabibliotecagrupo3.vistas.ListadoLectores" target="sistemabibliotecagrupo3.modelos.LectorData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
