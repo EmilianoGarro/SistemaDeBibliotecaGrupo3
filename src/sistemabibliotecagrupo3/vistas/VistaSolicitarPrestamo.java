@@ -141,7 +141,7 @@ PrestamoData prestamoData;
 
     public void cargarEjemplar(){
         EjemplarData auxE = new EjemplarData(conexion);
-        ArrayList<Ejemplar>ejemplares=(ArrayList)auxE.obtenerEjemplaresSegunEstado(true);
+        ArrayList<Ejemplar>ejemplares=(ArrayList)auxE.obtenerEjemplares();
         for(Ejemplar a:ejemplares){
             jCEjemplar.addItem(a);
         } 
@@ -151,7 +151,7 @@ PrestamoData prestamoData;
     
     public void cargarLectores(){
         LectorData auxL = new LectorData(conexion);
-        ArrayList<Lector> lectores = (ArrayList)auxL.obtenerLectoresSegunEstado(true);
+        ArrayList<Lector> lectores = (ArrayList)auxL.obtenerLectores();
         for(Lector l:lectores){
             jCLector.addItem(l);
         } 
@@ -162,7 +162,9 @@ PrestamoData prestamoData;
     private void jBSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSolicitarActionPerformed
         // TODO add your handling code here:
 //        prestamoData.revisionDePrestamosSinDevolucion();
+        prestamoData.revisionDePrestamosSinDevolucion();        
         Lector auxL = (Lector)jCLector.getSelectedItem();
+        prestamoData.revisarAltaLector(auxL);
         Ejemplar auxE = (Ejemplar)jCEjemplar.getSelectedItem();
         if(auxL!=null&&auxE!=null){
         prestamoData.solicitarPrestamo(auxE, auxL);

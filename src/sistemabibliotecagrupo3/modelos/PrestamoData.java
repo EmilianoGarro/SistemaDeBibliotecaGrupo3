@@ -262,7 +262,7 @@ public class PrestamoData {
            this.actualizarEjemplar(auxE);
         }
         
-        if(p.getMulta()!=null&&aux.isAfter(auxL)){
+        if(aux.isAfter(auxL)&&p.getFechaDevolucion()==null){
         auxLector = this.buscarLector(p.getLector().getId_Lector());
         this.darBajaLector(auxLector);
         Ejemplar auxE = p.getEjemplar();
@@ -512,20 +512,7 @@ public class PrestamoData {
     }
 
     public void revisarAltaLector(Lector lector){
-    ArrayList<Lector>p=(ArrayList)this.obtenerPrestamosVigentesPorLector(lector);
-    ArrayList<Lector>m=(ArrayList)this.obtenerLectoresConMultas();
-    int a = 0;
-    for(Lector l:m){
-        if(l.getDni()==lector.getDni());
-        a++;
-    }
-    
-    if(p.size()==0&&a==0){
-    Lector auxl = this.buscarLector(lector.getId_Lector());
-    auxl.setActivo(true);
-    this.darAltaLector(auxl);
-    } 
-
+       this.darAltaLector(lector);
 }
     
     public Prestamo buscarPrestamo(Lector lector,Ejemplar ejemplar,boolean estado){
