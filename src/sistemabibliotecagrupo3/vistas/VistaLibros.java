@@ -76,7 +76,6 @@ public class VistaLibros extends javax.swing.JInternalFrame {
         jTTipo = new javax.swing.JTextField();
         jYearAnio = new com.toedter.calendar.JYearChooser();
         jCAutor = new javax.swing.JComboBox<>();
-        jBNuevo = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -203,18 +202,10 @@ public class VistaLibros extends javax.swing.JInternalFrame {
 
         jYearAnio.setMinimum(0);
         jYearAnio.setValue(0);
-        jYearAnio.setYear(0);
 
         jCAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCAutorActionPerformed(evt);
-            }
-        });
-
-        jBNuevo.setText("Nuevo");
-        jBNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBNuevoActionPerformed(evt);
             }
         });
 
@@ -262,9 +253,7 @@ public class VistaLibros extends javax.swing.JInternalFrame {
                             .addComponent(jTEditorial)
                             .addComponent(jTTipo, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jYearAnio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jCAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(26, 26, 26)
-                        .addComponent(jBNuevo)))
+                            .addComponent(jCAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(85, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -291,12 +280,11 @@ public class VistaLibros extends javax.swing.JInternalFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)))
-                .addGap(15, 15, 15)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jCAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBNuevo))
-                .addGap(11, 11, 11)
+                    .addComponent(jCAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -447,10 +435,11 @@ public class VistaLibros extends javax.swing.JInternalFrame {
 
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
         // TODO add your handling code here:
+        jCAutor.removeAllItems();
         jTID.setText("");
         jTNombre.setText("");
         jTIsbn.setText("");
-        jYearAnio.setValue(2021);
+        jYearAnio.setValue(0);
         jTEditorial.setText("");
         jTTipo.setText("");
         cargarAutores();
@@ -580,12 +569,6 @@ public class VistaLibros extends javax.swing.JInternalFrame {
     private void jCAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCAutorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCAutorActionPerformed
-
-    private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
-        // TODO add your handling code here:
-//        MenuPrincipal mp = new MenuPrincipal();
-//        mp.agregarVentanaAutores();
-    }//GEN-LAST:event_jBNuevoActionPerformed
     public void cargarAutores(){
         autores = libroData.listarAutores(); 
         for(Autor a:autores){
@@ -599,7 +582,6 @@ public class VistaLibros extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBGuardar;
     private javax.swing.JButton jBLimpiar;
-    private javax.swing.JButton jBNuevo;
     private javax.swing.JComboBox<Autor> jCAutor;
     private javax.swing.JCheckBox jCEstado;
     private javax.swing.JLabel jLabel1;

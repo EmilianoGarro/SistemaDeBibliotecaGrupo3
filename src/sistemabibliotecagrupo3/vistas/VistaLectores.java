@@ -197,7 +197,6 @@ public class VistaLectores extends javax.swing.JInternalFrame {
         jLabel8.setText("@Correo:");
 
         jBAlta.setText("Dar alta");
-        jBAlta.setEnabled(false);
         jBAlta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAltaActionPerformed(evt);

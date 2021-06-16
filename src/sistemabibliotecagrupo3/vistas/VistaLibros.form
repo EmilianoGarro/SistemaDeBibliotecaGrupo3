@@ -75,8 +75,6 @@
                           <Component id="jYearAnio" alignment="0" max="32767" attributes="0"/>
                           <Component id="jCAutor" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                      <Component id="jBNuevo" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="85" max="32767" attributes="0"/>
@@ -113,13 +111,12 @@
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jCAutor" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jBNuevo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTIsbn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -308,7 +305,6 @@
       <Properties>
         <Property name="minimum" type="int" value="0"/>
         <Property name="value" type="int" value="0"/>
-        <Property name="year" type="int" value="0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jCAutor">
@@ -323,14 +319,6 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Autor&gt;"/>
       </AuxValues>
-    </Component>
-    <Component class="javax.swing.JButton" name="jBNuevo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Nuevo"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBNuevoActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

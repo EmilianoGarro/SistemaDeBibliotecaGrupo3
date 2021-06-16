@@ -124,21 +124,21 @@ public class LectorData {
     }
     
     public void darBajaLector(int id){
-    ArrayList<Prestamo> prestamos =(ArrayList)this.obtenerPrestamos();
-    int m = 0,d=0;
+//    ArrayList<Prestamo> prestamos =(ArrayList)this.obtenerPrestamos();
+//    int m = 0,d=0;
     Lector lectorA = this.buscarLector(id);
-    for(Prestamo p : prestamos){
-        if(p.getLector().getId_Lector()==id&&p.isActivo()){
-        
-                    if(p.getMulta()!=null){
-                    m++;
-                    }
-                    if(p.getFechaDevolucion()==null){
-                    d++;
-                    }
-        }
-    }    
-    if(lectorA!=null&&lectorA.isActivo()==true&&m==0&&d==0){
+//    for(Prestamo p : prestamos){
+//        if(p.getLector().getId_Lector()==id&&p.isActivo()){
+//        
+//                    if(p.getMulta()!=null){
+//                    m++;
+//                    }
+//                    if(p.getFechaDevolucion()==null){
+//                    d++;
+//                    }
+//        }
+//    }    
+    if(lectorA!=null&&lectorA.isActivo()==true){
         try{
         String sql = "UPDATE lector SET estado=0 WHERE idLector=?";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -156,8 +156,9 @@ public class LectorData {
         JOptionPane.showMessageDialog(null, "El lector que desea dar de baja no se encuentra en la base de datos");
     }else if(lectorA.isActivo()==false){
         JOptionPane.showMessageDialog(null,"El lector ya esta dado de baja");
-    }else if(m!=0){JOptionPane.showMessageDialog(null, "El lector no se puede dar de baja por que tiene "+m+" multa/s activa/s");
-    }else if(d!=0){JOptionPane.showMessageDialog(null,"El lectore no se puede dar de baja por que tiene "+d+" prestamo/s pendiente/s");}
+//    }else if(m!=0){JOptionPane.showMessageDialog(null, "El lector no se puede dar de baja por que tiene "+m+" multa/s activa/s");
+//    }else if(d!=0){JOptionPane.showMessageDialog(null,"El lectore no se puede dar de baja por que tiene "+d+" prestamo/s pendiente/s");
+    }
     
     }
     
