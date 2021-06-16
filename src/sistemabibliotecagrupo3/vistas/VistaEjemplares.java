@@ -381,7 +381,7 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         jCLibro.setEnabled(true);
         jBAlta.setEnabled(false);
         jBActualizar.setEnabled(false);
-        jBGuardar.setEnabled(false);
+        jBGuardar.setEnabled(true);
         jBBorrar.setEnabled(false);
         
         
