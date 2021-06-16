@@ -112,7 +112,6 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         });
 
         jBGuardar.setText("Guardar");
-        jBGuardar.setEnabled(false);
         jBGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBGuardarActionPerformed(evt);
@@ -262,13 +261,13 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void habilitarBotonGuardar(){
+    //private void habilitarBotonGuardar(){
         
         
-        if(jCStatus.getSelectedItem()!=null&&jCLibro.getSelectedItem()!=null){
-        jBGuardar.setEnabled(true);
-        }else{jBGuardar.setEnabled(false);}
-    }
+//        if(jCStatus.getSelectedItem()!=null){
+//        jBGuardar.setEnabled(true);
+//        }else{jBGuardar.setEnabled(false);}
+//    }
     
     private void habilitarBotonBuscar(){
                  if(!jTID.getText().isEmpty()){
@@ -432,7 +431,7 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTIDKeyReleased
 
     private void jCLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCLibroActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
     }//GEN-LAST:event_jCLibroActionPerformed
 
     private void jCStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCStatusActionPerformed
@@ -441,7 +440,6 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
 
     private void jCEstadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCEstadoKeyReleased
         // TODO add your handling code here:
-        habilitarBotonGuardar();
     }//GEN-LAST:event_jCEstadoKeyReleased
 
     private void jBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAltaActionPerformed
