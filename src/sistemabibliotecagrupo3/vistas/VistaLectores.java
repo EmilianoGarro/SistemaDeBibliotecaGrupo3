@@ -65,7 +65,6 @@ public class VistaLectores extends javax.swing.JInternalFrame {
         jBBuscar = new javax.swing.JButton();
         jTCorreo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jBAlta = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -196,13 +195,6 @@ public class VistaLectores extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel8.setText("@Correo:");
 
-        jBAlta.setText("Dar alta");
-        jBAlta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBAltaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -215,40 +207,39 @@ public class VistaLectores extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel7)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jCEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(193, 193, 193))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel2)
+                                            .addGap(58, 58, 58)
+                                            .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jBBuscar))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel3)
+                                                .addComponent(jLabel4)
+                                                .addComponent(jLabel5))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jTApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jTDni, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(83, 83, 83)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(193, 193, 193))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(58, 58, 58)
-                                        .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jBBuscar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel5))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTDni, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(83, 83, 83))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jBGuardar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jBBorrar)
-                                .addGap(12, 12, 12)
+                                .addGap(18, 18, 18)
                                 .addComponent(jBActualizar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBAlta)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGap(18, 18, 18)))
                         .addComponent(jBLimpiar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(184, 184, 184)
@@ -292,8 +283,7 @@ public class VistaLectores extends javax.swing.JInternalFrame {
                     .addComponent(jBGuardar)
                     .addComponent(jBBorrar)
                     .addComponent(jBActualizar)
-                    .addComponent(jBLimpiar)
-                    .addComponent(jBAlta))
+                    .addComponent(jBLimpiar))
                 .addGap(34, 34, 34))
         );
 
@@ -319,9 +309,8 @@ public class VistaLectores extends javax.swing.JInternalFrame {
         Lector lector = lectorData.buscarLector(aux);
         if(lector!=null && lector.isActivo()!=false){
         jBBorrar.setEnabled(true);
-        jBAlta.setEnabled(true);
-        }else{jBBorrar.setEnabled(false);
-        jBAlta.setEnabled(false);}
+        }else{
+        jBBorrar.setEnabled(false);}
         }
        
       
@@ -354,7 +343,6 @@ public class VistaLectores extends javax.swing.JInternalFrame {
         jTDni.setEnabled(false);
         jCEstado.setEnabled(false);
         jTCorreo.setEnabled(false);
-         jBAlta.setEnabled(false);
      
     }//GEN-LAST:event_jBGuardarActionPerformed
 
@@ -380,7 +368,6 @@ public class VistaLectores extends javax.swing.JInternalFrame {
         jBBorrar.setEnabled(false);
         jBBuscar.setEnabled(false);
         jBActualizar.setEnabled(false);
-        jBAlta.setEnabled(false);
         }
         else{JOptionPane.showMessageDialog(this, "El lector que intenta borrar, no se encuentra en la base de datos");}
     }//GEN-LAST:event_jBBorrarActionPerformed
@@ -401,12 +388,10 @@ public class VistaLectores extends javax.swing.JInternalFrame {
         jTApellido.setEnabled(false);
         jTDni.setEnabled(false);
         jTCorreo.setEnabled(false);
-        
         jBBuscar.setEnabled(false);
         jBActualizar.setEnabled(false);
         jBBorrar.setEnabled(false);
         jBGuardar.setEnabled(false);
-        jBAlta.setEnabled(false);
         }else{JOptionPane.showMessageDialog(this,"El lector que quiere actualizar no esta en la base de datos");}
     }//GEN-LAST:event_jBActualizarActionPerformed
 
@@ -429,7 +414,6 @@ public class VistaLectores extends javax.swing.JInternalFrame {
         jBActualizar.setEnabled(false);
         jBGuardar.setEnabled(false);
         jBBorrar.setEnabled(false);
-        jBAlta.setEnabled(false);
         
         
     }//GEN-LAST:event_jBLimpiarActionPerformed
@@ -444,6 +428,8 @@ public class VistaLectores extends javax.swing.JInternalFrame {
         jTApellido.setText(lector.getApellido());
         jTCorreo.setText(lector.getEmail());
         jCEstado.setSelected(lector.isActivo());
+        jCEstado.setEnabled(true);
+        jBBorrar.setEnabled(true);
         jBBuscar.setEnabled(false);
         jBGuardar.setEnabled(false);
         jBActualizar.setEnabled(true);
@@ -543,35 +529,8 @@ public class VistaLectores extends javax.swing.JInternalFrame {
         habilitarBotonActualizar();
     }//GEN-LAST:event_jCEstadoKeyReleased
 
-    private void jBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAltaActionPerformed
-        // TODO add your handling code here:
-        int id = Integer.parseInt(jTID.getText());
-        Lector lector = lectorData.buscarLector(id);
-        if(lector!=null){
-        
-        lectorData.darAltaLector(id);
-        
-        jTDni.setText(String.valueOf(lector.getDni()));
-        jTNombre.setText(lector.getNombre());
-        jTApellido.setText(lector.getApellido());
-        jTCorreo.setText(lector.getEmail());
-        jCEstado.setEnabled(false);
-        jTID.setEnabled(false);
-        jTNombre.setEnabled(false);
-        jTApellido.setEnabled(false);
-        jTDni.setEnabled(false);
-        jTCorreo.setEnabled(false);
-        jBAlta.setEnabled(false);
-        jBBorrar.setEnabled(false);
-        jBBuscar.setEnabled(false);
-        jBActualizar.setEnabled(false);
-        }
-        else{JOptionPane.showMessageDialog(this, "El lector que intenta dar de alta, no se encuentra en la base de datos");}
-    }//GEN-LAST:event_jBAltaActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBActualizar;
-    private javax.swing.JButton jBAlta;
     private javax.swing.JButton jBBorrar;
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBGuardar;

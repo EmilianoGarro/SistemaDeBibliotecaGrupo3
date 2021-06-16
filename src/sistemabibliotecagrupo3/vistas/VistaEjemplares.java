@@ -158,10 +158,20 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
                 jCLibroActionPerformed(evt);
             }
         });
+        jCLibro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jCLibroKeyReleased(evt);
+            }
+        });
 
         jCStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCStatusActionPerformed(evt);
+            }
+        });
+        jCStatus.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jCStatusKeyReleased(evt);
             }
         });
 
@@ -183,7 +193,6 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
                                 .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(35, 35, 35)
                                 .addComponent(jBBuscar))
@@ -301,7 +310,7 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         jTID.setText(String.valueOf(ejemplar.getId_Ejemplar()));
         jTID.setEnabled(false);
         jBGuardar.setEnabled(false);
-jBAlta.setEnabled(false);
+        jBAlta.setEnabled(false);
         jCEstado.setEnabled(false);
         jCStatus.setEnabled(false);
         jCLibro.setEnabled(false);
@@ -458,6 +467,14 @@ jBAlta.setEnabled(false);
         else if(ejemplar==null){JOptionPane.showMessageDialog(this, "El ejemplar que intenta dar de alta, no se encuentra en la base de datos");
         }
     }//GEN-LAST:event_jBAltaActionPerformed
+
+    private void jCLibroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCLibroKeyReleased
+        // TODO add your handling code here:\
+    }//GEN-LAST:event_jCLibroKeyReleased
+
+    private void jCStatusKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCStatusKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCStatusKeyReleased
     public void cargarLibros(){
         libros = ejemplarData.listarLibros(); 
         for(Libro l:libros){

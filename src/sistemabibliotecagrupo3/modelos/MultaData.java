@@ -36,7 +36,7 @@ public class MultaData {
     public void guardarMulta(Multa multa){
     
     try{
-        String sql = "INSERT INTO multa(fechaInicio,fechaDevolucion,activo) VALUES (?,?,?)";
+        String sql = "INSERT INTO multa(fechaInicio,fechaFin,activo) VALUES (?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
         ps.setDate(1,Date.valueOf(multa.getFechaInicio()));
         ps.setDate(2,Date.valueOf(multa.getFechaFin()));
@@ -68,7 +68,7 @@ public class MultaData {
             auxMulta=new Multa();
             auxMulta.setId_Multa(rs.getInt("idMulta"));
             auxMulta.setEstado(rs.getBoolean("activo"));
-            auxMulta.setFechaFin(rs.getDate("fechaDevolucion").toLocalDate());
+            auxMulta.setFechaFin(rs.getDate("fechaFin").toLocalDate());
             auxMulta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
             }
             ps.close();
@@ -116,7 +116,7 @@ public class MultaData {
     Multa auxMulta = buscarMulta(multa.getId_Multa());
     if(auxMulta!=null){
     try{
-        String sql = "UPDATE multa SET fechaInicio=?,fechaDevolucion=?,activo=? WHERE idMulta=?";
+        String sql = "UPDATE multa SET fechaInicio=?,fechaFin=?,activo=? WHERE idMulta=?";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
         ps.setDate(1,Date.valueOf(multa.getFechaInicio()));
         ps.setDate(2, Date.valueOf(multa.getFechaFin()));
@@ -162,7 +162,7 @@ public class MultaData {
         auxMulta.setId_Multa(rs.getInt("idMulta"));
         auxMulta.setEstado(rs.getBoolean("activo"));
         auxMulta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
-        auxMulta.setFechaFin(rs.getDate("fechaDevolucion").toLocalDate());
+        auxMulta.setFechaFin(rs.getDate("fechaFin").toLocalDate());
         multas.add(auxMulta);
         }
         ps.close();
@@ -187,7 +187,7 @@ public class MultaData {
         auxMulta.setId_Multa(rs.getInt("idMulta"));
         auxMulta.setEstado(rs.getBoolean("activo"));
         auxMulta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
-        auxMulta.setFechaFin(rs.getDate("fechaDevolucion").toLocalDate());
+        auxMulta.setFechaFin(rs.getDate("fechaFin").toLocalDate());
         multas.add(auxMulta);
         }
         ps.close();
