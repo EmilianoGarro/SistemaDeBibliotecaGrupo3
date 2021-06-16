@@ -201,6 +201,10 @@ public class VistaLibros extends javax.swing.JInternalFrame {
             }
         });
 
+        jYearAnio.setMinimum(0);
+        jYearAnio.setValue(0);
+        jYearAnio.setYear(0);
+
         jCAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCAutorActionPerformed(evt);
@@ -227,7 +231,6 @@ public class VistaLibros extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(46, 46, 46)
@@ -262,7 +265,7 @@ public class VistaLibros extends javax.swing.JInternalFrame {
                             .addComponent(jCAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(26, 26, 26)
                         .addComponent(jBNuevo)))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

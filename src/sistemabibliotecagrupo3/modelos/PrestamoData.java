@@ -249,17 +249,25 @@ public class PrestamoData {
            this.guardarMulta(auxM);
            p.setMulta(auxM);
            this.actualizarPrestamo(p);
+           Ejemplar auxE = p.getEjemplar();
+           auxE.setEstado("Retraso");
+           this.actualizarEjemplar(auxE);
         }else if(p.getMulta()!=null&&p.getFechaDevolucion()==null&&!aux.isAfter(inicioYFin)){
         auxM = this.buscarMulta(p.getMulta().getId_Multa());
         LocalDate auxFin = auxM.getFechaFin();
         auxM.setFechaFin(auxFin.plusDays(2));
         this.actualizarMulta(auxM);
+        Ejemplar auxE = p.getEjemplar();
+           auxE.setEstado("Retraso");
+           this.actualizarEjemplar(auxE);
         }
         
         if(p.getMulta()!=null&&aux.isAfter(auxL)){
         auxLector = this.buscarLector(p.getLector().getId_Lector());
         this.darBajaLector(auxLector);
-       
+        Ejemplar auxE = p.getEjemplar();
+         auxE.setEstado("Retraso");
+        this.actualizarEjemplar(auxE);
         }
         
         

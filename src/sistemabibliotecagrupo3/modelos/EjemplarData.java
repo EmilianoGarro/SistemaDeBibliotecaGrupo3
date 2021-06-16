@@ -65,7 +65,7 @@ public class EjemplarData {
     
     public void darBajaEjemplar(int id){
     Ejemplar auxEjemplar = buscarEjemplar(id);
-    if(auxEjemplar!=null&&auxEjemplar.isActivo()==true){
+    if(auxEjemplar!=null&&auxEjemplar.isActivo()==true&&!"Prestado".equals(auxEjemplar.getEstado())){
         try{
         String sql = "UPDATE ejemplar SET activo=0 WHERE idEjemplar=?";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -79,7 +79,7 @@ public class EjemplarData {
         JOptionPane.showMessageDialog(null, "El ejemplar que desea borrar no esta en la base de datos");
         }else if (auxEjemplar.isActivo()==false){
         JOptionPane.showMessageDialog(null, "EL ejemplar ya se encuentra dado de baja");
-        }
+        }else if("Prestado".equals(auxEjemplar.getEstado())){JOptionPane.showMessageDialog(null, "El ejemplar no se puede dar de baja por que esta prestado");}
     
     }
     

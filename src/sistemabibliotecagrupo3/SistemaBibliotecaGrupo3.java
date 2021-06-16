@@ -37,8 +37,8 @@ public class SistemaBibliotecaGrupo3 {
                 MultaData multaData = new MultaData(conexion);
                 PrestamoData prestamoData = new PrestamoData(conexion);
 
-                System.out.println(autorData.obtenerAutoresSegunEstado(true));
-                System.out.println(libroData.listarAutores());
+//                System.out.println(autorData.obtenerAutoresSegunEstado(true));
+//                System.out.println(libroData.listarAutores());
 //            ---------------------------PRUEBA AUTORDATA-------------------------------------------
 //  ---------------------------------AUTORES--------------------------------------------------------------------
 //                Autor a1 = new Autor(5748365,"Céline","Louis-Ferdinand","Francia",LocalDate.of(1894,5,27),true);

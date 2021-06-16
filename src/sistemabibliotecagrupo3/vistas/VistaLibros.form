@@ -36,7 +36,6 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
@@ -80,7 +79,7 @@
                       <Component id="jBNuevo" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="67" max="32767" attributes="0"/>
+              <EmptySpace pref="85" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -306,6 +305,11 @@
       </Events>
     </Component>
     <Component class="com.toedter.calendar.JYearChooser" name="jYearAnio">
+      <Properties>
+        <Property name="minimum" type="int" value="0"/>
+        <Property name="value" type="int" value="0"/>
+        <Property name="year" type="int" value="0"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jCAutor">
       <Properties>

@@ -6,6 +6,9 @@
 package sistemabibliotecagrupo3.vistas;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -37,8 +40,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMPrestamosVencidos = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMListarMultas = new javax.swing.JMenuItem();
-        jMenu8 = new javax.swing.JMenu();
-        jMenuItem18 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMAutores = new javax.swing.JMenuItem();
         jMEjemplares = new javax.swing.JMenuItem();
@@ -49,6 +50,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMListadoEjemplares = new javax.swing.JMenuItem();
         jMListadoLectores = new javax.swing.JMenuItem();
         jMListadoLibros = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuItem18 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +77,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu6.add(jMSolicitar);
 
         jMBuscarPrestamo.setText("Buscar Prestamo");
+        jMBuscarPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMBuscarPrestamoActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMBuscarPrestamo);
 
         jMPrestamosVencidos.setText("Prestamos Vencidos");
@@ -97,13 +105,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu7.add(jMListarMultas);
 
         jMenuBar1.add(jMenu7);
-
-        jMenu8.setText("Salir");
-
-        jMenuItem18.setText("Exit");
-        jMenu8.add(jMenuItem18);
-
-        jMenuBar1.add(jMenu8);
 
         jMenu1.setText("Altas, Bajas y Modificaciones");
 
@@ -176,6 +177,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu2.add(jMListadoLibros);
 
         jMenuBar1.add(jMenu2);
+
+        jMenu8.setText("Salir");
+
+        jMenuItem18.setText("Exit");
+        jMenu8.add(jMenuItem18);
+
+        jMenuBar1.add(jMenu8);
 
         setJMenuBar(jMenuBar1);
 
@@ -319,7 +327,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMSolicitarActionPerformed
         escritorio.removeAll();
         escritorio.repaint();
-        VistaPrestamos vp = new VistaPrestamos();
+        VistaSolicitarPrestamo vp = new VistaSolicitarPrestamo();
         vp.setVisible(true);
         escritorio.add(vp);
         escritorio.moveToFront(vp);
@@ -342,6 +350,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
         lm.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
         lm.show();
     }//GEN-LAST:event_jMListarMultasActionPerformed
+
+    private void jMBuscarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMBuscarPrestamoActionPerformed
+        // TODO add your handling code here:
+         escritorio.removeAll();
+        escritorio.repaint();
+        VistaPrestamos vp = new VistaPrestamos();
+        vp.setVisible(true);
+        escritorio.add(vp);
+        escritorio.moveToFront(vp);
+         Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = vp.getSize();
+        vp.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        vp.show();
+    }//GEN-LAST:event_jMBuscarPrestamoActionPerformed
 
     /**
      * @param args the command line arguments

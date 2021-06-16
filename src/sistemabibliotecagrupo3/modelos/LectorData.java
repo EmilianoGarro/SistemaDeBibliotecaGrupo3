@@ -21,15 +21,18 @@ import javax.swing.JOptionPane;
  * @author Emiliano
  */
 public class LectorData {
+     private Conexion conexion;
      private Connection con;
     
     public LectorData(Conexion conexion){
         try {
+            this.conexion=conexion;
             con = conexion.getConexion();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error de conexion");
         }
     }
+    
     public void guardarLector(Lector lector){
     try{
         String sql = "INSERT INTO lector(dni, apellido, nombre,email,estado) VALUES (?,?,?,?,?)";
@@ -88,7 +91,8 @@ public class LectorData {
         ps.setString(2,lector.getApellido());
         ps.setString(3,lector.getNombre());
         ps.setString(4, lector.getEmail());
-        ps.setBoolean(5, lector.isActivo());
+            
+                ps.setBoolean(5, lector.isActivo());
         ps.setInt(6, lector.getId_Lector());
         ps.executeUpdate();
         ps.close();
@@ -101,9 +105,40 @@ public class LectorData {
     
     }
     
+    protected List<Prestamo> obtenerPrestamos(){
+    PrestamoData prestamoData = new PrestamoData(conexion);
+    ArrayList<Prestamo>auxP=(ArrayList)prestamoData.obtenerPrestamos();
+    return auxP;
+    }
+    
+    protected ArrayList<Lector> obtenerLectoresConMultas(){
+    PrestamoData prestamoData = new PrestamoData(conexion);
+    ArrayList<Lector>auxL=(ArrayList)prestamoData.obtenerLectoresConMultas();
+    return auxL;
+    }
+    
+    protected List<Lector> obtenerPrestamosVencidos(){
+    PrestamoData prestamoData = new PrestamoData(conexion);
+    List<Lector>auxP=prestamoData.obtenerLectoresConPrestamosVencidos();
+    return auxP;
+    }
+    
     public void darBajaLector(int id){
+    ArrayList<Prestamo> prestamos =(ArrayList)this.obtenerPrestamos();
+    int m = 0,d=0;
     Lector lectorA = this.buscarLector(id);
-        if(lectorA!=null&&lectorA.isActivo()==true){
+    for(Prestamo p : prestamos){
+        if(p.getLector().getId_Lector()==id&&p.isActivo()){
+        
+                    if(p.getMulta()!=null){
+                    m++;
+                    }
+                    if(p.getFechaDevolucion()==null){
+                    d++;
+                    }
+        }
+    }    
+    if(lectorA!=null&&lectorA.isActivo()==true&&m==0&&d==0){
         try{
         String sql = "UPDATE lector SET estado=0 WHERE idLector=?";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -120,12 +155,28 @@ public class LectorData {
     }else if(lectorA==null){
         JOptionPane.showMessageDialog(null, "El lector que desea dar de baja no se encuentra en la base de datos");
     }else if(lectorA.isActivo()==false){
-        JOptionPane.showMessageDialog(null,"El lector ya esta dado de baja");}
+        JOptionPane.showMessageDialog(null,"El lector ya esta dado de baja");
+    }else if(m!=0){JOptionPane.showMessageDialog(null, "El lector no se puede dar de baja por que tiene "+m+" multa/s activa/s");
+    }else if(d!=0){JOptionPane.showMessageDialog(null,"El lectore no se puede dar de baja por que tiene "+d+" prestamo/s pendiente/s");}
+    
     }
     
     public void darAltaLector(int id){
-    Lector lectorA = this.buscarLector(id);
-    if(lectorA!=null&&lectorA.isActivo()==false){
+    Lector lectorA = this.buscarLector(id);    
+    boolean auxB = false;
+    ArrayList<Lector>p=(ArrayList)obtenerPrestamosVencidos();
+    ArrayList<Lector>m=(ArrayList)this.obtenerLectoresConMultas();
+    int a = 0;
+    for(Lector l:m){
+        if(l.getDni()==lectorA.getDni());
+        a++;
+    }
+    if(p.isEmpty()&&a==0){
+    auxB=true;
+    } 
+        ////////
+//         Lector lectorA = this.buscarLector(id);
+    if(lectorA!=null&&lectorA.isActivo()==false&&auxB==true){
     try{
         String sql = "UPDATE lector SET estado=1 WHERE idLector=?";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -143,9 +194,10 @@ public class LectorData {
    JOptionPane.showMessageDialog(null, "El lector que desea dar de alta no se encuentra en la base de datos");
    }else if(lectorA.isActivo()==true){
    JOptionPane.showMessageDialog(null, "El lector ya esta dado de alta");
-   }
-   }
-
+   }else if(a!=0){JOptionPane.showMessageDialog(null, "El lector no se puede dar de alta por que tiene "+m+" multa/s");
+   }else if(!p.isEmpty()){JOptionPane.showMessageDialog(null, "El lector no se puede dar de alta por que posee "+p.size()+" prestamo/s vencidos");}
+   } 
+ 
     public void eliminarLector(int id){
     Lector auxLector = buscarLector(id);
     if(auxLector!=null){
@@ -187,6 +239,7 @@ public class LectorData {
          }
     return lectores;
     }
+    
     public List<Lector> obtenerLectoresSegunEstado(boolean estado){
     List<Lector> lectores= new ArrayList<>();
         
