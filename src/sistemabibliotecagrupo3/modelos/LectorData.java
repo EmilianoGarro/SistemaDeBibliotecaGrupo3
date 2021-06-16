@@ -41,7 +41,7 @@ public class LectorData {
         ps.setString(2,lector.getApellido());
         ps.setString(3, lector.getNombre());
         ps.setString(4, lector.getEmail());
-        ps.setBoolean(5, lector.isActivo());
+        ps.setBoolean(5, true);
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
             if(rs.next()){
@@ -124,20 +124,8 @@ public class LectorData {
     }
     
     public void darBajaLector(int id){
-//    ArrayList<Prestamo> prestamos =(ArrayList)this.obtenerPrestamos();
-//    int m = 0,d=0;
     Lector lectorA = this.buscarLector(id);
-//    for(Prestamo p : prestamos){
-//        if(p.getLector().getId_Lector()==id&&p.isActivo()){
-//        
-//                    if(p.getMulta()!=null){
-//                    m++;
-//                    }
-//                    if(p.getFechaDevolucion()==null){
-//                    d++;
-//                    }
-//        }
-//    }    
+
     if(lectorA!=null&&lectorA.isActivo()==true){
         try{
         String sql = "UPDATE lector SET estado=0 WHERE idLector=?";
@@ -155,11 +143,7 @@ public class LectorData {
     }else if(lectorA==null){
         JOptionPane.showMessageDialog(null, "El lector que desea dar de baja no se encuentra en la base de datos");
     }else if(lectorA.isActivo()==false){
-        JOptionPane.showMessageDialog(null,"El lector ya esta dado de baja");
-//    }else if(m!=0){JOptionPane.showMessageDialog(null, "El lector no se puede dar de baja por que tiene "+m+" multa/s activa/s");
-//    }else if(d!=0){JOptionPane.showMessageDialog(null,"El lectore no se puede dar de baja por que tiene "+d+" prestamo/s pendiente/s");
-    }
-    
+        JOptionPane.showMessageDialog(null,"El lector ya esta dado de baja");}
     }
     
     public void darAltaLector(int id){
