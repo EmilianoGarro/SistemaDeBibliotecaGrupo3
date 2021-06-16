@@ -215,6 +215,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMAutoresActionPerformed
 //    public void agregarVentanaAutores() {
 //        VistaAutores va = new VistaAutores();
+    
 //        escritorio.add(va);
 //        escritorio.moveToFront(va);
 //        va.setVisible(true);
