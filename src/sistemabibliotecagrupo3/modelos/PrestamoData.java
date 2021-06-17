@@ -237,6 +237,7 @@ public class PrestamoData {
     
     public void revisionDePrestamosSinDevolucion(){
      ArrayList<Prestamo>prestamos=(ArrayList)obtenerPrestamos();
+        
         for(Prestamo p:prestamos){
         
         LocalDate inicioYFin = p.getFechaPrestamo().plusDays(30);
@@ -334,8 +335,18 @@ public class PrestamoData {
             ResultSet rs = ps.executeQuery();
             Prestamo auxPrestamo;
             while(rs.next()){
-            auxPrestamo = buscarPrestamo(rs.getInt("idPrestamo"));
-            prestamos.add(auxPrestamo);
+                auxPrestamo = new Prestamo();
+                auxPrestamo.setActivo(rs.getBoolean("activo"));
+                Ejemplar ejemplar = buscarEjemplar(rs.getInt("idEjemplar"));
+                auxPrestamo.setEjemplar(ejemplar);
+                auxPrestamo.setFechaPrestamo(rs.getDate("fechaPrestamo").toLocalDate());
+                auxPrestamo.setFechaDevolucion(rs.getDate("fechaDevolucion").toLocalDate());
+                auxPrestamo.setId_Prestamo(rs.getInt("idPrestamo"));
+                Lector lector = buscarLector(rs.getInt("idLector"));
+                auxPrestamo.setLector(lector);
+                Multa multa = buscarMulta(rs.getInt("idMulta"));
+                auxPrestamo.setMulta(multa);          
+                prestamos.add(auxPrestamo);
             }
             ps.close();
     }   catch (SQLException ex) {
