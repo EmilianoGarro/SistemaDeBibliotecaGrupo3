@@ -241,15 +241,15 @@ public class PrestamoData {
     return lectores;
     }
     
-//    public void revisionDePrestamosSinDevolucion(){
-//     ArrayList<Prestamo>prestamos=(ArrayList)obtenerPrestamos();
-//        for(Prestamo p:prestamos){
-//        
-//        LocalDate inicioYFin = p.getFechaPrestamo().plusDays(30);
-//        LocalDate aux = LocalDate.now();
-//        LocalDate auxL = inicioYFin.plusMonths(3);
-//        Multa auxM=null;
-//        Lector auxLector=null;
+    public void revisionDePrestamosSinDevolucion(){
+     ArrayList<Prestamo>prestamos=(ArrayList)obtenerPrestamos();
+        for(Prestamo p:prestamos){
+        
+        LocalDate inicioYFin = p.getFechaPrestamo().plusDays(30);
+        LocalDate aux = LocalDate.now();
+        LocalDate auxL = inicioYFin.plusMonths(3);
+        Multa auxM=null;
+        Lector auxLector=null;
 //        if(p.getMulta()==null&&p.getFechaDevolucion()==null&&aux.isAfter(inicioYFin)){
 //           auxM = new Multa(aux,aux.plusDays(2),true);
 //           this.guardarMulta(auxM);
@@ -267,20 +267,20 @@ public class PrestamoData {
 //           auxE.setEstado("Retraso");
 //           this.actualizarEjemplar(auxE);
 //        }
-//        
-//        if(aux.isAfter(auxL)&&p.getFechaDevolucion()==null){
-//        auxLector = this.buscarLector(p.getLector().getId_Lector());
-//        this.darBajaLector(auxLector);
-//        Ejemplar auxE = p.getEjemplar();
-//         auxE.setEstado("Retraso");
-//        this.actualizarEjemplar(auxE);
-//        }
-//        
-//        
-//        
-//        }
-//    
-//    }
+        
+        if(aux.isAfter(auxL)&&p.getFechaDevolucion()==null){
+        auxLector = this.buscarLector(p.getLector().getId_Lector());
+        this.darBajaLector(auxLector);
+        Ejemplar auxE = p.getEjemplar();
+         auxE.setEstado("Retraso");
+        this.actualizarEjemplar(auxE);
+        }
+        
+        
+        
+        }
+    
+    }
     
     public List<Lector> obtenerLectoresConPrestamosVencidos(){
     ArrayList<Lector>auxLectores=new ArrayList<>();
@@ -481,6 +481,7 @@ public class PrestamoData {
      if(auxPrestamo!=null&&auxPrestamo.getFechaDevolucion()==null){
          LocalDate inicio = prestamo.getFechaPrestamo().plusDays(30);
          LocalDate fin = LocalDate.now();
+         LocalDate desactivar = prestamo.getFechaPrestamo().plusMonths(3);
          
          try{
          String sql = "UPDATE prestamo SET fechaDevolucion = ? , idMulta = ? , activo = 0 WHERE idPrestamo=?";
@@ -499,6 +500,12 @@ public class PrestamoData {
          Ejemplar auxE = buscarEjemplar(prestamo.getEjemplar().getId_Ejemplar());
          auxE.setEstado("Disponible");
          actualizarEjemplar(auxE);
+         
+//         if(fin.isAfter(desactivar)){
+//         Lector aux = prestamo.getLector();
+//         this.darBajaLector(aux);
+//         
+//         }
          
          
          JOptionPane.showMessageDialog(null, "El ejemplar se delvolvio correctamente");

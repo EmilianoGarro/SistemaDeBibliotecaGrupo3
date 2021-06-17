@@ -36,7 +36,7 @@ PrestamoData prestamoData;
         conexion = new Conexion();
         Connection con = conexion.getConexion();
         prestamoData = new PrestamoData(conexion);
-  
+        prestamoData.revisionDePrestamosSinDevolucion();
 //        prestamoData.revisionDePrestamosSinDevolucion();
     } catch (ClassNotFoundException ex) {
         JOptionPane.showMessageDialog(this, "Error con los drivers de conexion");
