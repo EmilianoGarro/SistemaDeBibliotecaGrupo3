@@ -191,6 +191,15 @@ PrestamoData prestamoData;
         } 
         jCLector.setSelectedItem(null);
     }
+    public void cargarEjemplart(String estado){
+        EjemplarData auxE = new EjemplarData(conexion);
+        ArrayList<Ejemplar>ejemplares=(ArrayList)auxE.obtenerEjemplaresSegunEstado(estado);
+        
+        for(Ejemplar a:ejemplares){
+            jCEjemplar.addItem(a);
+        } 
+        jCEjemplar.setSelectedItem(null);
+        }
     
     
     private void jBSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSolicitarActionPerformed
@@ -226,7 +235,9 @@ PrestamoData prestamoData;
       
          jCLector.removeAllItems();
         jCEjemplar.removeAllItems();
+        cargarEjemplart("Retraso");
          cargarEjemplarS("Prestado");
+        
         cargarLectoresP();
     }//GEN-LAST:event_jBDevolverActionPerformed
 
@@ -249,6 +260,7 @@ PrestamoData prestamoData;
         jCLector.removeAllItems();
         jCEjemplar.removeAllItems();
         cargarEjemplarS("Prestado");
+        cargarEjemplart("Retraso");
         cargarLectoresP();
         
         
