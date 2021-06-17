@@ -34,7 +34,7 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
         jTDevolucion.setEditable(false);
         jTMulta.setEditable(false);
         jBBuscar.setEnabled(false);
-//        prestamoData.revisionDePrestamosSinDevolucion();
+        prestamoData.revisionDePrestamosSinDevolucion();
     } catch (ClassNotFoundException ex) {
         JOptionPane.showMessageDialog(this, "Error con los drivers de conexion");
     } catch (SQLException ex) {
