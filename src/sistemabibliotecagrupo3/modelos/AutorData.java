@@ -67,8 +67,8 @@ public class AutorData {
         String sql="INSERT INTO autor(dni, apellido, nombre, nacionalidad, fechaNac, activo) VALUES (?,?,?,?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, autor.getDni());
-        ps.setString(2, autor.getApellido());
-        ps.setString(3, autor.getNombre());
+        ps.setString(2, autor.getNombre());
+        ps.setString(3, autor.getApellido());
         ps.setString(4, autor.getNacionalidad());
         ps.setDate(5, Date.valueOf(autor.getFechaNac()));
         ps.setBoolean(6, autor.isActivo());

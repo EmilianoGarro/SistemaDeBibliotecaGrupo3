@@ -401,7 +401,7 @@ public class VistaLibros extends javax.swing.JInternalFrame {
         jBBuscar.setEnabled(false);
         jBActualizar.setEnabled(false);
         }
-        else{JOptionPane.showMessageDialog(this, "El autor que intenta borrar, no se encuentra en la base de datos");}
+        else{JOptionPane.showMessageDialog(this, "El libro que intenta borrar, no se encuentra en la base de datos");}
     }//GEN-LAST:event_jBBorrarActionPerformed
 
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed

@@ -69,6 +69,12 @@ public class PrestamoData {
         return auxMulta;
     }
     
+    public ArrayList<Multa> obtenerMultas(){
+    MultaData auxM = new MultaData(conexion);
+    ArrayList<Multa>auxMM=(ArrayList)auxM.obtenerMultas();
+    return auxMM;
+    }
+    
     public void actualizarMulta(Multa multa){
     MultaData auxMultaData = new MultaData(conexion);
     auxMultaData.actualizarMulta(multa);
@@ -235,47 +241,46 @@ public class PrestamoData {
     return lectores;
     }
     
-    public void revisionDePrestamosSinDevolucion(){
-     ArrayList<Prestamo>prestamos=(ArrayList)obtenerPrestamos();
-        
-        for(Prestamo p:prestamos){
-        
-        LocalDate inicioYFin = p.getFechaPrestamo().plusDays(30);
-        LocalDate aux = LocalDate.now();
-        LocalDate auxL = inicioYFin.plusMonths(3);
-        Multa auxM=null;
-        Lector auxLector=null;
-        if(p.getMulta()==null&&p.getFechaDevolucion()==null&&aux.isAfter(inicioYFin)){
-           auxM = new Multa(aux,aux.plusDays(2),true);
-           this.guardarMulta(auxM);
-           p.setMulta(auxM);
-           this.actualizarPrestamo(p);
-           Ejemplar auxE = p.getEjemplar();
-           auxE.setEstado("Retraso");
-           this.actualizarEjemplar(auxE);
-        }else if(p.getMulta()!=null&&p.getFechaDevolucion()==null&&!aux.isAfter(inicioYFin)){
-        auxM = this.buscarMulta(p.getMulta().getId_Multa());
-        LocalDate auxFin = auxM.getFechaFin();
-        auxM.setFechaFin(auxFin.plusDays(2));
-        this.actualizarMulta(auxM);
-        Ejemplar auxE = p.getEjemplar();
-           auxE.setEstado("Retraso");
-           this.actualizarEjemplar(auxE);
-        }
-        
-        if(aux.isAfter(auxL)&&p.getFechaDevolucion()==null){
-        auxLector = this.buscarLector(p.getLector().getId_Lector());
-        this.darBajaLector(auxLector);
-        Ejemplar auxE = p.getEjemplar();
-         auxE.setEstado("Retraso");
-        this.actualizarEjemplar(auxE);
-        }
-        
-        
-        
-        }
-    
-    }
+//    public void revisionDePrestamosSinDevolucion(){
+//     ArrayList<Prestamo>prestamos=(ArrayList)obtenerPrestamos();
+//        for(Prestamo p:prestamos){
+//        
+//        LocalDate inicioYFin = p.getFechaPrestamo().plusDays(30);
+//        LocalDate aux = LocalDate.now();
+//        LocalDate auxL = inicioYFin.plusMonths(3);
+//        Multa auxM=null;
+//        Lector auxLector=null;
+//        if(p.getMulta()==null&&p.getFechaDevolucion()==null&&aux.isAfter(inicioYFin)){
+//           auxM = new Multa(aux,aux.plusDays(2),true);
+//           this.guardarMulta(auxM);
+//           p.setMulta(auxM);
+//           this.actualizarPrestamo(p);
+//           Ejemplar auxE = p.getEjemplar();
+//           auxE.setEstado("Retraso");
+//           this.actualizarEjemplar(auxE);
+//        }else if(p.getMulta()!=null&&p.getFechaDevolucion()==null&&!aux.isAfter(inicioYFin)){
+//        auxM = this.buscarMulta(p.getMulta().getId_Multa());
+//        LocalDate auxFin = auxM.getFechaFin();
+//        auxM.setFechaFin(auxFin.plusDays(2));
+//        this.actualizarMulta(auxM);
+//        Ejemplar auxE = p.getEjemplar();
+//           auxE.setEstado("Retraso");
+//           this.actualizarEjemplar(auxE);
+//        }
+//        
+//        if(aux.isAfter(auxL)&&p.getFechaDevolucion()==null){
+//        auxLector = this.buscarLector(p.getLector().getId_Lector());
+//        this.darBajaLector(auxLector);
+//        Ejemplar auxE = p.getEjemplar();
+//         auxE.setEstado("Retraso");
+//        this.actualizarEjemplar(auxE);
+//        }
+//        
+//        
+//        
+//        }
+//    
+//    }
     
     public List<Lector> obtenerLectoresConPrestamosVencidos(){
     ArrayList<Lector>auxLectores=new ArrayList<>();
@@ -335,18 +340,8 @@ public class PrestamoData {
             ResultSet rs = ps.executeQuery();
             Prestamo auxPrestamo;
             while(rs.next()){
-                auxPrestamo = new Prestamo();
-                auxPrestamo.setActivo(rs.getBoolean("activo"));
-                Ejemplar ejemplar = buscarEjemplar(rs.getInt("idEjemplar"));
-                auxPrestamo.setEjemplar(ejemplar);
-                auxPrestamo.setFechaPrestamo(rs.getDate("fechaPrestamo").toLocalDate());
-                auxPrestamo.setFechaDevolucion(rs.getDate("fechaDevolucion").toLocalDate());
-                auxPrestamo.setId_Prestamo(rs.getInt("idPrestamo"));
-                Lector lector = buscarLector(rs.getInt("idLector"));
-                auxPrestamo.setLector(lector);
-                Multa multa = buscarMulta(rs.getInt("idMulta"));
-                auxPrestamo.setMulta(multa);          
-                prestamos.add(auxPrestamo);
+            auxPrestamo = buscarPrestamo(rs.getInt("idPrestamo"));
+            prestamos.add(auxPrestamo);
             }
             ps.close();
     }   catch (SQLException ex) {
@@ -484,11 +479,20 @@ public class PrestamoData {
         
      
      if(auxPrestamo!=null&&auxPrestamo.getFechaDevolucion()==null){
-        try{
-         String sql = "UPDATE prestamo SET fechaDevolucion=?,activo=0 WHERE idPrestamo=?";
+         LocalDate inicio = prestamo.getFechaPrestamo().plusDays(30);
+         LocalDate fin = LocalDate.now();
+         
+         try{
+         String sql = "UPDATE prestamo SET fechaDevolucion = ? , idMulta = ? , activo = 0 WHERE idPrestamo=?";
          PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
          ps.setDate(1, Date.valueOf(LocalDate.now()));
-         ps.setInt(2,prestamo.getId_Prestamo());
+         if(fin.isAfter(inicio)){
+         Multa auxMulta = new Multa(fin,LocalDate.now().plusDays(2),true);
+          this.guardarMulta(auxMulta);
+           Multa auxMulta2 = this.obtenerMultas().get(this.obtenerMultas().size()-1);
+          ps.setInt(2, auxMulta2.getId_Multa());
+         }else{ps.setNull(2, java.sql.Types.NULL);}
+         ps.setInt(3,prestamo.getId_Prestamo());
          ps.executeUpdate();
          ps.close();
          
@@ -496,18 +500,6 @@ public class PrestamoData {
          auxE.setEstado("Disponible");
          actualizarEjemplar(auxE);
          
-         LocalDate inicio = prestamo.getFechaPrestamo().plusDays(30);
-         LocalDate fin = LocalDate.now();
-         
-         if(fin.isAfter(inicio)&&prestamo.getMulta()==null){
-          Multa auxMulta = new Multa(fin,LocalDate.now().plusDays(2),true);
-          auxPrestamo.setMulta(auxMulta);
-          actualizarPrestamo(auxPrestamo);
-         }else if(fin.isAfter(inicio)&&prestamo.getMulta()!=null){
-         Multa auxMulta = this.buscarMulta(prestamo.getMulta().getId_Multa());
-         auxMulta.setEstado(false);
-         this.actualizarMulta(auxMulta);
-         }
          
          JOptionPane.showMessageDialog(null, "El ejemplar se delvolvio correctamente");
      
@@ -515,12 +507,10 @@ public class PrestamoData {
      }  catch (SQLException ex) {
          JOptionPane.showMessageDialog(null, "Error al devolver el prestamo "+" "+ex.getMessage());
         }
-    
-     }
         
         
     
-    }
+    }}
 
     public void revisarAltaLector(Lector lector){
        this.darAltaLector(lector);
@@ -562,8 +552,95 @@ public class PrestamoData {
     }
     
     
+    public ArrayList<Lector> obtenerLectoresConPrestamosVigentes(){
+    ArrayList<Lector>auxL = new ArrayList<>();
+    try{
+        String sql = "SELECT idLector FROM `prestamo` WHERE fechaDevolucion IS NULL";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ResultSet rs = ps.executeQuery();
+        Lector lector;
+        
+        while(rs.next()){
+        lector = buscarLector(rs.getInt("idLector"));
+        auxL.add(lector);
+        }
+        ps.close();
     
+    }   catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los lectores con prestamos vigentes "+" "+ex.getMessage());
+        }
+    return auxL;
+    }
 
+    public ArrayList<Prestamo>obtenerPrestamosVencidos(){
+    ArrayList<Prestamo> auxP = new ArrayList<>();
+    try{
+            String sql = "SELECT idPrestamo FROM prestamo WHERE fechaDevolucion IS NULL";
+            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = ps.executeQuery();
+            Prestamo prestamo;
+            while(rs.next()){
+            prestamo = buscarPrestamo(rs.getInt("idPrestamo"));
+            auxP.add(prestamo);
+            }
+            ps.close();
+
+    }   catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los prestamos vencidos "+" "+ex.getMessage());
+        }
+    
+    
+    return auxP;
+    }
+    
+    public ArrayList<Prestamo>obtenerPrestamosConMultas(){
+    ArrayList<Prestamo> auxP = new ArrayList<>();
+    try{
+        String sql = "SELECT idPrestamo FROM prestamo WHERE idMulta IS NOT NULL";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ResultSet rs = ps.executeQuery();
+        Prestamo prestamo;
+        while(rs.next()){
+        prestamo = buscarPrestamo(rs.getInt("idPrestamo"));
+        auxP.add(prestamo);
+        }
+        ps.close();
+    }   catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los prestamos con multas");
+        }
+    
+    
+    return auxP;
+    }
+    
+    public ArrayList<Prestamo>obtenerPrestamosConMultasDentroDelMes(){
+    ArrayList<Prestamo> auxP = new ArrayList<>();
+    LocalDate fecha = LocalDate.now();
+    int auxM = fecha.getMonthValue();
+    int auxA = fecha.getYear();
+    LocalDate auxF1  = LocalDate.of(auxA, auxM, 1);
+    LocalDate auxF2 = auxF1.plusMonths(1);
+    try{
+          String sql = "SELECT idPrestamo FROM prestamo WHERE idMulta IS NOT null AND fechaPrestamo BETWEEN ? and ?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setDate(1,Date.valueOf(auxF1));
+        ps.setDate(2,Date.valueOf(auxF2));
+        ResultSet rs = ps.executeQuery();
+        Prestamo prestamo;
+        while(rs.next()){
+            prestamo=buscarPrestamo(rs.getInt("idPrestamo"));
+            auxP.add(prestamo);
+        }
+        ps.close();
+    
+    
+    }   catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los prestamos con multas en el mes");
+        }
+    
+    
+    return auxP;
+    }
 }
    
     

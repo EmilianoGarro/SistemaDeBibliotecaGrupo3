@@ -232,12 +232,12 @@ public class SistemaBibliotecaGrupo3 {
 //            Multa m1 = new Multa(LocalDate.of(2000, 1, 25),LocalDate.of(2021, 6, 6),true);
 //            Multa m2 = new Multa(LocalDate.of(1992, 1, 25),LocalDate.of(2021, 6, 6),false);
 //            Multa m3 = new Multa(LocalDate.of(2012, 1, 25),LocalDate.of(2021, 6, 6),false);
-//            Multa m4 = new Multa(LocalDate.of(2020, 2, 28),LocalDate.of(2021, 6, 6),true);    
+            Multa m4 = new Multa(LocalDate.of(2020, 2, 28),LocalDate.of(2021, 6, 6),true);    
 //            --------------CARGA DE MULTAS---------------------------------------
 //            multaData.guardarMulta(m1);
 //            multaData.guardarMulta(m2);
 //            multaData.guardarMulta(m3);
-//            multaData.guardarMulta(m4);
+            multaData.guardarMulta(m4);
 //            ArrayList<Multa> multas = (ArrayList)multaData.obtenerMultas();
 //            multaData.darAltaMulta(multas.get(1).getId_Multa());
 //            multaData.darAltaMulta(multas.get(2).getId_Multa());
@@ -314,6 +314,9 @@ public class SistemaBibliotecaGrupo3 {
 //              prestamoData.devolverPrestamo(p.get(0));
 //              prestamoData.solicitarPrestamo(ejemplaresP.get(0), lectoresP.get(0));
 //
+                
+                    
+
 
 //FUNCIONANDO TODO COMO CORRESPONDE
         } catch (ClassNotFoundException ex) {

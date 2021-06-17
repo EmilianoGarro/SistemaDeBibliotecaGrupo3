@@ -34,7 +34,7 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
         jTDevolucion.setEditable(false);
         jTMulta.setEditable(false);
         jBBuscar.setEnabled(false);
-        prestamoData.revisionDePrestamosSinDevolucion();
+//        prestamoData.revisionDePrestamosSinDevolucion();
     } catch (ClassNotFoundException ex) {
         JOptionPane.showMessageDialog(this, "Error con los drivers de conexion");
     } catch (SQLException ex) {
@@ -72,6 +72,11 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
         jBBaja = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jCActivo = new javax.swing.JCheckBox();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("PRESTAMO");
@@ -298,6 +303,7 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
 
     private void jBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAltaActionPerformed
         // TODO add your handling code here:
+        jBAlta.setEnabled(false);
        int id = Integer.parseInt(jTId.getText());
       
      
@@ -307,6 +313,7 @@ public class VistaPrestamos extends javax.swing.JInternalFrame {
 
     private void jBBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBajaActionPerformed
         // TODO add your handling code here:
+        jBBaja.setEnabled(false);
         int id = Integer.parseInt(jTId.getText());
         prestamoData.darBajaPrestamo(id);
     }//GEN-LAST:event_jBBajaActionPerformed

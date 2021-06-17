@@ -95,6 +95,11 @@ public class ListadoMulta extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tMultas = new javax.swing.JTable();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 22)); // NOI18N
         jLabel1.setText("Listado de Multas");
 

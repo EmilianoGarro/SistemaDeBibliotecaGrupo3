@@ -23,6 +23,7 @@ public class VistaAutores extends javax.swing.JInternalFrame {
     /**
      * Creates new form VistaAlumnos
      */
+    
     public VistaAutores() {
         initComponents();
          try {
@@ -338,8 +339,8 @@ public class VistaAutores extends javax.swing.JInternalFrame {
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
         // TODO add your handling code here:
         if(jDFechaNac.getDate()!=null){
-        String apellido=jTApellido.getText();
         String nombre=jTNombre.getText();
+        String apellido=jTApellido.getText();
         int dni = Integer.parseInt(jTDni.getText());
         LocalDate fechaNac=jDFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String nacionalidad=jTNacionalidad.getText();
@@ -446,8 +447,8 @@ public class VistaAutores extends javax.swing.JInternalFrame {
         Autor autor = autorData.buscarAutor(id);
         if(autor!=null){
         jTDni.setText(String.valueOf(autor.getDni()));
-        jTApellido.setText(autor.getApellido());
         jTNombre.setText(autor.getNombre());
+        jTApellido.setText(autor.getApellido());
         jDFechaNac.setDate(Date.valueOf(autor.getFechaNac()));
         jTNacionalidad.setText(autor.getNacionalidad());
         jCEstado.setSelected(autor.isActivo());

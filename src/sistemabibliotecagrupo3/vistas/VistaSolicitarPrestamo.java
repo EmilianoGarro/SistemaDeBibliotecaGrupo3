@@ -36,9 +36,8 @@ PrestamoData prestamoData;
         conexion = new Conexion();
         Connection con = conexion.getConexion();
         prestamoData = new PrestamoData(conexion);
-        cargarEjemplar();
-        cargarLectores();
-        prestamoData.revisionDePrestamosSinDevolucion();
+  
+//        prestamoData.revisionDePrestamosSinDevolucion();
     } catch (ClassNotFoundException ex) {
         JOptionPane.showMessageDialog(this, "Error con los drivers de conexion");
     } catch (SQLException ex) {
@@ -63,6 +62,8 @@ PrestamoData prestamoData;
         jCLector = new javax.swing.JComboBox<>();
         jBSolicitar = new javax.swing.JButton();
         jBDevolver = new javax.swing.JButton();
+        jRSolicitar = new javax.swing.JRadioButton();
+        jRDevolver = new javax.swing.JRadioButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -79,6 +80,7 @@ PrestamoData prestamoData;
         jLabel3.setText("LECTOR:");
 
         jBSolicitar.setText("SOLICITAR");
+        jBSolicitar.setEnabled(false);
         jBSolicitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBSolicitarActionPerformed(evt);
@@ -86,9 +88,24 @@ PrestamoData prestamoData;
         });
 
         jBDevolver.setText("DEVOLVER");
+        jBDevolver.setEnabled(false);
         jBDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBDevolverActionPerformed(evt);
+            }
+        });
+
+        jRSolicitar.setText("SOLICITAR");
+        jRSolicitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRSolicitarActionPerformed(evt);
+            }
+        });
+
+        jRDevolver.setText("DEVOLVER");
+        jRDevolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRDevolverActionPerformed(evt);
             }
         });
 
@@ -97,59 +114,76 @@ PrestamoData prestamoData;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(99, 99, 99)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(57, 57, 57)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jCEjemplar, 0, 321, Short.MAX_VALUE)
-                    .addComponent(jCLector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 38, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBSolicitar)
-                .addGap(28, 28, 28)
-                .addComponent(jBDevolver)
-                .addGap(158, 158, 158))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jBSolicitar)
+                        .addGap(89, 89, 89)
+                        .addComponent(jBDevolver))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(47, 47, 47)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCLector, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(177, 177, 177)
+                        .addComponent(jRSolicitar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRDevolver)))
+                .addContainerGap(139, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jCEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jCLector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRSolicitar)
+                    .addComponent(jRDevolver))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCLector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBSolicitar)
                     .addComponent(jBDevolver))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addGap(110, 110, 110))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void cargarEjemplar(){
+    public void cargarEjemplarS(String estado){
         EjemplarData auxE = new EjemplarData(conexion);
-        ArrayList<Ejemplar>ejemplares=(ArrayList)auxE.obtenerEjemplares();
+        ArrayList<Ejemplar>ejemplares=(ArrayList)auxE.obtenerEjemplaresSegunEstado(estado);
+        
         for(Ejemplar a:ejemplares){
             jCEjemplar.addItem(a);
         } 
         jCEjemplar.setSelectedItem(null);
         }
+    public void cargarLectoresP(){
+        ArrayList<Lector> lectores = prestamoData.obtenerLectoresConPrestamosVigentes();
+        for(Lector l:lectores){
+            jCLector.addItem(l);
+        } 
+        jCLector.setSelectedItem(null);
+    }
     
-    
-    public void cargarLectores(){
+    public void cargarLectoresS(){
         LectorData auxL = new LectorData(conexion);
         ArrayList<Lector> lectores = (ArrayList)auxL.obtenerLectores();
         for(Lector l:lectores){
@@ -162,7 +196,6 @@ PrestamoData prestamoData;
     private void jBSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSolicitarActionPerformed
         // TODO add your handling code here:
 //        prestamoData.revisionDePrestamosSinDevolucion();
-        prestamoData.revisionDePrestamosSinDevolucion();        
         Lector auxL = (Lector)jCLector.getSelectedItem();
         prestamoData.revisarAltaLector(auxL);
         Ejemplar auxE = (Ejemplar)jCEjemplar.getSelectedItem();
@@ -170,7 +203,11 @@ PrestamoData prestamoData;
         prestamoData.solicitarPrestamo(auxE, auxL);
         Prestamo auxP = prestamoData.buscarPrestamo(auxL,auxE,true);
         
-        }else{JOptionPane.showMessageDialog(null, "Tiene que seleccionar un lector y un ejemplar");}  
+        }else{JOptionPane.showMessageDialog(null, "Tiene que seleccionar un lector y un ejemplar");}
+        jCLector.removeAllItems();
+        jCEjemplar.removeAllItems();
+        cargarEjemplarS("Disponible");
+        cargarLectoresS();
     }//GEN-LAST:event_jBSolicitarActionPerformed
 
     private void jBDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDevolverActionPerformed
@@ -186,7 +223,36 @@ PrestamoData prestamoData;
                 JOptionPane.showMessageDialog(null, "El prestamo que desea devolver no esta en la base de datos");
             }else if(auxP.getFechaDevolucion()!=null){JOptionPane.showMessageDialog(null, "El prestamo ya fue devuelto anteriormente");}
         }else{JOptionPane.showMessageDialog(null, "Tiene que seleccionar un lector y un ejemplar");}
+      
+         jCLector.removeAllItems();
+        jCEjemplar.removeAllItems();
+         cargarEjemplarS("Prestado");
+        cargarLectoresP();
     }//GEN-LAST:event_jBDevolverActionPerformed
+
+    private void jRSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRSolicitarActionPerformed
+        // TODO add your handling code here:
+        jBSolicitar.setEnabled(true);
+        jBDevolver.setEnabled(false);
+        jRDevolver.setSelected(false);
+        jCLector.removeAllItems();
+        jCEjemplar.removeAllItems();
+        cargarEjemplarS("Disponible");
+        cargarLectoresS();
+    }//GEN-LAST:event_jRSolicitarActionPerformed
+
+    private void jRDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRDevolverActionPerformed
+        // TODO add your handling code here:
+        jBSolicitar.setEnabled(false);
+        jBDevolver.setEnabled(true);
+        jRSolicitar.setSelected(false);
+        jCLector.removeAllItems();
+        jCEjemplar.removeAllItems();
+        cargarEjemplarS("Prestado");
+        cargarLectoresP();
+        
+        
+    }//GEN-LAST:event_jRDevolverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -197,5 +263,7 @@ PrestamoData prestamoData;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JRadioButton jRDevolver;
+    private javax.swing.JRadioButton jRSolicitar;
     // End of variables declaration//GEN-END:variables
 }

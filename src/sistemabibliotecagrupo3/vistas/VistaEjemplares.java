@@ -36,7 +36,7 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         conexion = new Conexion();
         Connection con = conexion.getConexion();
         ejemplarData = new EjemplarData(conexion);
-        jBAlta.setEnabled(false);
+//        jBAlta.setEnabled(false);
     } catch (ClassNotFoundException ex) {
         JOptionPane.showMessageDialog(this, "Error con los drivers de conexion");
     } catch (SQLException ex) {
@@ -119,7 +119,6 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         });
 
         jBBorrar.setText("Borrar");
-        jBBorrar.setEnabled(false);
         jBBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBBorrarActionPerformed(evt);
@@ -127,7 +126,6 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         });
 
         jBActualizar.setText("Actualizar");
-        jBActualizar.setEnabled(false);
         jBActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBActualizarActionPerformed(evt);
@@ -157,25 +155,14 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
                 jCLibroActionPerformed(evt);
             }
         });
-        jCLibro.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jCLibroKeyReleased(evt);
-            }
-        });
 
         jCStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCStatusActionPerformed(evt);
             }
         });
-        jCStatus.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jCStatusKeyReleased(evt);
-            }
-        });
 
         jBAlta.setText("Dar alta");
-        jBAlta.setEnabled(false);
         jBAlta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAltaActionPerformed(evt);
@@ -261,13 +248,13 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    //private void habilitarBotonGuardar(){
+    private void habilitarBotonGuardar(){
         
         
-//        if(jCStatus.getSelectedItem()!=null){
-//        jBGuardar.setEnabled(true);
-//        }else{jBGuardar.setEnabled(false);}
-//    }
+        if(jCStatus.getSelectedItem()!=null&&jCLibro.getSelectedItem()!=null){
+        jBGuardar.setEnabled(true);
+        }else{jBGuardar.setEnabled(false);}
+    }
     
     private void habilitarBotonBuscar(){
                  if(!jTID.getText().isEmpty()){
@@ -275,20 +262,20 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
                  }else{jBBuscar.setEnabled(false);}   
     }
     
-    public void habilitarBotonBorrar(){
-        if(!jTID.getText().isEmpty()){
-        int aux = Integer.parseInt(jTID.getText());
-        Ejemplar ejemplar = ejemplarData.buscarEjemplar(aux);
-        if(ejemplar!=null && ejemplar.isActivo()!=false){
-        jBBorrar.setEnabled(true);
-        jBAlta.setEnabled(false);
-        }else{jBBorrar.setEnabled(false);
-          jBAlta.setEnabled(true);  
-        }
-        }
-       
-      
-    }
+//    public void habilitarBotonBorrar(){
+//        if(!jTID.getText().isEmpty()){
+//        int aux = Integer.parseInt(jTID.getText());
+//        Ejemplar ejemplar = ejemplarData.buscarEjemplar(aux);
+//        if(ejemplar!=null && ejemplar.isActivo()!=false){
+//        jBBorrar.setEnabled(true);
+//        jBAlta.setEnabled(false);
+//        }else{jBBorrar.setEnabled(false);
+//          jBAlta.setEnabled(true);  
+//        }
+//        }
+//       
+//      
+//    }
     
     private void habilitarBotonActualizar(){
     
@@ -303,47 +290,55 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         Boolean estado = jCEstado.isSelected();
         Libro libro = (Libro)jCLibro.getSelectedItem();
         String status = (String)jCStatus.getSelectedItem();
-        Ejemplar ejemplar = new Ejemplar(libro, status, estado);
-        ejemplarData.guardarEjemplar(ejemplar);
         
+        Ejemplar ejemplar = new Ejemplar(libro, status, estado);
+        if(ejemplar!=null&&libro!=null&&status!=null){
+        ejemplarData.guardarEjemplar(ejemplar);
         jTID.setText(String.valueOf(ejemplar.getId_Ejemplar()));
         jTID.setEnabled(false);
         jBGuardar.setEnabled(false);
         jBAlta.setEnabled(false);
+        jBActualizar.setEnabled(false);
+        jBBorrar.setEnabled(false);
         jCEstado.setEnabled(false);
         jCStatus.setEnabled(false);
         jCLibro.setEnabled(false);
-        
+        }else{JOptionPane.showMessageDialog(null, "Error al guardar, tiene que seleccionar un libro y un estado");}
         
         
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
         // TODO add your handling code here:
-        int id = Integer.parseInt(jTID.getText());
-        Ejemplar ejemplar = ejemplarData.buscarEjemplar(id);
-        if(ejemplar!=null&&!"Prestado".equals(ejemplar.getEstado())){
-        
-        ejemplarData.darBajaEjemplar(id);
-        jCLibro.setSelectedItem(ejemplar.getLibro());
-        jCStatus.setSelectedItem(ejemplar.getEstado());
-        jCEstado.setSelected(ejemplar.isActivo());
-        
-        jCEstado.setEnabled(false);
-        jTID.setEnabled(false);
-        jCStatus.setEnabled(false);
-        jCLibro.setEnabled(false);
-        jBAlta.setEnabled(false);
-        jBBorrar.setEnabled(false);
-        jBBuscar.setEnabled(false);
-        jBActualizar.setEnabled(false);
-        }
-        else if(ejemplar==null){JOptionPane.showMessageDialog(this, "El ejemplar que intenta borrar, no se encuentra en la base de datos");
-        }else if("Prestado".equals(ejemplar.getEstado())){JOptionPane.showMessageDialog(null, "El ejemplar no se puede dar de baja por que esta prestado");}
+        if(!jTID.getText().isEmpty()){
+            int id = Integer.parseInt(jTID.getText());
+            Ejemplar ejemplar = ejemplarData.buscarEjemplar(id);
+            if(ejemplar!=null&&!"Prestado".equals(ejemplar.getEstado())){
+
+            ejemplarData.darBajaEjemplar(id);
+            jCLibro.setSelectedItem(ejemplar.getLibro());
+            jCStatus.setSelectedItem(ejemplar.getEstado());
+            jCEstado.setSelected(ejemplar.isActivo());
+
+            jCEstado.setEnabled(false);
+            jTID.setEnabled(false);
+            jCStatus.setEnabled(false);
+            jCLibro.setEnabled(false);
+            jBAlta.setEnabled(false);
+            jBBorrar.setEnabled(false);
+            jBBuscar.setEnabled(false);
+            jBActualizar.setEnabled(false);
+            jBGuardar.setEnabled(false);
+            }
+            else if(ejemplar==null){JOptionPane.showMessageDialog(this, "El ejemplar que intenta borrar, no se encuentra en la base de datos");
+            }else if("Prestado".equals(ejemplar.getEstado())){JOptionPane.showMessageDialog(null, "El ejemplar no se puede dar de baja por que esta prestado");}
+       }else{JOptionPane.showMessageDialog(null, "Error al borrar el ejemplar, tiene que seleccionar un ID");}
+       
     }//GEN-LAST:event_jBBorrarActionPerformed
 
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
         // TODO add your handling code here:
+        if(!jTID.getText().isEmpty()){
         int id = Integer.parseInt(jTID.getText());
         Ejemplar ejemplar = ejemplarData.buscarEjemplar(id);
         if(ejemplar!=null){
@@ -362,6 +357,7 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         jBBorrar.setEnabled(false);
         jBGuardar.setEnabled(false);
         }else{JOptionPane.showMessageDialog(this,"El ejemplar que quiere actualizar no esta en la base de datos");}
+        }else{JOptionPane.showMessageDialog(null, "Error al borrar, primero tiene que buscar el ejemplar por ID");}   
     }//GEN-LAST:event_jBActualizarActionPerformed
 
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
@@ -379,10 +375,10 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         jCStatus.setEnabled(true);
         jCEstado.setEnabled(true);
         jCLibro.setEnabled(true);
-        jBAlta.setEnabled(false);
-        jBActualizar.setEnabled(false);
+        jBAlta.setEnabled(true);
+        jBActualizar.setEnabled(true);
         jBGuardar.setEnabled(true);
-        jBBorrar.setEnabled(false);
+        jBBorrar.setEnabled(true);
         
         
     }//GEN-LAST:event_jBLimpiarActionPerformed
@@ -393,16 +389,16 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         Ejemplar ejemplar = ejemplarData.buscarEjemplar(id);
         if(ejemplar!=null){
  
-        jCStatus.removeAllItems();  
-        jCStatus.addItem(ejemplar.getEstado());
+        
+        jCStatus.setSelectedItem(ejemplar.getEstado());
         jCLibro.removeAllItems();
         jCLibro.addItem(ejemplar.getLibro());
         jCEstado.setSelected(ejemplar.isActivo());
         
-        jBBuscar.setEnabled(false);
-        jBGuardar.setEnabled(false);
-        jBActualizar.setEnabled(true);
-        jBGuardar.setEnabled(false);
+//        jBBuscar.setEnabled(false);
+//        jBGuardar.setEnabled(false);
+//        jBActualizar.setEnabled(true);
+//        jBGuardar.setEnabled(false);
         }
         else{JOptionPane.showMessageDialog(this, "El id que ingreso no esta registrado en la base de datos");}
         
@@ -426,12 +422,12 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
     private void jTIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTIDKeyReleased
         // TODO add your handling code here:
         habilitarBotonBuscar();
-        habilitarBotonBorrar();
-        habilitarBotonActualizar();
+//        habilitarBotonBorrar();
+//        habilitarBotonActualizar();
     }//GEN-LAST:event_jTIDKeyReleased
 
     private void jCLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCLibroActionPerformed
-        // TODO add your handling code here:        
+        // TODO add your handling code here:
     }//GEN-LAST:event_jCLibroActionPerformed
 
     private void jCStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCStatusActionPerformed
@@ -440,10 +436,12 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
 
     private void jCEstadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCEstadoKeyReleased
         // TODO add your handling code here:
+//        habilitarBotonGuardar();
     }//GEN-LAST:event_jCEstadoKeyReleased
 
     private void jBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAltaActionPerformed
         // TODO add your handling code here:
+         if(!jTID.getText().isEmpty()){
         int id = Integer.parseInt(jTID.getText());
         Ejemplar ejemplar = ejemplarData.buscarEjemplar(id);
         if(ejemplar!=null){
@@ -457,22 +455,16 @@ public class VistaEjemplares extends javax.swing.JInternalFrame {
         jTID.setEnabled(false);
         jCStatus.setEnabled(false);
         jCLibro.setEnabled(false);
-            jBAlta.setEnabled(false);
+        jBGuardar.setEnabled(false);
+        jBAlta.setEnabled(false);
         jBBorrar.setEnabled(false);
         jBBuscar.setEnabled(false);
         jBActualizar.setEnabled(false);
         }
         else if(ejemplar==null){JOptionPane.showMessageDialog(this, "El ejemplar que intenta dar de alta, no se encuentra en la base de datos");
         }
+        }else{JOptionPane.showMessageDialog(null, "Error al dar alta, tiene que ingresar un ID");}
     }//GEN-LAST:event_jBAltaActionPerformed
-
-    private void jCLibroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCLibroKeyReleased
-        // TODO add your handling code here:\
-    }//GEN-LAST:event_jCLibroKeyReleased
-
-    private void jCStatusKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCStatusKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCStatusKeyReleased
     public void cargarLibros(){
         libros = ejemplarData.listarLibros(); 
         for(Libro l:libros){

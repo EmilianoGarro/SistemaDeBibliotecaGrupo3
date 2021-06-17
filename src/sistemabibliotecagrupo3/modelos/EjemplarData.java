@@ -189,7 +189,30 @@ public class EjemplarData {
     return ejemplares;
     }
     
-    public List<Ejemplar> obtenerEjemplaresSegunEstado(boolean estado){
+    public List<Ejemplar> obtenerEjemplaresSegunEstado(String estado){
+    List<Ejemplar> ejemplares = new ArrayList<>();
+    try{
+        String sql = "SELECT * FROM ejemplar WHERE estado=?";
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, estado);
+        ResultSet rs = ps.executeQuery();
+        Ejemplar auxEjemplar;
+        while(rs.next()){
+        auxEjemplar = new Ejemplar();
+        auxEjemplar.setActivo(rs.getBoolean("activo"));
+        auxEjemplar.setEstado(rs.getString("estado"));
+        auxEjemplar.setId_Ejemplar(rs.getInt("idEjemplar"));
+        Libro auxLibro = buscarLibro(rs.getInt("idLibro"));
+        auxEjemplar.setLibro(auxLibro);
+        ejemplares.add(auxEjemplar);
+        }
+        ps.close();
+    }   catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los ejemplares "+" "+ex.getMessage());
+        }
+    return ejemplares;
+    }
+    public List<Ejemplar> obtenerEjemplaresSegunEstadoB(boolean estado){
     List<Ejemplar> ejemplares = new ArrayList<>();
     try{
         String sql = "SELECT * FROM ejemplar WHERE activo=?";
@@ -212,7 +235,6 @@ public class EjemplarData {
         }
     return ejemplares;
     }
-    
 }
     
 

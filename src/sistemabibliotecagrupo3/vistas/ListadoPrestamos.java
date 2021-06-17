@@ -21,7 +21,6 @@ import sistemabibliotecagrupo3.modelos.*;
 public class ListadoPrestamos extends javax.swing.JInternalFrame {
     private DefaultTableModel modelo;
     private PrestamoData prestamoData;
-    private ArrayList<Prestamo> prestamos;
     private Conexion conexion;
     /**
      * Creates new form ListadoAlumnosXMaterias
@@ -69,14 +68,14 @@ public class ListadoPrestamos extends javax.swing.JInternalFrame {
     public void cargaDatos(){
         borrarFilasTabla();
         String opcion = (String)cbEstado.getSelectedItem();
-        
+        ArrayList<Prestamo>prestamos=new ArrayList<>();
 //        obtenerPrestamosPorFecha(fec)
 //        obtenerPrestamosVigentesPorLector(lec)
      
         switch (opcion) {
-            case "lectores con multas" : prestamos = (ArrayList)prestamoData.obtenerLectoresConMultas(); break;
-            case "lectores con prestamos vencidos" : prestamos = (ArrayList)prestamoData.obtenerLectoresConPrestamosVencidos(); break;
-            case "lectores con multas en el mes" : prestamos = (ArrayList)prestamoData.obtenerLectoresConMultasDentroDeUnMes(); break;
+            case "lectores con multas" : prestamos = (ArrayList)prestamoData.obtenerPrestamosConMultas(); break;
+            case "lectores con prestamos vencidos" : prestamos = (ArrayList)prestamoData.obtenerPrestamosVencidos(); break;
+            case "lectores con multas en el mes" : prestamos = (ArrayList)prestamoData.obtenerPrestamosConMultasDentroDelMes(); break;
             case "todos" : prestamos = (ArrayList)prestamoData.obtenerPrestamos(); break;
         }
  

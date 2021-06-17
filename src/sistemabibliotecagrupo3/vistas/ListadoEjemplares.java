@@ -68,8 +68,8 @@ public class ListadoEjemplares extends javax.swing.JInternalFrame {
         String opcion = (String)cbEstado.getSelectedItem();
         
         switch (opcion) {
-            case "activos" : ejemplares = (ArrayList)ejemplarData.obtenerEjemplaresSegunEstado(true); break;
-            case "inactivos" : ejemplares = (ArrayList)ejemplarData.obtenerEjemplaresSegunEstado(false); break;
+            case "activos" : ejemplares = (ArrayList)ejemplarData.obtenerEjemplaresSegunEstado("Disponible"); break;
+            case "inactivos" : ejemplares = (ArrayList)ejemplarData.obtenerEjemplaresSegunEstadoB(false); break;
             case "todos" : ejemplares = (ArrayList)ejemplarData.obtenerEjemplares(); break;
         }
  
